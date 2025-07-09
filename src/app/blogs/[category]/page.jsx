@@ -1,44 +1,32 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import TrendingBlog from "@/components/TrendingBlog"; // Update this path based on your actual structure
+import TrendingBlog from "@/components/TrendingBlog";
 import Image from "next/image";
-
-// Sample blog data
-const allBlogs = Array.from({ length: 40 }).map((_, i) => ({
-  id: i + 1,
-  title: `MongoDB Performance Tips for Large Applications ${i + 1}`,
-  slug: `sample-blog-post-${i + 1}`,
-  category: [
-    "Technology",
-    "Finance",
-    "Business",
-    "Crypto",
-    "Sports",
-    "Lifestyle",
-    "Health",
-    "Fashion",
-  ][i % 8],
-  image: "/LatestBlog/blog.jpg",
-  description:
-    "Next.js 15 introduces powerful routing, better image handling, and faster builds. Here's everything you need to know! Understand new features like the app directory, server components, and turbopack optimizations. This guide helps you make the most of the framework's latest version.",
-  author: "Zeeshan",
-  date: "2025-06-30",
-}));
+import axios from "axios";
 
 export default function CategoryPage() {
   const { category } = useParams();
-  const [visibleCount, setVisibleCount] = useState(17); // 1 featured + 16 = 8 rows
+  const [blogs, setBlogs] = useState([]);
+  const [visibleCount, setVisibleCount] = useState(17); // 1 featured + 16
 
-  const blogs = allBlogs.filter(
-    (blog) => blog.category.toLowerCase() === category.toLowerCase()
-  );
+  useEffect(() => {
+    const fetchCategoryBlogs = async () => {
+      try {
+        const res = await axios.get(`/api/blog/category/${category}`);
+        setBlogs(res.data.blogs);
+      } catch (error) {
+        console.error("Failed to fetch blogs:", error);
+      }
+    };
+    if (category) fetchCategoryBlogs();
+  }, [category]);
+
   const featured = blogs[0];
   const remainingBlogs = blogs.slice(1, visibleCount);
-
   const loadMore = () => setVisibleCount((prev) => prev + 16);
 
   return (
@@ -51,7 +39,7 @@ export default function CategoryPage() {
               Home
             </Link>
             <span className="text-gray-500">/</span>
-            <span className="text-gray-800 font-semibold">{category}</span>
+            <span className="text-gray-800 font-semibold capitalize">{category}</span>
           </nav>
         </div>
       </section>
@@ -62,21 +50,22 @@ export default function CategoryPage() {
           {/* Category Title */}
           <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
             <span className="relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[25px]">
-            <h2 className="skew-x-[10deg] tracking-wide capitalize">{category} Blogs</h2>
-          </span>
+              <h2 className="skew-x-[10deg] tracking-wide capitalize">{category} Blogs</h2>
+            </span>
           </div>
 
           {/* Featured Blog */}
           {featured && (
             <Link href={`/blogs/${category.toLowerCase()}/${featured.slug}`}>
               <div className="relative mb-10 rounded-lg group cursor-pointer overflow-hidden shadow-md h-[300px] md:h-[450px]">
-                <img
-                  src={featured.image}
+                <Image
+                  src={featured.image || "/LatestBlog/blog.jpg"}
                   alt={featured.title}
+                  fill
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-[38%] inset-0 bg-gradient-to-t from-black via-black/90 to-transparent px-7 pb-6 z-10">
-                  <span className="text-sm px-4 py-1 rounded-md bg-indigo-600 text-white font-bold italic skew-x-[-10deg] ">
+                  <span className="text-sm px-4 py-1 rounded-md bg-indigo-600 text-white font-bold italic skew-x-[-10deg]">
                     <span className="skew-x-[10deg] tracking-wider">
                       {featured.category}
                     </span>
@@ -98,34 +87,30 @@ export default function CategoryPage() {
           {/* Grid of Smaller Blogs */}
           <div className="md:grid-cols-2 md:gap-y-11 grid gap-6">
             {remainingBlogs.map((blog) => (
-              <Link
-                key={blog.id}
-                href={`/blogs/${category.toLowerCase()}/${blog.slug}`}
-              >
+              <Link key={blog._id} href={`/blogs/${category.toLowerCase()}/${blog.slug}`}>
                 <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
                   <div className="relative w-full h-48 md:h-56 overflow-hidden">
                     <Image
-                    src={blog.image}
-                    alt={blog.title}
-                    width={600}
-                    height={300}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
+                      src={blog.image || "/LatestBlog/blog.jpg"}
+                      alt={blog.title}
+                      fill
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
                   </div>
                   <div className="p-4 space-y-2">
-                    <p className="text-sm text-gray-500">{blog.category} • {blog.date}</p>
+                    <p className="text-sm text-gray-500">
+                      {blog.category} • {blog.date}
+                    </p>
                     <h4 className="text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2 leading-snug">
                       {blog.title}
                     </h4>
-                    <p className="text-sm text-gray-700 line-clamp-2">
-                      {blog.description}
-                    </p>
+                    <p className="text-sm text-gray-700 line-clamp-2">{blog.description}</p>
                     <Link
-                    href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}
-                    className="inline-block text-indigo-600 font-medium hover:underline mt-2"
-                  >
-                    Read More →
-                  </Link>
+                      href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}
+                      className="inline-block text-indigo-600 font-medium hover:underline mt-2"
+                    >
+                      Read More →
+                    </Link>
                   </div>
                 </div>
               </Link>

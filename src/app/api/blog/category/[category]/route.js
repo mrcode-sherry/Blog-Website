@@ -3,7 +3,7 @@ import Blog from '@/backend/models/blog';
 import { NextResponse } from 'next/server';
 
 // ✅ GET: Blogs by Category
-export async function GET(_, { params }) {
+export async function GET(req, { params }) {
   await dbConnect();
   const { category } = params;
 

@@ -1,60 +1,24 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-
-const categories = [
-  {
-    name: 'Tech',
-    count: 3410,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'tech',
-  },
-  {
-    name: 'Business',
-    count: 3141,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'business',
-  },
-  {
-    name: 'News',
-    count: 421,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'news',
-  },
-  {
-    name: 'Lifestyle',
-    count: 1985,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'lifestyle',
-  },
-  {
-    name: 'Health',
-    count: 2037,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'health',
-  },
-  {
-    name: 'Biography',
-    count: 110,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'biography',
-  },
-  {
-    name: 'Education',
-    count: 347,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'education',
-  },
-  {
-    name: 'Marketing',
-    count: 324,
-    image: '/LatestBlog/blog.jpg',
-    slug: 'marketing',
-  },
-];
+import axios from 'axios';
 
 const CategoryBlog = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get('/api/blog/category');
+        setCategories(res.data.categories);
+      } catch (err) {
+        console.error("Failed to load categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
+
   return (
     <section className="px-4 md:px-20 py-12">
       {/* Section Heading */}
@@ -65,30 +29,43 @@ const CategoryBlog = () => {
           </span>
         </div>
       </div>
+
       <div className="grid gap-10 md:grid-cols-3">
         {categories.map((cat) => (
-          <Link
-            href={`/blogs/${cat.slug}`}
+          <div
             key={cat.slug}
-            className="group border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white"
+            className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 transform"
           >
-            <div className="relative w-full h-48 overflow-hidden">
-              <Image
-                src={cat.image}
-                alt={cat.name}
-                layout="fill"
-                objectFit="cover"
-                className="group-hover:scale-105 transition-transform duration-300"
-              />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition duration-300" />
-            </div>
-            <div className="p-4">
-              <h3 className="text-xl font-bold text-indigo-700 group-hover:text-indigo-900 transition">
-                {cat.name}
-              </h3>
+            <Link href={`/blogs/${cat.slug}`}>
+              <div className="relative w-full h-52 overflow-hidden">
+                <Image
+                  src={cat.image || "/LatestBlog/blog.jpg"}
+                  alt={cat.category}
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-300" />
+              </div>
+            </Link>
+
+            <div className="p-5 space-y-2">
+              <Link href={`/blogs/${cat.slug}`}>
+                <h3 className="text-xl font-bold text-indigo-700 group-hover:text-indigo-900 transition hover:underline">
+                  {cat.category}
+                </h3>
+              </Link>
               <p className="text-sm text-gray-600">{cat.count} Articles</p>
             </div>
-          </Link>
+
+            <div className="absolute bottom-4 right-4">
+              <Link
+                href={`/blogs/${cat.slug}`}
+                className="text-sm bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition shadow-md"
+              >
+                View Blogs
+              </Link>
+            </div>
+          </div>
         ))}
       </div>
     </section>
@@ -96,4 +73,3 @@ const CategoryBlog = () => {
 };
 
 export default CategoryBlog;
-

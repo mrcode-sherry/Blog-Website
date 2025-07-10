@@ -17,7 +17,7 @@ export default function CategoryPage() {
     const fetchCategoryBlogs = async () => {
       try {
         const res = await axios.get(`/api/blog/category/${category}`);
-        setBlogs(res.data.blogs);
+        setBlogs(res.data.blogs || []);
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
       }
@@ -27,6 +27,7 @@ export default function CategoryPage() {
 
   const featured = blogs[0];
   const remainingBlogs = blogs.slice(1, visibleCount);
+
   const loadMore = () => setVisibleCount((prev) => prev + 16);
 
   return (
@@ -64,21 +65,23 @@ export default function CategoryPage() {
                   fill
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-[38%] inset-0 bg-gradient-to-t from-black via-black/90 to-transparent px-7 pb-6 z-10">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent px-7 pb-6 z-10 flex flex-col justify-center mt-34">
+                  <div>
+                    <div className="flex mb-4">
                   <span className="text-sm px-4 py-1 rounded-md bg-indigo-600 text-white font-bold italic skew-x-[-10deg]">
-                    <span className="skew-x-[10deg] tracking-wider">
-                      {featured.category}
-                    </span>
+                    <span className="skew-x-[10deg] tracking-wider">{featured.category}</span>
                   </span>
-                  <h3 className="mb-4 mt-4 text-white text-[40px] font-bold leading-tight hover:underline hover:decoration-blue-500 hover:underline-offset-4 duration-300">
-                    {featured.title}
-                  </h3>
-                  <p className="text-gray-200 text-sm mb-3 leading-relaxed line-clamp-3">
-                    {featured.description}
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    {featured.author} • {featured.date}
-                  </p>
+                </div>
+                    <h3 className="text-white text-[40px] mb-4 font-bold leading-tight hover:underline hover:decoration-blue-500 hover:underline-offset-4 duration-300">
+                      {featured.title}
+                    </h3>
+                    <p className="text-gray-200 text-sm mb-10 leading-relaxed line-clamp-3">
+                      {featured.desc}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {featured.author} • {new Date(featured.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
               </div>
             </Link>
@@ -99,7 +102,7 @@ export default function CategoryPage() {
                   </div>
                   <div className="p-4 space-y-2">
                     <p className="text-sm text-gray-500">
-                      {blog.category} • {blog.date}
+                      {blog.category} • {new Date(featured.createdAt).toLocaleDateString()}
                     </p>
                     <h4 className="text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2 leading-snug">
                       {blog.title}
@@ -117,14 +120,14 @@ export default function CategoryPage() {
             ))}
           </div>
 
-          {/* Read More Button */}
+          {/* Load More Button */}
           {visibleCount < blogs.length && (
             <div className="flex justify-center mt-8">
               <button
                 onClick={loadMore}
                 className="bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition flex items-center gap-2"
               >
-                Read More <ArrowRight size={18} />
+                Load More <ArrowRight size={18} />
               </button>
             </div>
           )}

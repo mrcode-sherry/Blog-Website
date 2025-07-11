@@ -20,47 +20,48 @@ const CategoryBlog = () => {
   }, []);
 
   return (
-    <section className="px-4 md:px-20 py-12">
+    <section className="px-6 md:px-20 py-10 sm:py-14 bg-white">
       {/* Section Heading */}
       <div className="flex items-center justify-center mb-8 relative">
         <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
-          <span className="relative z-10 inline-block mb-5 rounded-md px-4 py-2 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[25px]">
+          <span className="relative z-10 inline-block rounded-md px-4 py-2 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-2xl">
             <span className="skew-x-[10deg] tracking-wide">Blogs Category</span>
           </span>
         </div>
       </div>
 
-      <div className="grid gap-10 md:grid-cols-3">
+      {/* Category Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10">
         {categories.map((cat) => (
           <div
             key={cat.slug}
-            className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 transform"
+            className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300"
           >
             <Link href={`/blogs/${cat.slug}`}>
-              <div className="relative w-full h-52 overflow-hidden">
+              <div className="relative w-full h-48 sm:h-52 md:h-60 overflow-hidden">
                 <Image
                   src={cat.image || "/LatestBlog/blog.jpg"}
                   alt={cat.category}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent opacity-70 group-hover:opacity-80 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent group-hover:opacity-80 transition duration-300" />
               </div>
             </Link>
 
-            <div className="p-5 space-y-2">
+            <div className="p-4 sm:p-5 space-y-1 sm:space-y-2">
               <Link href={`/blogs/${cat.slug}`}>
-                <h3 className="text-xl font-bold text-indigo-700 group-hover:text-indigo-900 transition hover:underline">
+                <h3 className="text-lg sm:text-xl font-bold text-indigo-700 group-hover:text-indigo-900 transition hover:underline">
                   {cat.category}
                 </h3>
               </Link>
               <p className="text-sm text-gray-600">{cat.count} Articles</p>
             </div>
 
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute bottom-3 right-3">
               <Link
                 href={`/blogs/${cat.slug}`}
-                className="text-sm bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition shadow-md"
+                className="text-xs sm:text-sm bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-indigo-700 transition shadow-md"
               >
                 View Blogs
               </Link>

@@ -39,7 +39,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`fixed top-0 w-full z-50 px-4 md:px-20 py-5 flex justify-between items-center transition-all duration-300 
+      <nav className={`fixed top-0 w-full z-50 px-6 md:px-20 py-5 flex justify-between items-center transition-all duration-300 
         ${scrolled || menuOpen ? 'bg-gray-800/70 backdrop-blur-md shadow-sm text-white' : 'bg-white text-black'}`}>
 
         {/* Logo */}

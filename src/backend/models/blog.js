@@ -47,11 +47,14 @@ const blogSchema = new mongoose.Schema(
       type: String,
       default: "Admin",
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
-// 🔥 Auto-generate slug before saving
 blogSchema.pre("save", function (next) {
   if (!this.slug && this.title) {
     this.slug = slugify(this.title);

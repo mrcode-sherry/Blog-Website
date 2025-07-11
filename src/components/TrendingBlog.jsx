@@ -1,39 +1,28 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import axios from 'axios';
+import { Eye } from 'lucide-react';
 
-const trendingBlogs = [
-  {
-    id: 1,
-    title: 'Is Next.js the Future of Web?',
-    image: '/LatestBlog/blog.jpg',
-    category: 'Next.js',
-    date: 'June 28, 2025',
-    slug: 'nextjs-future',
-  },
-  {
-    id: 2,
-    title: 'Top 5 SEO Practices in 2025',
-    image: '/LatestBlog/blog.jpg',
-    category: 'SEO',
-    date: 'June 27, 2025',
-    slug: 'seo-practices-2025',
-  },
-  {
-    id: 3,
-    title: 'Mastering React Performance',
-    image: '/LatestBlog/blog.jpg',
-    category: 'React',
-    date: 'June 25, 2025',
-    slug: 'react-performance',
-  },
-  // Add more blogs if needed
-];
 
 const TrendingBlog = () => {
+  const [trending, setTrending] = useState([]);
+
+  useEffect(() => {
+    const fetchTrending = async () => {
+      try {
+        const res = await axios.get('/api/blog/trending');
+        setTrending(res.data.blogs);
+      } catch (err) {
+        console.error("Failed to fetch trending blogs", err);
+      }
+    };
+    fetchTrending();
+  }, []);
+
   return (
-    <aside className="p-5 border-l-[2px] border-gray-300">
+    <aside className="md:p-5 p-1 md:border-l-[2px] border-gray-300">
       {/* Heading */}
       <div className="mb-10">
         <div className="inline-block bg-indigo-600 text-white text-sm px-4 py-1 rounded-md font-semibold italic skew-x-[-10deg]">
@@ -43,16 +32,15 @@ const TrendingBlog = () => {
 
       {/* Blog List */}
       <div className="flex flex-col gap-7">
-        {trendingBlogs.map((blog) => (
+        {trending.map((blog) => (
           <Link
-            key={blog.id}
+            key={blog._id}
             href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}
             className="flex items-start gap-3 group hover:opacity-90 transition-opacity"
           >
-            {/* Blog Image with Overlay */}
-            <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden">
+            <div className="relative w-20 h-20 flex-shrink-0 rounded-md overflow-hidden">
               <Image
-                src={blog.image}
+                src={blog.img || '/LatestBlog/blog.jpg'}
                 alt={blog.title}
                 width={64}
                 height={64}
@@ -61,15 +49,24 @@ const TrendingBlog = () => {
               <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md"></div>
             </div>
 
-            {/* Blog Info */}
-            <div className="flex flex-col text-sm text-gray-800 leading-tight">
-              <p className="text-indigo-600 text-xs font-medium mb-2">
-                {blog.category} • {blog.date}
-              </p>
-              <p className="font-semibold line-clamp-2 group-hover:text-indigo-600 duration-300">
-                {blog.title}
-              </p>
+            <div className="flex flex-col justify-between text-sm text-gray-800 leading-tight h-full md:h-20">
+              {/* Top Part: Category and Title */}
+              <div className=''>
+                <p className="text-indigo-600 text-xs font-medium mb-1">
+                  {blog.category} • {new Date(blog.createdAt).toLocaleDateString()}
+                </p>
+                <p className="font-semibold text-[14px] line-clamp-2 group-hover:text-indigo-600 duration-300">
+                  {blog.title}
+                </p>
+              </div>
+
+              {/* Bottom Part: Views */}
+              <div className="flex items-center gap-1 md:mt-0 mt-2 text-gray-500 text-xs">
+                <Eye className="w-4 h-4" />
+                <span>{blog.views} views</span>
+              </div>
             </div>
+
           </Link>
         ))}
       </div>

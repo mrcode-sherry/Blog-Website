@@ -38,27 +38,29 @@ const LatestBlog = ({ variant = 'default' }) => {
   };
 
   return (
-    <section className={`w-full ${variant === 'overlay' ? '' : 'md:w-[75%]'} p-4 md:p-6`}>
+    <section className={`w-full ${variant === 'overlay' ? '' : ''} md:px-10 py-10`}>
       {/* Section Heading */}
       <div className="flex items-center justify-center mb-8 relative">
         <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
           <span className={`${variant === 'overlay'
             ? 'relative z-10 inline-block px-4 rounded-md py-2 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center'
-            : 'relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[25px]'
-          }`}>
+            : 'relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[20px] sm:text-[25px]'
+            }`}>
             <span className="skew-x-[10deg] tracking-wide">Latest Blogs</span>
           </span>
         </div>
       </div>
 
       {/* Blog Grid */}
-      <div className={`grid gap-6 ${variant === 'overlay' ? 'grid-cols-1' : 'md:grid-cols-2 md:gap-y-11'}`}>
+      <div className={`grid gap-6 ${variant === 'overlay'
+        ? 'grid-cols-1'
+        : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-2 md:gap-y-11'}`}>
         {blogs.map((blog) => (
           <div key={blog._id}>
             {variant === 'overlay' ? (
               <div className="relative group rounded-md overflow-hidden shadow-md">
                 <Link href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}>
-                  <div className="relative w-full h-48 md:h-32">
+                  <div className="relative w-full h-48 sm:h-52 md:h-32">
                     <Image
                       src={blog.img}
                       alt={blog.title}
@@ -68,14 +70,14 @@ const LatestBlog = ({ variant = 'default' }) => {
                     <div className="absolute inset-0 bg-black/80 group-hover:bg-black/90 transition duration-300" />
                     <div className="absolute bottom-0 left-0 right-0 top-0 p-4 z-10 text-white">
                       <div className="flex flex-row justify-between text-center items-center">
-                        <p className="text-[11px] px-2 py-1 my-auto rounded-md bg-indigo-600 text-white font-semibold italic tracking-wider skew-x-[-10deg] w-20">
+                        <p className="text-[10px] sm:text-[11px] px-2 py-1 my-auto rounded-md bg-indigo-600 text-white font-semibold italic tracking-wider skew-x-[-10deg] w-20">
                           {blog.category}
                         </p>
-                        <span className="text-[11px] text-left flex justify-end bottom-0">
+                        <span className="text-[10px] sm:text-[11px] text-left flex justify-end">
                           {new Date(blog.createdAt).toLocaleDateString()}
                         </span>
                       </div>
-                      <h3 className="text-base font-semibold leading-snug mt-7 group-hover:underline">
+                      <h3 className="text-sm sm:text-base font-semibold leading-snug mt-6 group-hover:underline line-clamp-2">
                         {blog.title}
                       </h3>
                     </div>
@@ -84,7 +86,7 @@ const LatestBlog = ({ variant = 'default' }) => {
               </div>
             ) : (
               <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
-                <div className="relative w-full h-60 overflow-hidden">
+                <div className="relative w-full h-52 sm:h-60 overflow-hidden">
                   <Link href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}>
                     <Image
                       src={blog.img}
@@ -96,18 +98,18 @@ const LatestBlog = ({ variant = 'default' }) => {
                   </Link>
                 </div>
                 <div className="p-4 space-y-2">
-                  <p className="text-sm text-gray-500">
+                  <p className="text-xs sm:text-sm text-gray-500">
                     {blog.category} • {new Date(blog.createdAt).toLocaleDateString()}
                   </p>
                   <Link href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}>
-                    <h3 className="text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
+                    <h3 className="text-gray-800 mb-2 sm:text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
                       {blog.title}
                     </h3>
                   </Link>
                   <p className="text-sm text-gray-700 line-clamp-2">{blog.desc}</p>
                   <Link
                     href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}
-                    className="inline-block text-indigo-600 font-medium hover:underline mt-2"
+                    className="inline-block text-indigo-600 font-medium hover:underline mt-2 text-sm"
                   >
                     Read More →
                   </Link>
@@ -119,14 +121,14 @@ const LatestBlog = ({ variant = 'default' }) => {
       </div>
 
       {/* Pagination */}
-      <div className={`flex justify-center items-center gap-6 mt-8 ${variant === 'overlay' ? 'text-sm' : ''}`}>
+      <div className={`flex justify-center items-center gap-6 mt-10 flex-wrap ${variant === 'overlay' ? 'text-sm' : ''}`}>
         <button
           onClick={goToPrev}
           disabled={currentPage === 1}
-          className={`p-2 rounded-full border flex items-center gap-1 transition ${currentPage === 1
+          className={`p-2 sm:px-4 rounded-full border flex items-center gap-1 transition text-sm ${currentPage === 1
             ? 'text-gray-400 border-gray-300 cursor-not-allowed'
             : 'text-indigo-600 border-indigo-600 hover:bg-indigo-100'
-          }`}
+            }`}
         >
           <ChevronLeft size={16} />
           Prev
@@ -139,10 +141,10 @@ const LatestBlog = ({ variant = 'default' }) => {
         <button
           onClick={goToNext}
           disabled={currentPage === totalPages}
-          className={`p-2 rounded-full border flex items-center gap-1 transition ${currentPage === totalPages
+          className={`p-2 sm:px-4 rounded-full border flex items-center gap-1 transition text-sm ${currentPage === totalPages
             ? 'text-gray-400 border-gray-300 cursor-not-allowed'
             : 'text-indigo-600 border-indigo-600 hover:bg-indigo-100'
-          }`}
+            }`}
         >
           Next
           <ChevronRight size={16} />

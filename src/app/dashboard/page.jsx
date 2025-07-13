@@ -26,10 +26,12 @@ const Dashboard = () => {
     <PrivateRoute>
       <div className="min-h-screen flex bg-gray-100 mt-20">
         {/* Sidebar */}
-        <Sidebar setView={setView} logout={logout} activeView={view} />
+        <div className='pt-4 bg-[#1E2939]'>
+          <Sidebar setView={setView} logout={logout} activeView={view} />
+        </div>
 
         {/* Main View */}
-        <main className="flex-1 p-6">{renderView()}</main>
+        <main className="flex-1 p-8">{renderView()}</main>
       </div>
     </PrivateRoute>
   );

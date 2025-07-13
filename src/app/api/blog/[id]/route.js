@@ -2,18 +2,13 @@ import dbConnect from '@/backend/db';
 import Blog from '@/backend/models/blog';
 import { NextResponse } from 'next/server';
 
-// ✅ GET a single blog by ID — with views increment
+// ✅ GET a single blog by ID — no view count
 export async function GET(req, { params }) {
   await dbConnect();
   const { id } = params;
 
   try {
-    // 🔥 Increment view count on blog fetch
-    const blog = await Blog.findByIdAndUpdate(
-      id,
-      { $inc: { views: 1 } },
-      { new: true }
-    );
+    const blog = await Blog.findById(id);
 
     if (!blog) {
       return NextResponse.json(

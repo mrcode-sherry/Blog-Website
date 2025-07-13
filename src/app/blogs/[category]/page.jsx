@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import TrendingBlog from "@/components/TrendingBlog";
 import Image from "next/image";
 import axios from "axios";
+import striptags from "striptags"; // ✅ Imported here
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -34,7 +35,7 @@ export default function CategoryPage() {
       {/* Breadcrumb Heading */}
       <section className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-16 mt-10">
         <div className="max-w-7xl mx-auto text-center">
-          <nav className="text-sm text-gray-600 text-base sm:text-lg space-x-1">
+          <nav className="text-sm text-gray-600 sm:text-lg space-x-1">
             <Link href="/" className="text-indigo-600 hover:underline font-medium">
               Home
             </Link>
@@ -73,8 +74,8 @@ export default function CategoryPage() {
                   <h3 className="text-white text-xl sm:text-2xl md:text-[40px] mb-4 font-bold leading-tight hover:underline hover:decoration-blue-500 hover:underline-offset-4 duration-300">
                     {featured.title}
                   </h3>
-                  <p className="text-gray-200 text-sm sm:text-base mb-6 leading-relaxed md:line-clamp-3 line-clamp-2">
-                    {featured.desc}
+                  <p className="text-gray-200 text-sm sm:text-base mb-4 leading-relaxed md:line-clamp-3 line-clamp-2">
+                    {striptags(featured.desc)}
                   </p>
                   <p className="text-xs text-gray-400">
                     {featured.author} • {new Date(featured.createdAt).toLocaleDateString()}
@@ -104,13 +105,12 @@ export default function CategoryPage() {
                     <h4 className="text-base sm:text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2 leading-snug">
                       {blog.title}
                     </h4>
-                    <p className="text-sm text-gray-700 line-clamp-2">{blog.description}</p>
-                    <Link
-                      href={`/blog/${blog.category.toLowerCase()}/${blog.slug}`}
-                      className="inline-block text-indigo-600 font-medium hover:underline mt-2"
-                    >
+                    <p className="text-sm text-gray-700 line-clamp-2">
+                      {striptags(blog.desc)}
+                    </p>
+                    <p className="inline-block text-indigo-600 font-medium hover:underline mt-2">
                       Read More →
-                    </Link>
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -130,7 +130,7 @@ export default function CategoryPage() {
           )}
         </section>
 
-        {/* Right Section (Unchanged) */}
+        {/* Right Section (Trending Blogs) */}
         <aside className="w-full lg:w-[30%]">
           <TrendingBlog />
         </aside>

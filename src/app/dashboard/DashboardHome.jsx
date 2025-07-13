@@ -35,15 +35,15 @@ const DashboardHome = () => {
           <h2 className="text-lg font-semibold mb-1">Total Views</h2>
           <p className="text-3xl font-bold">{totalStats.views.toLocaleString()}</p>
         </div>
-        <div className="bg-green-600 text-white p-5 rounded-lg shadow-md">
+        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-1">Total Likes</h2>
           <p className="text-3xl font-bold">{totalStats.likes.toLocaleString()}</p>
         </div>
-        <div className="bg-yellow-500 text-white p-5 rounded-lg shadow-md">
+        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-1">Traffic</h2>
           <p className="text-3xl font-bold">{totalStats.traffic.toLocaleString()}</p>
         </div>
-        <div className="bg-purple-600 text-white p-5 rounded-lg shadow-md">
+        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-1">Total Blogs</h2>
           <p className="text-3xl font-bold">{totalStats.blogs}</p>
         </div>

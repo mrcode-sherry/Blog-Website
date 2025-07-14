@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FooterBar from "@/components/FooterBar";
 import { AuthProvider } from '@/context/AuthContext';
+import Analytics from "@/components/Analytics"; // ✅ Analytics import
 import "./globals.css";
 
 // ✅ Inter for body
@@ -34,19 +35,20 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${lora.variable} font-sans antialiased`}
       >
+        <Analytics /> {/* ✅ Google Analytics */}
         <AuthProvider>
-        <section>
-          <Navbar />
-        </section>
-        <main>
-          {children}
-        </main>
-        <section>
-          <Footer/>
-        </section>
-        <section>
-          <FooterBar/>
-        </section>
+          <section>
+            <Navbar />
+          </section>
+          <main>
+            {children}
+          </main>
+          <section>
+            <Footer/>
+          </section>
+          <section>
+            <FooterBar/>
+          </section>
         </AuthProvider>
       </body>
     </html>

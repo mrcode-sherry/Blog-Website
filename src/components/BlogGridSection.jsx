@@ -12,13 +12,13 @@ export default function BlogGridSection({ blogs }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 pb-16">
       {blogs.map((blog) => (
         <Link
           key={blog._id}
           href={`/blogs/${blog.category?.toLowerCase()}/${blog.slug}`}
         >
-          <div className="rounded-lg shadow-md overflow-hidden bg-white group transition-all">
+          <div className="rounded-lg shadow-xl overflow-hidden bg-white group transition-all">
             <div className="relative w-full h-44 sm:h-52 md:h-56">
               <Image
                 src={
@@ -36,7 +36,7 @@ export default function BlogGridSection({ blogs }) {
                 {blog.category} •{" "}
                 {new Date(blog.createdAt).toLocaleDateString()}
               </p>
-              <h4 className="text-base font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
+              <h4 className="text-base text-black font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
                 {blog.title}
               </h4>
               <p className="text-sm text-gray-700 line-clamp-2">

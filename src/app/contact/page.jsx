@@ -3,7 +3,7 @@ import ContactForm from '../../components/ContactForm';
 
 const page = () => {
   return (
-    <section className="md:px-20 bg-white">
+    <section className="bg-white">
       <ContactForm />
     </section>
   );

@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import LatestBlog from '@/components/LatestBlog';
 import BlogGridSection from '@/components/BlogGridSection';
+import { Eye } from 'lucide-react';
 
 export default function BlogDetailsPage() {
   const { slug } = useParams();
@@ -11,7 +12,6 @@ export default function BlogDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [formattedDate, setFormattedDate] = useState('');
   const [relatedBlogs, setRelatedBlogs] = useState([]);
-  const viewCounted = useRef(false);
 
   useEffect(() => {
     const fetchBlogAndRelated = async () => {
@@ -24,13 +24,12 @@ export default function BlogDetailsPage() {
           setBlog(currentBlog);
           setFormattedDate(new Date(currentBlog.createdAt).toLocaleDateString());
 
-          // ✅ Increment view count once
-          if (!viewCounted.current) {
+          const viewKey = `viewed-${slug}`;
+          if (typeof window !== 'undefined' && !sessionStorage.getItem(viewKey)) {
             await fetch(`/api/blog/view/${slug}`, { method: 'PUT' });
-            viewCounted.current = true;
+            sessionStorage.setItem(viewKey, 'true');
           }
 
-          // ✅ Fetch all blogs
           const allRes = await fetch('/api/blog');
           const allData = await allRes.json();
 
@@ -54,8 +53,8 @@ export default function BlogDetailsPage() {
     fetchBlogAndRelated();
   }, [slug]);
 
-  if (loading) return <p className="text-center mt-10">Loading blog...</p>;
-  if (!blog) return <p className="text-center mt-10">Blog not found.</p>;
+  if (loading) return <p className="text-center mt-10 text-sm">Loading blog...</p>;
+  if (!blog) return <p className="text-center mt-10 text-sm">Blog not found.</p>;
 
   const validImg =
     blog?.img?.startsWith('/') || blog?.img?.startsWith('http')
@@ -63,15 +62,66 @@ export default function BlogDetailsPage() {
       : '/LatestBlog/blog.jpg';
 
   return (
-    <div className="px-4 md:px-16 lg:px-24 mt-20">
-      <div className="flex flex-col lg:flex-row gap-8">
+    <div className="md:px-20 px-6 pt-28 sm:pt-32 bg-white">
+      {/* Blog and Sidebar Layout for md+ */}
+      <div className="hidden md:flex gap-8">
         {/* Main Blog Content */}
-        <div className="flex-1 w-[75%]">
-          <p className="text-indigo-600 text-sm font-medium mb-2">
-            {blog.category} • {formattedDate} • {blog.views} views
+        <div className="w-[75%]">
+          <span className="relative z-10 rounded-md inline-block px-3 py-1 mb-3 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-base sm:text-lg md:text-[17px]">
+            <h2 className="skew-x-[10deg] tracking-wide capitalize">{blog.category}</h2>
+          </span>
+
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-black leading-snug">
+            {blog.title}
+          </h1>
+
+          <p className="text-indigo-600 text-xs sm:text-sm font-medium mb-4 flex items-center gap-2">
+            {formattedDate} •
+            <span className="flex items-center gap-1">
+              <Eye className="w-4 h-4" />
+              {blog.views} views
+            </span>
           </p>
 
-          <h1 className="text-3xl font-bold mb-6">{blog.title}</h1>
+          <div className="mb-6 sm:mb-10">
+            <Image
+              src={validImg}
+              alt={blog.title}
+              width={800}
+              height={400}
+              className="rounded-lg w-full h-auto object-cover"
+            />
+          </div>
+
+          <div
+            className="prose prose-sm sm:prose base max-w-full blog-content text-black"
+            dangerouslySetInnerHTML={{ __html: blog.desc }}
+          />
+        </div>
+
+        {/* Sidebar (Latest Blog) */}
+        <div className="w-[25%]">
+          <LatestBlog variant="overlay" />
+        </div>
+      </div>
+
+      {/* Layout for sm screens */}
+      <div className="md:hidden">
+        {/* Blog First */}
+        <div>
+          <span className="relative z-10 rounded-md inline-block px-3 py-1 mb-3 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-base">
+            <h2 className="skew-x-[10deg] tracking-wide capitalize">{blog.category}</h2>
+          </span>
+
+          <h1 className="text-2xl font-bold mb-3 text-black leading-snug">{blog.title}</h1>
+
+          <p className="text-indigo-600 text-xs font-medium mb-4 flex items-center gap-2">
+            {formattedDate} •
+            <span className="flex items-center gap-1">
+              <Eye className="w-4 h-4" />
+              {blog.views} views
+            </span>
+          </p>
 
           <div className="mb-6">
             <Image
@@ -84,20 +134,30 @@ export default function BlogDetailsPage() {
           </div>
 
           <div
-            className="prose max-w-full blog-content"
+            className="prose prose-sm max-w-full blog-content text-black"
             dangerouslySetInnerHTML={{ __html: blog.desc }}
           />
         </div>
 
-        {/* Trending Sidebar */}
-        <div className="w-full lg:w-[25%]">
+        {/* Related Blogs Second */}
+        <div className="mt-10">
+          <h2 className="text-lg font-bold mb-4 text-black">
+            Related {blog.category} Blogs
+          </h2>
+          <BlogGridSection blogs={relatedBlogs} />
+        </div>
+
+        {/* Latest Blogs Third */}
+        <div className="md:mt-10">
           <LatestBlog variant="overlay" />
         </div>
       </div>
 
-      {/* Blog Grid at Bottom (Filtered by Same Category) */}
-      <div className="mt-20">
-        <h2 className="text-xl font-bold mb-4">Related {blog.category} Blogs</h2>
+      {/* Related Blogs for md+ (bottom row) */}
+      <div className="hidden md:block md:mt-10 mt-20">
+        <h2 className="text-xl font-bold mb-4 text-black">
+          Related {blog.category} Blogs
+        </h2>
         <BlogGridSection blogs={relatedBlogs} />
       </div>
     </div>

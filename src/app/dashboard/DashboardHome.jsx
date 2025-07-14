@@ -1,25 +1,28 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DashboardHome = () => {
-  const totalStats = {
-    views: 12034,
-    likes: 5432,
-    traffic: 7811,
-    blogs: 28,
-  };
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const blogsByCategory = [
-  { category: 'Technology', count: 12 },
-  { category: 'Finance', count: 9 },
-  { category: 'Business', count: 8 },
-  { category: 'Crypto', count: 4 },
-  { category: 'Sports', count: 6 },
-  { category: 'Lifestyle', count: 11 },
-  { category: 'Health', count: 7 },
-  { category: 'Fashion', count: 6 },
-];
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/dashboard/summary');
+        const json = await res.json();
+        if (json.success) setStats(json.data);
+      } catch (err) {
+        console.error('Failed to fetch stats:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchStats();
+  }, []);
+
+  if (loading) return <p className="text-center text-sm">Loading Dashboard...</p>;
+  if (!stats) return <p className="text-center text-sm text-red-600">Failed to load data.</p>;
 
   return (
     <div className="space-y-10">
@@ -31,29 +34,16 @@ const DashboardHome = () => {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-1">Total Views</h2>
-          <p className="text-3xl font-bold">{totalStats.views.toLocaleString()}</p>
-        </div>
-        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-1">Total Likes</h2>
-          <p className="text-3xl font-bold">{totalStats.likes.toLocaleString()}</p>
-        </div>
-        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-1">Traffic</h2>
-          <p className="text-3xl font-bold">{totalStats.traffic.toLocaleString()}</p>
-        </div>
-        <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
-          <h2 className="text-lg font-semibold mb-1">Total Blogs</h2>
-          <p className="text-3xl font-bold">{totalStats.blogs}</p>
-        </div>
+        <Card title="Total Views" value={stats.views} />
+        <Card title="Traffic" value={stats.traffic} />
+        <Card title="Total Blogs" value={stats.blogs} />
       </div>
 
       {/* Blogs by Category */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Blogs by Category</h2>
         <ul className="space-y-3">
-          {blogsByCategory.map((item) => (
+          {stats.blogsByCategory.map((item) => (
             <li
               key={item.category}
               className="flex justify-between items-center border-b pb-2"
@@ -65,7 +55,7 @@ const DashboardHome = () => {
         </ul>
       </div>
 
-      {/* Future Add-ons Section */}
+      {/* Future Features Section */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Next Steps</h2>
         <ul className="list-disc pl-6 text-gray-600 space-y-2">
@@ -78,5 +68,12 @@ const DashboardHome = () => {
     </div>
   );
 };
+
+const Card = ({ title, value }) => (
+  <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
+    <h2 className="text-lg font-semibold mb-1">{title}</h2>
+    <p className="text-3xl font-bold">{value.toLocaleString()}</p>
+  </div>
+);
 
 export default DashboardHome;

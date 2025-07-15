@@ -33,10 +33,8 @@ const TrendingBlog = () => {
       {/* Blog List */}
       <div className="flex flex-col gap-7">
         {trending.map((blog) => {
-          const validImg =
-            blog?.img?.startsWith("/") || blog?.img?.startsWith("http")
-              ? blog.img
-              : "/LatestBlog/blog.jpg";
+          const validImg = blog?.img;
+          if (!validImg) return null; // Skip if no image
 
           return (
             <Link

@@ -1,7 +1,9 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
+import { X } from 'lucide-react';
 
 const TinyEditor = dynamic(() => import('@/components/TinyEditor'), { ssr: false });
 
@@ -35,7 +37,6 @@ export default function EditBlogPage() {
       const res = await fetch(`/api/blog/${id}`);
       const data = await res.json();
       if (data.success) {
-        // Normalize category to lowercase
         setFormData({
           ...data.blog,
           category: data.blog.category?.toLowerCase() || 'technology',
@@ -64,6 +65,24 @@ export default function EditBlogPage() {
 
   const handleDescriptionChange = (content) => {
     setFormData((prev) => ({ ...prev, desc: content }));
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData((prev) => ({
+        ...prev,
+        img: reader.result, // base64 string
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setFormData((prev) => ({ ...prev, img: '' }));
   };
 
   const handleSubmit = async (e) => {
@@ -109,15 +128,42 @@ export default function EditBlogPage() {
           className="p-2 border rounded"
         />
 
-        <input
-          name="img"
-          value={formData.img}
-          onChange={handleChange}
-          placeholder="Image URL"
-          className="p-2 border rounded"
-        />
+        {/* Image Upload Section */}
+        <div>
+          <label className="block mb-1 text-sm font-medium text-gray-700">
+            Blog Image
+          </label>
 
-        {/* Fixed Category Dropdown */}
+          {/* Upload input shown only if no image */}
+          {!formData.img && (
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              className="p-2 border rounded bg-white cursor-pointer w-full"
+            />
+          )}
+
+          {/* Preview + Remove Icon if image is set */}
+          {formData.img && (
+            <div className="relative mt-3 w-full rounded overflow-hidden shadow-md">
+              <img
+                src={formData.img}
+                alt="Selected preview"
+                className="w-full max-h-64 object-cover rounded"
+              />
+              <button
+                type="button"
+                onClick={handleRemoveImage}
+                className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-red-600 hover:text-white transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Category Dropdown */}
         <select
           name="category"
           value={formData.category}
@@ -132,6 +178,7 @@ export default function EditBlogPage() {
           ))}
         </select>
 
+        {/* Description Editor */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Blog Description

@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import LatestBlog from '@/components/LatestBlog';
 import BlogGridSection from '@/components/BlogGridSection';
 import { Eye } from 'lucide-react';
+import striptags from 'striptags';
 
 export default function BlogDetailsPage() {
   const { slug } = useParams();
@@ -23,12 +24,6 @@ export default function BlogDetailsPage() {
           const currentBlog = data.blog;
           setBlog(currentBlog);
           setFormattedDate(new Date(currentBlog.createdAt).toLocaleDateString());
-
-          const viewKey = `viewed-${slug}`;
-          if (typeof window !== 'undefined' && !sessionStorage.getItem(viewKey)) {
-            await fetch(`/api/blog/view/${slug}`, { method: 'PUT' });
-            sessionStorage.setItem(viewKey, 'true');
-          }
 
           const allRes = await fetch('/api/blog');
           const allData = await allRes.json();
@@ -53,13 +48,33 @@ export default function BlogDetailsPage() {
     fetchBlogAndRelated();
   }, [slug]);
 
+  // ✅ CORRECTED: Avoid double view count on first load
+  useEffect(() => {
+    if (!blog || !slug) return;
+
+    const viewKey = `viewed-${slug}`;
+    const alreadyViewed = sessionStorage.getItem(viewKey);
+
+    if (!alreadyViewed) {
+      const timer = setTimeout(() => {
+        fetch(`/api/blog/view/${slug}`, { method: 'PUT' })
+          .then(() => {
+            sessionStorage.setItem(viewKey, 'true');
+          })
+          .catch((err) => console.error('Failed to increment view:', err));
+      }, 500); // delay added to prevent race condition
+
+      return () => clearTimeout(timer);
+    }
+  }, [blog?._id]);
+
   if (loading) return <p className="text-center mt-10 text-sm">Loading blog...</p>;
   if (!blog) return <p className="text-center mt-10 text-sm">Blog not found.</p>;
 
-  const validImg =
-    blog?.img?.startsWith('/') || blog?.img?.startsWith('http')
-      ? blog.img
-      : '/LatestBlog/blog.jpg';
+  const showImage =
+    blog?.img?.startsWith('/') ||
+    blog?.img?.startsWith('http') ||
+    blog?.img?.startsWith('data:image');
 
   return (
     <div className="md:px-20 px-6 pt-28 sm:pt-32 bg-white">
@@ -83,20 +98,21 @@ export default function BlogDetailsPage() {
             </span>
           </p>
 
-          <div className="mb-6 sm:mb-10">
-            <Image
-              src={validImg}
-              alt={blog.title}
-              width={800}
-              height={400}
-              className="rounded-lg w-full h-auto object-cover"
-            />
-          </div>
+          {showImage && (
+            <div className="mb-6 sm:mb-10">
+              <Image
+                src={blog.img}
+                alt={blog.title}
+                width={800}
+                height={400}
+                className="rounded-lg w-full h-auto object-cover"
+              />
+            </div>
+          )}
 
-          <div
-            className="prose prose-sm sm:prose base max-w-full blog-content text-black"
-            dangerouslySetInnerHTML={{ __html: blog.desc }}
-          />
+          <p className="text-base text-black leading-relaxed whitespace-pre-line">
+            {striptags(blog.desc)}
+          </p>
         </div>
 
         {/* Sidebar (Latest Blog) */}
@@ -123,20 +139,21 @@ export default function BlogDetailsPage() {
             </span>
           </p>
 
-          <div className="mb-6">
-            <Image
-              src={validImg}
-              alt={blog.title}
-              width={800}
-              height={400}
-              className="rounded-lg w-full h-auto object-cover"
-            />
-          </div>
+          {showImage && (
+            <div className="mb-6">
+              <Image
+                src={blog.img}
+                alt={blog.title}
+                width={800}
+                height={400}
+                className="rounded-lg w-full h-auto object-cover"
+              />
+            </div>
+          )}
 
-          <div
-            className="prose prose-sm max-w-full blog-content text-black"
-            dangerouslySetInnerHTML={{ __html: blog.desc }}
-          />
+          <p className="text-base text-black leading-relaxed whitespace-pre-line">
+            {striptags(blog.desc)}
+          </p>
         </div>
 
         {/* Related Blogs Second */}

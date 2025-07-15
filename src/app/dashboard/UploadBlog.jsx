@@ -1,8 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import { X } from 'lucide-react';
 
-// Dynamically import the TinyEditor component (with no SSR to avoid hydration errors)
 const TinyEditor = dynamic(() => import('@/components/TinyEditor'), { ssr: false });
 
 const UploadBlog = () => {
@@ -13,6 +13,8 @@ const UploadBlog = () => {
     category: '',
     author: '',
   });
+
+  const fileInputRef = useRef(null); // ✅ Added ref
 
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
@@ -35,6 +37,31 @@ const UploadBlog = () => {
 
   const handleDescriptionChange = (content) => {
     setForm((prev) => ({ ...prev, desc: content }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setForm((prev) => ({
+        ...prev,
+        img: reader.result,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setForm((prev) => ({
+      ...prev,
+      img: '',
+    }));
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // ✅ Reset file input
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -63,6 +90,9 @@ const UploadBlog = () => {
           category: '',
           author: '',
         });
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
       } else {
         setErrorMsg('❌ Failed to upload blog: ' + data.error);
       }
@@ -95,7 +125,7 @@ const UploadBlog = () => {
           required
         />
 
-        {/* TinyMCE Editor */}
+        {/* Description */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Blog Description
@@ -103,23 +133,44 @@ const UploadBlog = () => {
           <TinyEditor value={form.desc} onChange={handleDescriptionChange} />
         </div>
 
-        {/* Image URL */}
-        <input
-          type="text"
-          name="img"
-          value={form.img}
-          onChange={handleChange}
-          placeholder="Image URL"
-          className="w-full p-3 border border-gray-300 rounded"
-          required
-        />
+        {/* Image Upload */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Upload Blog Image
+          </label>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="w-full p-2 border border-gray-300 rounded bg-white cursor-pointer"
+            disabled={!!form.img}
+            required={!form.img}
+          />
+          {form.img && (
+            <div className="relative mt-3 w-full rounded overflow-hidden shadow-md">
+              <img
+                src={form.img}
+                alt="Uploaded preview"
+                className="w-full max-h-64 object-cover rounded"
+              />
+              <button
+                type="button"
+                onClick={handleRemoveImage}
+                className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-red-600 hover:text-white transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Category */}
         <select
           name="category"
           value={form.category}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-3 border border-gray-300 rounded cursor-pointer"
           required
         >
           <option value="">Select Category</option>
@@ -140,7 +191,7 @@ const UploadBlog = () => {
           className="w-full p-3 border border-gray-300 rounded"
         />
 
-        {/* Submit Button */}
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}

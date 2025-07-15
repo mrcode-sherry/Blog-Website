@@ -5,8 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import striptags from "striptags"; // ✅ Imported here
-
+import striptags from "striptags";
 
 const LatestBlog = ({ variant = "default" }) => {
   const [blogs, setBlogs] = useState([]);
@@ -62,10 +61,8 @@ const LatestBlog = ({ variant = "default" }) => {
         }`}
       >
         {blogs.map((blog) => {
-          const validImg =
-            blog?.img?.startsWith("/") || blog?.img?.startsWith("http")
-              ? blog.img
-              : "/LatestBlog/blog.jpg";
+          const validImg = blog?.img;
+          if (!validImg) return null; // Skip blog if no image
 
           return (
             <div key={blog._id}>
@@ -79,7 +76,7 @@ const LatestBlog = ({ variant = "default" }) => {
                         fill
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-black/80 group-hover:bg-black/90 transition duration-300" />
+                      <div className="absolute inset-0 bg-black/70 group-hover:bg-black/80 transition duration-300" />
                       <div className="absolute bottom-0 left-0 right-0 top-0 p-4 z-10 text-white">
                         <div className="flex flex-row justify-between text-center items-center">
                           <p className="text-[10px] sm:text-[11px] px-2 py-1 my-auto rounded-md bg-indigo-600 text-white font-semibold italic tracking-wider skew-x-[-10deg] w-20">

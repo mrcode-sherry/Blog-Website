@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react";
 import TrendingBlog from "@/components/TrendingBlog";
 import Image from "next/image";
 import axios from "axios";
-import striptags from "striptags"; // ✅ Imported here
+import striptags from "striptags";
 
 export default function CategoryPage() {
   const { category } = useParams();
@@ -60,7 +60,7 @@ export default function CategoryPage() {
             <Link href={`/blogs/${category.toLowerCase()}/${featured.slug}`}>
               <div className="relative mb-10 rounded-lg group cursor-pointer overflow-hidden shadow-md h-[250px] sm:h-[300px] md:h-[450px]">
                 <Image
-                  src={featured.image || "/LatestBlog/blog.jpg"}
+                  src={featured.img}
                   alt={featured.title}
                   fill
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
@@ -92,7 +92,7 @@ export default function CategoryPage() {
                 <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
                   <div className="relative w-full h-44 sm:h-52 md:h-56 overflow-hidden">
                     <Image
-                      src={blog.image || "/LatestBlog/blog.jpg"}
+                      src={blog.img}
                       alt={blog.title}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"

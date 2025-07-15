@@ -139,7 +139,7 @@ const LatestBlog = ({ variant = "default" }) => {
         <button
           onClick={goToPrev}
           disabled={currentPage === 1}
-          className={`py-2 px-2 md:px-3 rounded-full border flex items-center gap-1 transition text-sm ${
+          className={`py-2 px-2 md:px-3 cursor-pointer rounded-full border flex items-center gap-1 transition text-sm ${
             currentPage === 1
               ? "text-gray-400 border-gray-300 cursor-not-allowed"
               : "text-indigo-600 border-indigo-600 hover:bg-indigo-100"
@@ -156,7 +156,7 @@ const LatestBlog = ({ variant = "default" }) => {
         <button
           onClick={goToNext}
           disabled={currentPage === totalPages}
-          className={`py-2 px-2 md:px-3 rounded-full border flex items-center gap-1 transition text-sm ${
+          className={`py-2 px-2 md:px-3 rounded-full cursor-pointer border flex items-center gap-1 transition text-sm ${
             currentPage === totalPages
               ? "text-gray-400 border-gray-300 cursor-not-allowed"
               : "text-indigo-600 border-indigo-600 hover:bg-indigo-100"

@@ -5,24 +5,23 @@ import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [animateClose, setAnimateClose] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef(null);
+  const modalRef = useRef(null);
   const menuRef = useRef(null);
   const { isAuthenticated } = useAuth();
+  const router = useRouter();
 
   const categories = [
-    'Technology',
-    'Finance',
-    'Business',
-    'Crypto',
-    'Sports',
-    'Lifestyle',
-    'Health',
-    'Fashion'
+    'Technology', 'Finance', 'Business', 'Crypto',
+    'Sports', 'Lifestyle', 'Health', 'Fashion'
   ];
 
   useEffect(() => {
@@ -40,134 +39,162 @@ export default function Navbar() {
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setMenuOpen(false);
+        handleMenuClose();
+      }
+      if (showSearch && modalRef.current && !modalRef.current.contains(e.target)) {
+        setShowSearch(false);
       }
     };
-
-    if (menuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-
+    document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [menuOpen]);
+  }, [menuOpen, showSearch]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+    setShowSearch(false);
+    setSearchQuery('');
+  };
+
+  const handleMenuClose = () => {
+    setAnimateClose(true);
+    setTimeout(() => {
+      setMenuOpen(false);
+      setAnimateClose(false);
+    }, 300); // must match duration
+  };
 
   return (
     <>
-      <nav className={`fixed top-0 w-full z-50 px-6 md:px-20 py-5 flex justify-between items-center transition-all duration-300 
-        ${scrolled || menuOpen ? 'bg-gray-800/70 backdrop-blur-md shadow-sm text-white' : 'bg-white text-black'}`}>
+      {/* Top Navbar */}
+      <nav className={`fixed top-0 w-full z-50 px-6 md:px-20 py-5 flex justify-between items-center transition-all duration-300 ${scrolled || menuOpen ? 'bg-gray-800/70 backdrop-blur-md shadow-sm text-white' : 'bg-white text-black'}`}>
+        <Link href="/" className="flex items-center space-x-2">
+          <Image src="/shine.png" alt="MyBlog Logo" width={40} height={40} priority />
+          <span className="text-xl font-bold">MyBlog</span>
+        </Link>
 
-        {/* Hide logo when menuOpen is true */}
-        {!menuOpen && (
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/shine.png" alt="MyBlog Logo" width={40} height={40} priority />
-            <span className="text-xl font-bold">MyBlog</span>
-          </Link>
-        )}
-
-        {/* Desktop Navigation */}
-        {!menuOpen && (
-          <ul className="hidden md:flex space-x-6 font-medium text-[16px] items-center">
-            <li><Link href="/" className="hover:text-indigo-500 transition">Home</Link></li>
-            {categories.map((cat) => (
-              <li key={cat}>
-                <Link href={`/blogs/${cat.toLowerCase()}`} className="hover:text-indigo-500 transition">
-                  {cat}
-                </Link>
-              </li>
-            ))}
-            <li className="group relative">
-              <div className="flex items-center hover:text-indigo-500 transition cursor-pointer">
-                <Link href="/contact" className="flex items-center">
-                  Contact <ChevronDown size={18} className="ml-1" />
-                </Link>
-              </div>
-              <div className="absolute hidden group-hover:block bg-white text-black shadow-2xl rounded-lg py-2 w-40 z-50">
-                <Link href="/about" className="block px-4 py-2 hover:bg-gray-100 hover:text-indigo-500 transition">About</Link>
-                <Link href="/privacy-policy" className="block px-4 py-2 hover:bg-gray-100 hover:text-indigo-500 transition">Privacy Policy</Link>
-              </div>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex space-x-6 font-medium text-[16px] items-center">
+          <li><Link href="/" className="hover:text-indigo-500 transition">Home</Link></li>
+          {categories.map((cat) => (
+            <li key={cat}>
+              <Link href={`/blogs/${cat.toLowerCase()}`} className="hover:text-indigo-500 transition">
+                {cat}
+              </Link>
             </li>
-            {isAuthenticated && (
-              <li>
-                <Link href="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
-                  Dashboard
-                </Link>
-              </li>
-            )}
-          </ul>
-        )}
+          ))}
+          <li className="group relative">
+            <div className="flex items-center hover:text-indigo-500 transition cursor-pointer">
+              <Link href="/contact" className="flex items-center">
+                Contact <ChevronDown size={18} className="ml-1" />
+              </Link>
+            </div>
+            <div className="absolute hidden group-hover:block bg-white text-black shadow-2xl rounded-lg py-2 w-40 z-50">
+              <Link href="/about" className="block px-4 py-2 hover:bg-gray-100 hover:text-indigo-500 transition">About</Link>
+              <Link href="/privacy-policy" className="block px-4 py-2 hover:bg-gray-100 hover:text-indigo-500 transition">Privacy Policy</Link>
+            </div>
+          </li>
+          {isAuthenticated && (
+            <li>
+              <Link href="/dashboard" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                Dashboard
+              </Link>
+            </li>
+          )}
+        </ul>
 
-        {/* Search Button (Desktop Only) */}
-        {!menuOpen && (
-          <button
-            onClick={() => setShowSearch(true)}
-            className={`hidden md:block transition cursor-pointer ${scrolled ? 'text-white' : 'text-black'}`}
-          >
+        {/* Icons on Desktop */}
+        <div className="hidden md:flex space-x-3 items-center">
+          <button onClick={() => setShowSearch(true)} className={`transition cursor-pointer ${scrolled ? 'text-white' : 'text-black'}`}>
             <Search size={20} />
           </button>
-        )}
+        </div>
 
-        {/* Mobile Menu Toggle */}
-        <button
-          className={`md:hidden z-[999] transition ${scrolled || menuOpen ? 'text-white' : 'text-black'}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle Menu"
-        >
-          {menuOpen ? <X size={26} /> : <Menu size={26} />}
-        </button>
+        {/* Icons on Mobile */}
+        <div className="md:hidden flex items-center space-x-4 z-[999]">
+          <button onClick={() => setShowSearch(true)} className={`transition cursor-pointer ${scrolled ? 'text-white' : 'text-black'}`}>
+            <Search size={22} />
+          </button>
+          <button onClick={() => setMenuOpen(true)} className={`transition ${scrolled ? 'text-white' : 'text-black'}`}>
+            <Menu size={26} />
+          </button>
+        </div>
       </nav>
 
-      {/* Search Modal */}
-      {showSearch && (
-        <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 w-[90%] max-w-md shadow-xl relative">
-            <button onClick={() => setShowSearch(false)} className="absolute top-2 right-2 text-gray-500 hover:text-red-600">
-              <X size={20} />
-            </button>
-            <div className="relative mt-4">
-              <Search className="absolute left-3 top-[9px] text-indigo-500 w-5" />
-              <input
-                ref={searchRef}
-                type="text"
-                placeholder="Search blogs..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
+      {/* Mobile Slide Menu with animation */}
+      {menuOpen && (
+        <div className="fixed inset-0 z-[9998] flex">
+          <div
+            ref={menuRef}
+            className={`bg-black/90 w-[80%] h-screen py-6 px-6 overflow-y-auto relative transform transition-transform ease-in-out
+              ${animateClose ? '-translate-x-full' : 'translate-x-0'}`}
+          >
+            <div className="flex items-center justify-between mb-9">
+              <div className="flex items-center space-x-2">
+                <Image src="/shine.png" alt="Logo" width={35} height={35} />
+                <span className="text-white text-xl font-bold">MyBlog</span>
+              </div>
+              <button
+                onClick={handleMenuClose}
+                className="text-white hover:bg-white/20 rounded-full p-1 transition"
+              >
+                <X size={22} />
+              </button>
             </div>
+            <nav className="flex flex-col gap-6 text-white px-2">
+              <Link href="/" onClick={handleMenuClose} className="hover:text-indigo-400">Home</Link>
+              {categories.map((cat) => (
+                <Link key={cat} href={`/blogs/${cat.toLowerCase()}`} onClick={handleMenuClose} className="hover:text-indigo-400">
+                  {cat}
+                </Link>
+              ))}
+              <Link href="/contact" onClick={handleMenuClose} className="hover:text-indigo-400">Contact</Link>
+              <Link href="/about" onClick={handleMenuClose} className="hover:text-indigo-400">About</Link>
+              <Link href="/privacy-policy" onClick={handleMenuClose} className="hover:text-indigo-400">Privacy Policy</Link>
+              {isAuthenticated && (
+                <Link href="/dashboard" onClick={handleMenuClose} className="bg-blue-600 px-4 py-2 rounded text-white hover:bg-blue-700 mt-2">
+                  Dashboard
+                </Link>
+              )}
+            </nav>
           </div>
+          <div className="w-[25%] h-screen bg-black/50 backdrop-blur-sm" onClick={handleMenuClose}></div>
         </div>
       )}
 
-      {/* Mobile Drawer Menu */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[80] bg-black/90 flex">
-          <div ref={menuRef} className="w-[75%] max-w-sm h-screen bg-gray-900 text-white p-6 flex flex-col gap-4">
-            {/* Logo & Close */}
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center space-x-2">
-                <Image src="/shine.png" alt="Logo" width={34} height={34} />
-                <span className="text-lg font-semibold">MyBlog</span>
-              </div>
-              <button onClick={() => setMenuOpen(false)} aria-label="Close Menu">
-                <X size={24} />
+      {/* Search Modal (unchanged) */}
+      {showSearch && (
+        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex justify-center">
+          <form
+            onSubmit={handleSearch}
+            ref={modalRef}
+            className="bg-white rounded-lg p-6 w-[90%] max-w-md shadow-xl relative h-28 md:mt-40 mt-24"
+          >
+            <button
+              type="button"
+              onClick={() => setShowSearch(false)}
+              className="absolute top-1 right-2 text-gray-600 hover:bg-gray-200 cursor-pointer rounded-full p-1 transition"
+            >
+              <X size={20} />
+            </button>
+            <div className="relative mt-4">
+              <input
+                ref={searchRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search blogs..."
+                className="w-full pr-10 pl-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 text-gray-800"
+              />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 cursor-pointer -translate-y-1/2 text-indigo-500 hover:text-indigo-700"
+              >
+                <Search size={20} />
               </button>
             </div>
-
-            <Link href="/" onClick={() => setMenuOpen(false)} className="py-1">Home</Link>
-            {categories.map((cat) => (
-              <Link key={cat} href={`/blogs/${cat.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="py-1">
-                {cat}
-              </Link>
-            ))}
-            <Link href="/contact" onClick={() => setMenuOpen(false)} className="py-1">Contact</Link>
-            <Link href="/about" onClick={() => setMenuOpen(false)} className="py-1">About</Link>
-            <Link href="/privacy-policy" onClick={() => setMenuOpen(false)} className="py-1">Privacy Policy</Link>
-            {isAuthenticated && (
-              <Link href="/dashboard" onClick={() => setMenuOpen(false)} className="bg-blue-600 py-1 text-center rounded hover:bg-blue-700">
-                Dashboard
-              </Link>
-            )}
-          </div>
+          </form>
         </div>
       )}
     </>

@@ -17,9 +17,29 @@ const ContactForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("✅ Your message has been sent successfully!");
+        setFormData({ name: '', email: '', subject: '', message: '', phone: '' });
+      } else {
+        alert("❌ Failed to send message: " + data.error);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ An error occurred while sending the message.");
+    }
   };
 
   return (
@@ -41,11 +61,9 @@ const ContactForm = () => {
         {/* Contact Form */}
         <article className="w-full md:w-[75%] space-y-6">
           <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
-           <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
             <span className="relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-[25px]">
               <h2 className="skew-x-[10deg] tracking-wide capitalize">Contact Us</h2>
             </span>
-          </div>
           </div>
 
           <form
@@ -131,7 +149,7 @@ const ContactForm = () => {
 
             <button
               type="submit"
-              className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition"
+              className="w-full sm:w-auto cursor-pointer duration-300 bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition"
             >
               Submit Message
             </button>

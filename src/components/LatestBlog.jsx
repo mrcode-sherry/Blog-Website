@@ -6,13 +6,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import striptags from "striptags";
+import { motion, AnimatePresence } from "framer-motion";
+
+const skeletonArray = new Array(6).fill(null);
 
 const LatestBlog = ({ variant = "default" }) => {
   const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   const fetchBlogs = async (page = 1) => {
+    setLoading(true);
     try {
       const res = await axios.get(`/api/blog/latest?page=${page}&limit=6`);
       setBlogs(res.data.blogs);
@@ -21,6 +26,7 @@ const LatestBlog = ({ variant = "default" }) => {
     } catch (err) {
       console.error("Failed to fetch blogs:", err);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -36,8 +42,8 @@ const LatestBlog = ({ variant = "default" }) => {
   };
 
   return (
-    <section className={`w-full ${variant === "overlay" ? "" : ""} md:px-10 py-10`}>
-      {/* Section Heading */}
+    <section className={`w-full overflow-hidden ${variant === "overlay" ? "" : ""} md:px-10 py-10`}>
+      {/* Heading */}
       <div className="flex items-center justify-center mb-8 relative">
         <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
           <span
@@ -60,74 +66,94 @@ const LatestBlog = ({ variant = "default" }) => {
             : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 md:gap-y-11"
         }`}
       >
-        {blogs.map((blog) => {
-          const validImg = blog?.img;
-          if (!validImg) return null; // Skip blog if no image
+        {loading
+          ? skeletonArray.map((_, index) => (
+              <div
+                key={index}
+                className="animate-pulse space-y-4 bg-gray-100 rounded-md p-4 shadow"
+              >
+                <div className="w-full h-44 sm:h-52 bg-gray-300 rounded-md" />
+                <div className="h-4 w-2/3 bg-gray-300 rounded" />
+                <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                <div className="h-3 w-full bg-gray-200 rounded" />
+              </div>
+            ))
+          : blogs.map((blog, index) => {
+              const validImg = blog?.img;
+              if (!validImg) return null;
 
-          return (
-            <div key={blog._id}>
-              {variant === "overlay" ? (
-                <div className="relative group rounded-md overflow-hidden shadow-md">
-                  <Link href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}>
-                    <div className="relative w-full h-44 md:h-32">
-                      <Image
-                        src={validImg}
-                        alt={blog.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/70 group-hover:bg-black/80 transition duration-300" />
-                      <div className="absolute bottom-0 left-0 right-0 top-0 p-4 z-10 text-white">
-                        <div className="flex flex-row justify-between text-center items-center">
-                          <p className="text-[10px] sm:text-[11px] px-2 py-1 my-auto rounded-md bg-indigo-600 text-white font-semibold italic tracking-wider skew-x-[-10deg] w-20">
-                            {blog.category}
-                          </p>
-                          <span className="text-[10px] sm:text-[11px] text-left flex justify-end">
-                            {new Date(blog.createdAt).toLocaleDateString()}
-                          </span>
+              return (
+                <motion.div
+                  key={blog._id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  {variant === "overlay" ? (
+                    <div className="relative group rounded-md overflow-hidden shadow-md">
+                      <Link href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}>
+                        <div className="relative w-full h-44 md:h-32">
+                          <Image
+                            src={validImg}
+                            alt={blog.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/70 group-hover:bg-black/80 transition duration-300" />
+                          <div className="absolute bottom-0 left-0 right-0 top-0 p-4 z-10 text-white">
+                            <div className="flex flex-row justify-between text-center items-center">
+                              <p className="text-[10px] sm:text-[11px] px-2 py-1 my-auto rounded-md bg-indigo-600 text-white font-semibold italic tracking-wider skew-x-[-10deg] w-20">
+                                {blog.category}
+                              </p>
+                              <span className="text-[10px] sm:text-[11px]">
+                                {new Date(blog.createdAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <h3 className="md:text-sm text-[23px] font-semibold leading-snug md:mt-6 mt-8 group-hover:underline line-clamp-2">
+                              {blog.title}
+                            </h3>
+                          </div>
                         </div>
-                        <h3 className="md:text-sm text-[23px] font-semibold leading-snug md:mt-6 mt-8 group-hover:underline line-clamp-2">
-                          {blog.title}
-                        </h3>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
+                      <div className="relative w-full h-52 sm:h-60 overflow-hidden">
+                        <Link href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}>
+                          <Image
+                            src={validImg}
+                            alt={blog.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        </Link>
+                      </div>
+                      <div className="p-4 space-y-2">
+                        <p className="text-xs sm:text-sm text-gray-500">
+                          {blog.category} • {new Date(blog.createdAt).toLocaleDateString()}
+                        </p>
+                        <Link href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}>
+                          <h3 className="text-gray-800 mb-2 sm:text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
+                            {blog.title}
+                          </h3>
+                        </Link>
+                        <p className="text-sm text-gray-700 line-clamp-2">
+                          {striptags(blog.desc)}
+                        </p>
+                        <Link
+                          href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}
+                          className="inline-block text-indigo-600 font-medium hover:underline mt-2 text-sm"
+                        >
+                          Read More →
+                        </Link>
                       </div>
                     </div>
-                  </Link>
-                </div>
-              ) : (
-                <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
-                  <div className="relative w-full h-52 sm:h-60 overflow-hidden">
-                    <Link href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}>
-                      <Image
-                        src={validImg}
-                        alt={blog.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </Link>
-                  </div>
-                  <div className="p-4 space-y-2">
-                    <p className="text-xs sm:text-sm text-gray-500">
-                      {blog.category} • {new Date(blog.createdAt).toLocaleDateString()}
-                    </p>
-                    <Link href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}>
-                      <h3 className="text-gray-800 mb-2 sm:text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2">
-                        {blog.title}
-                      </h3>
-                    </Link>
-                    <p className="text-sm text-gray-700 line-clamp-2">{striptags(blog.desc)}</p>
-                    <Link
-                      href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}
-                      className="inline-block text-indigo-600 font-medium hover:underline mt-2 text-sm"
-                    >
-                      Read More →
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+                  )}
+                </motion.div>
+              );
+            })}
       </div>
 
       {/* Pagination */}

@@ -1,8 +1,15 @@
 'use client';
+
 import React, { useState } from 'react';
 import { Facebook, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
 import LatestBlog from "@/components/LatestBlog";
 import Link from 'next/link';
+import { motion } from 'framer-motion';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +52,12 @@ const ContactForm = () => {
   return (
     <main className="min-h-screen px-6 md:px-20 py-10 bg-white text-gray-800">
       {/* Hero Section */}
-      <section className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-12 sm:mb-16 mt-10">
+      <motion.section
+        variants={fadeInUp}
+        initial="hidden"
+        animate="visible"
+        className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-12 sm:mb-16 mt-10"
+      >
         <div className="max-w-7xl mx-auto text-center">
           <nav className="text-sm text-gray-600 sm:text-[20px] space-x-1">
             <Link href="/" className="text-indigo-600 hover:underline font-medium">
@@ -55,11 +67,17 @@ const ContactForm = () => {
             <span className="text-gray-800 font-semibold capitalize">Contact</span>
           </nav>
         </div>
-      </section>
+      </motion.section>
 
       <section className="flex flex-col md:flex-row gap-10">
         {/* Contact Form */}
-        <article className="w-full md:w-[75%] space-y-6">
+        <motion.article
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="w-full md:w-[75%] space-y-6"
+        >
           <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
             <span className="relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-[25px]">
               <h2 className="skew-x-[10deg] tracking-wide capitalize">Contact Us</h2>
@@ -203,12 +221,18 @@ const ContactForm = () => {
               </div>
             </div>
           </div>
-        </article>
+        </motion.article>
 
         {/* Latest Blogs Section */}
-        <aside className="w-full md:w-[25%]">
+        <motion.aside
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="w-full md:w-[25%]"
+        >
           <LatestBlog variant="overlay" />
-        </aside>
+        </motion.aside>
       </section>
     </main>
   );

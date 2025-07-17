@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Search, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -62,13 +63,18 @@ export default function Navbar() {
     setTimeout(() => {
       setMenuOpen(false);
       setAnimateClose(false);
-    }, 300); // must match duration
+    }, 200); // Reduced for quicker mobile close
   };
 
   return (
     <>
-      {/* Top Navbar */}
-      <nav className={`fixed top-0 w-full z-50 px-6 md:px-20 py-5 flex justify-between items-center transition-all duration-300 ${scrolled || menuOpen ? 'bg-gray-800/70 backdrop-blur-md shadow-sm text-white' : 'bg-white text-black'}`}>
+      {/* Top Navbar with animation */}
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: 'easeOut' }}
+        className={`fixed top-0 w-full z-50 px-6 overflow-hidden md:px-20 py-5 flex justify-between items-center transition-all duration-300 ${scrolled || menuOpen ? 'bg-gray-800/70 backdrop-blur-md shadow-sm text-white' : 'bg-white text-black'}`}
+      >
         <Link href="/" className="flex items-center space-x-2">
           <Image src="/shine.png" alt="MyBlog Logo" width={40} height={40} priority />
           <span className="text-xl font-bold">MyBlog</span>
@@ -104,14 +110,14 @@ export default function Navbar() {
           )}
         </ul>
 
-        {/* Icons on Desktop */}
+        {/* Desktop Icons */}
         <div className="hidden md:flex space-x-3 items-center">
           <button onClick={() => setShowSearch(true)} className={`transition cursor-pointer ${scrolled ? 'text-white' : 'text-black'}`}>
             <Search size={20} />
           </button>
         </div>
 
-        {/* Icons on Mobile */}
+        {/* Mobile Icons */}
         <div className="md:hidden flex items-center space-x-4 z-[999]">
           <button onClick={() => setShowSearch(true)} className={`transition cursor-pointer ${scrolled ? 'text-white' : 'text-black'}`}>
             <Search size={22} />
@@ -120,50 +126,56 @@ export default function Navbar() {
             <Menu size={26} />
           </button>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Mobile Slide Menu with animation */}
-      {menuOpen && (
-        <div className="fixed inset-0 z-[9998] flex">
-          <div
-            ref={menuRef}
-            className={`bg-black/90 w-[80%] h-screen py-6 px-6 overflow-y-auto relative transform transition-transform ease-in-out
-              ${animateClose ? '-translate-x-full' : 'translate-x-0'}`}
-          >
-            <div className="flex items-center justify-between mb-9">
-              <div className="flex items-center space-x-2">
-                <Image src="/shine.png" alt="Logo" width={35} height={35} />
-                <span className="text-white text-xl font-bold">MyBlog</span>
+      {/* Mobile Slide Menu (faster animation) */}
+      <AnimatePresence>
+        {menuOpen && (
+          <div className="fixed inset-0 z-[9998] flex">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.4, ease: 'easeOut' }}
+              ref={menuRef}
+              className="bg-black/90 w-[80%] h-screen py-6 px-6 overflow-y-auto relative backdrop-blur-sm"
+            >
+              <div className="flex items-center justify-between mb-9">
+                <div className="flex items-center space-x-2">
+                  <Image src="/shine.png" alt="Logo" width={35} height={35} />
+                  <span className="text-white text-xl font-bold">MyBlog</span>
+                </div>
+                <button
+                  onClick={handleMenuClose}
+                  className="text-white hover:bg-white/20 rounded-full p-1 transition"
+                >
+                  <X size={22} />
+                </button>
               </div>
-              <button
-                onClick={handleMenuClose}
-                className="text-white hover:bg-white/20 rounded-full p-1 transition"
-              >
-                <X size={22} />
-              </button>
-            </div>
-            <nav className="flex flex-col gap-6 text-white px-2">
-              <Link href="/" onClick={handleMenuClose} className="hover:text-indigo-400">Home</Link>
-              {categories.map((cat) => (
-                <Link key={cat} href={`/blogs/${cat.toLowerCase()}`} onClick={handleMenuClose} className="hover:text-indigo-400">
-                  {cat}
-                </Link>
-              ))}
-              <Link href="/contact" onClick={handleMenuClose} className="hover:text-indigo-400">Contact</Link>
-              <Link href="/about" onClick={handleMenuClose} className="hover:text-indigo-400">About</Link>
-              <Link href="/privacy-policy" onClick={handleMenuClose} className="hover:text-indigo-400">Privacy Policy</Link>
-              {isAuthenticated && (
-                <Link href="/dashboard" onClick={handleMenuClose} className="bg-blue-600 px-4 py-2 rounded text-white hover:bg-blue-700 mt-2">
-                  Dashboard
-                </Link>
-              )}
-            </nav>
+              <nav className="flex flex-col gap-6 text-white px-2">
+                <Link href="/" onClick={handleMenuClose} className="hover:text-indigo-400">Home</Link>
+                {categories.map((cat) => (
+                  <Link key={cat} href={`/blogs/${cat.toLowerCase()}`} onClick={handleMenuClose} className="hover:text-indigo-400">
+                    {cat}
+                  </Link>
+                ))}
+                <Link href="/contact" onClick={handleMenuClose} className="hover:text-indigo-400">Contact</Link>
+                <Link href="/about" onClick={handleMenuClose} className="hover:text-indigo-400">About</Link>
+                <Link href="/privacy-policy" onClick={handleMenuClose} className="hover:text-indigo-400">Privacy Policy</Link>
+                {isAuthenticated && (
+                  <Link href="/dashboard" onClick={handleMenuClose} className="bg-blue-600 px-4 py-2 rounded text-white hover:bg-blue-700 mt-2">
+                    Dashboard
+                  </Link>
+                )}
+              </nav>
+            </motion.div>
+            {/* Static backdrop to keep performance better */}
+            <div className="w-[25%] h-screen backdrop-blur-sm" onClick={handleMenuClose}></div>
           </div>
-          <div className="w-[25%] h-screen bg-black/50 backdrop-blur-sm" onClick={handleMenuClose}></div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
-      {/* Search Modal (unchanged) */}
+      {/* Search Modal */}
       {showSearch && (
         <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm flex justify-center">
           <form

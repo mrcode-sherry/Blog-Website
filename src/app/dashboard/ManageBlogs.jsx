@@ -1,44 +1,46 @@
-'use client';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 const categories = [
-  'Technology',
-  'Finance',
-  'Business',
-  'Crypto',
-  'Sports',
-  'Lifestyle',
-  'Health',
-  'Fashion',
+  "Technology",
+  "Finance",
+  "Business",
+  "Crypto",
+  "Sports",
+  "Lifestyle",
+  "Health",
+  "Fashion",
 ];
 
 export default function ManageBlogs() {
   const [allBlogs, setAllBlogs] = useState([]);
   const [filteredBlogs, setFilteredBlogs] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('Technology');
+  const [selectedCategory, setSelectedCategory] = useState("Technology");
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // ✅ Fetch all blogs (no backend filter)
+  /* fetch all blogs */
   const fetchBlogs = async () => {
     try {
-      const res = await fetch('/api/blog');
+      const res = await fetch("/api/blog");
       const data = await res.json();
       if (data.success) {
         setAllBlogs(data.blogs);
-        filterByCategory(data.blogs, 'Technology'); // default filter
+        filterByCategory(data.blogs, "Technology");
       }
     } catch (err) {
-      console.error('Error fetching blogs:', err);
+      console.error("Error fetching blogs:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // ✅ Filter blogs on client
+  /* client‑side filtering */
   const filterByCategory = (blogs, category) => {
     const filtered = blogs.filter(
-      (blog) =>
-        blog.category &&
-        blog.category.toLowerCase() === category.toLowerCase()
+      (b) => b.category?.toLowerCase() === category.toLowerCase()
     );
     setFilteredBlogs(filtered);
   };
@@ -52,34 +54,64 @@ export default function ManageBlogs() {
   }, [selectedCategory]);
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this blog?')) return;
-
+    if (!confirm("Are you sure you want to delete this blog?")) return;
     try {
-      const res = await fetch(`/api/blog/${id}`, {
-        method: 'DELETE',
-      });
+      const res = await fetch(`/api/blog/${id}`, { method: "DELETE" });
       const data = await res.json();
       if (data.success) {
-        alert('Blog deleted');
-        fetchBlogs(); // refresh
-      } else {
-        alert('Failed to delete blog');
-      }
+        alert("Blog deleted");
+        fetchBlogs();
+      } else alert("Failed to delete blog");
     } catch (err) {
-      console.error('Delete error:', err);
+      console.error("Delete error:", err);
     }
   };
 
-  const handleEdit = (id) => {
-    router.push(`/edit-blog/${id}`);
+  const handleEdit = (id) => router.push(`/edit-blog/${id}`);
+
+  /* simple fade‑up variant */
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: (d = 0) => ({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, delay: d },
+    }),
   };
+
+  /* skeleton cards while loading */
+  const SkeletonCard = () => (
+    <div className="flex items-center justify-between bg-gray-200 p-4 rounded shadow animate-pulse">
+      <div className="flex items-center gap-4 w-full">
+        <div className="w-24 h-16 bg-gray-300 rounded" />
+        <div className="flex-1 space-y-2">
+          <div className="h-4 w-3/4 bg-gray-300 rounded" />
+          <div className="h-3 w-1/2 bg-gray-300 rounded" />
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-6">
-      <h2 className="text-2xl font-semibold mb-4">Manage Blogs</h2>
+      {/* Heading */}
+      <motion.h2
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        className="text-2xl font-semibold mb-4"
+      >
+        Manage Blogs
+      </motion.h2>
 
-      {/* 🔽 Category Filter */}
-      <div className="mb-6">
+      {/* Category Filter */}
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        animate="visible"
+        custom={0.1}
+        className="mb-6"
+      >
         <label className="mr-2 font-medium">Filter by Category:</label>
         <select
           value={selectedCategory}
@@ -90,21 +122,29 @@ export default function ManageBlogs() {
             <option key={cat}>{cat}</option>
           ))}
         </select>
-      </div>
+      </motion.div>
 
-      {/* 📄 Blog List */}
+      {/* Blog List */}
       <div className="grid gap-6">
-        {filteredBlogs.length === 0 ? (
+        {loading ? (
+          /* Skeleton placeholders */
+          Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+        ) : filteredBlogs.length === 0 ? (
           <p>No blogs found in this category.</p>
         ) : (
-          filteredBlogs.map((blog) => (
-            <div
+          filteredBlogs.map((blog, idx) => (
+            <motion.div
               key={blog._id}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={0.1 + idx * 0.05}
               className="flex items-center justify-between bg-white p-4 rounded shadow"
             >
               <div className="flex items-center gap-4">
                 <img
-                  src={blog.img || '/default.png'}
+                  src={blog.img || "/default.png"}
                   alt="Blog"
                   className="w-24 h-16 object-cover rounded"
                 />
@@ -130,7 +170,7 @@ export default function ManageBlogs() {
                   Delete
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))
         )}
       </div>

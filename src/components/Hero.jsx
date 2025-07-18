@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 export default function Hero() {
   return (
     <section className="w-full bg-white py-12 px-6 md:px-20 transition-all overflow-hidden">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row-reverse items-center justify-between gap-10 md:gap-4">
+      <div className="mx-auto flex flex-col md:flex-row-reverse items-center justify-between gap-10 md:gap-4">
 
         {/* Right: Hero Image with Text Overlay */}
         <motion.div

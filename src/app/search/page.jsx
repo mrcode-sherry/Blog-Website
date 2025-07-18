@@ -1,16 +1,18 @@
-'use client';
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import striptags from 'striptags';
-import LatestBlog from '@/components/LatestBlog';
+"use client";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import striptags from "striptags";
+import LatestBlog from "@/components/LatestBlog";
+import { motion } from "framer-motion";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 8;
+const skeletonArray = Array.from({ length: 6 }); // 6 placeholder cards
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
-  const query = searchParams.get('q');
+  const query = searchParams.get("q");
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,49 +35,79 @@ export default function SearchPage() {
 
   return (
     <main className="px-6 md:px-20 py-12 md:mt-20 mt-16 bg-white">
-      <h1 className="md:text-3xl text-2xl font-bold md:mb-10  mb-6 text-black">
-        Search Results for:  <span className="text-indigo-600 capitalize">{query}</span>
-      </h1>
+      {/* Heading */}
+      <motion.h1
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="md:text-3xl text-2xl font-bold md:mb-10 mb-6 text-black"
+      >
+        Search Results for:{" "}
+        <span className="text-indigo-600 capitalize">{query}</span>
+      </motion.h1>
 
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left: Blog Grid */}
         <section className="w-full lg:w-[75%] space-y-6">
           {loading ? (
-            <p className="text-black">Loading...</p>
+            /* Skeleton placeholders */
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {skeletonArray.map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] bg-white"
+                >
+                  <div className="h-44 sm:h-52 md:h-56 w-full bg-gray-300 rounded-t-lg" />
+                  <div className="p-4 space-y-3">
+                    <div className="h-4 w-1/2 bg-gray-300 rounded" />
+                    <div className="h-4 w-full bg-gray-200 rounded" />
+                    <div className="h-4 w-2/3 bg-gray-200 rounded" />
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : paginatedBlogs.length === 0 ? (
             <p>No blogs found.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {paginatedBlogs.map((blog) => (
-                <Link
+              {paginatedBlogs.map((blog, idx) => (
+                <motion.div
                   key={blog._id}
-                  href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.05 }}
+                  viewport={{ once: true }}
                 >
-                  <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
-                    <div className="relative w-full h-44 sm:h-52 md:h-56 overflow-hidden">
-                      <Image
-                        src={blog.img}
-                        alt={blog.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
+                  <Link
+                    href={`/blogs/${blog.category.toLowerCase()}/${blog.slug}`}
+                  >
+                    <div className="rounded-lg shadow-[0_4px_12px_rgba(0,0,0,0.2)] overflow-hidden bg-white group transition-all">
+                      <div className="relative w-full h-44 sm:h-52 md:h-56 overflow-hidden">
+                        <Image
+                          src={blog.img}
+                          alt={blog.title}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="p-4 space-y-2">
+                        <p className="text-sm text-gray-500">
+                          {blog.category} •{" "}
+                          {new Date(blog.createdAt).toLocaleDateString()}
+                        </p>
+                        <h4 className="text-base text-gray-800 sm:text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2 leading-snug">
+                          {blog.title}
+                        </h4>
+                        <p className="text-sm text-gray-700 line-clamp-2">
+                          {striptags(blog.desc)}
+                        </p>
+                        <p className="inline-block text-indigo-600 font-medium hover:underline mt-2 text-sm">
+                          Read More →
+                        </p>
+                      </div>
                     </div>
-                    <div className="p-4 space-y-2">
-                      <p className="text-sm text-gray-500">
-                        {blog.category} • {new Date(blog.createdAt).toLocaleDateString()}
-                      </p>
-                      <h4 className="text-base text-gray-800 sm:text-lg font-semibold group-hover:text-indigo-600 transition-colors duration-300 line-clamp-2 leading-snug">
-                        {blog.title}
-                      </h4>
-                      <p className="text-sm text-gray-700 line-clamp-2">
-                        {striptags(blog.desc)}
-                      </p>
-                      <p className="inline-block text-indigo-600 font-medium hover:underline mt-2 text-sm">
-                        Read More →
-                      </p>
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </motion.div>
               ))}
             </div>
           )}
@@ -89,8 +121,8 @@ export default function SearchPage() {
                   onClick={() => setCurrentPage(i + 1)}
                   className={`px-3 py-1 border rounded ${
                     currentPage === i + 1
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-white text-gray-800 hover:bg-gray-100'
+                      ? "bg-indigo-600 text-white"
+                      : "bg-white text-gray-800 hover:bg-gray-100"
                   }`}
                 >
                   {i + 1}
@@ -101,9 +133,15 @@ export default function SearchPage() {
         </section>
 
         {/* Right: Latest Blog Section */}
-        <aside className="w-full lg:w-[25%]">
+        <motion.aside
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="w-full lg:w-[25%]"
+        >
           <LatestBlog variant="overlay" />
-        </aside>
+        </motion.aside>
       </div>
     </main>
   );

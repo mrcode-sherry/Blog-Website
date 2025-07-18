@@ -82,13 +82,19 @@ export default function TopCategory() {
     <div className="w-full flex flex-col md:flex-row px-4 sm:px-6 md:px-20 gap-6 py-8 bg-white overflow-hidden">
       {/* Left: Featured Top Categories */}
       <div className="w-full md:w-2/3 relative">
-        <div className="flex items-center mb-8 w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="flex items-center mb-8 w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300"
+        >
           <span className="relative z-10 inline-block rounded-md px-4 py-2 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-2xl">
             <span className="skew-x-[10deg] tracking-wide">
               Featured Top Categories
             </span>
           </span>
-        </div>
+        </motion.div>
 
         {loading ? (
           <div className="w-full h-[300px] sm:h-[470px] bg-gray-300 dark:bg-gray-700 animate-pulse rounded-xl"></div>

@@ -27,7 +27,7 @@ const AboutPage = () => {
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-12 sm:mb-16 mt-10"
+        className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-12 sm:mb-16 mt-20"
       >
         <div className="max-w-7xl mx-auto text-center">
           <nav className="text-sm text-gray-600 sm:text-[20px] space-x-1">

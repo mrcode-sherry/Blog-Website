@@ -41,10 +41,10 @@ export default function Hero() {
               </h2>
             </span>
             <h3 className="md:text-[26px] text-xl font-semibold leading-snug">
-              Discover the Future of Tech, AI & Digital Life
+              Discover the Future of Tech & Digital Life
             </h3>
             <p className="md:text-[16px] text-sm opacity-90 leading-relaxed">
-              Explore trending stories in AI, Web Development, SEO, Business, Law, Fashion & Health.  
+              Explore trending stories in tech, fashion, business, Lifestyle, Finance, Sports, Crypto and health.  
               Stay updated — stay inspired.
             </p>
           </motion.div>
@@ -75,8 +75,8 @@ export default function Hero() {
             viewport={{ once: true }}
             className="text-gray-600 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed mx-auto md:mx-0"
           >
-            Stay informed with expert-written articles across technology, fashion, business, entertainment, law, and health.
-            We deliver real stories, tutorials, and opinions — all in one place.
+            Stay informed with expert-written articles across technology, fashion, business, Lifestyle, Finance, Sports, Crypto and health.
+            We deliver real stories, tutorials, and opinions all in one place.
           </motion.p>
 
           <motion.div
@@ -99,7 +99,7 @@ export default function Hero() {
             viewport={{ once: true }}
             className="text-gray-500 text-sm max-w-xl leading-relaxed pt-3 sm:pt-4 mx-auto md:mx-0"
           >
-            Our blogging platform publishes daily updates in multiple categories so readers can explore tech innovations, fashion trends, legal updates, business strategies, healthcare advice, and entertainment highlights.
+            Our blogging platform publishes daily updates in multiple categories so readers can explore tech innovations, fashion trends, Crypto updates, business strategies, healthcare advice, and sports highlights.
           </motion.p>
         </motion.div>
       </div>

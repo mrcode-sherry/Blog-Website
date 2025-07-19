@@ -23,15 +23,15 @@ const PrivacyPolicy = () => {
   return (
     <main className="min-h-screen px-6 md:px-20 py-10 bg-white text-gray-800">
       {/* Breadcrumb */}
+      {/* Breadcrumb */}
       <motion.section
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        custom={0}
-        className="bg-gray-100 py-10 px-4 rounded-md shadow-sm mb-16 mt-16"
+        className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-12 sm:mb-16 mt-20"
       >
-        <div className="max-w-7xl mx-auto text-center items-center">
-          <nav className="text-sm text-gray-600 text-[20px] space-x-1">
+        <div className="max-w-7xl mx-auto text-center">
+          <nav className="text-sm text-gray-600 sm:text-[20px] space-x-1">
             <Link href="/" className="text-indigo-600 hover:underline font-medium">
               Home
             </Link>
@@ -46,16 +46,16 @@ const PrivacyPolicy = () => {
         {/* Left Side (75%) */}
         <section className="w-full lg:w-[75%] space-y-6">
           <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.1}
-            className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300"
-          >
-            <span className="relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[22px] sm:text-[25px]">
-              <h2 className="skew-x-[10deg] tracking-wide capitalize">Privacy Policy</h2>
-            </span>
-          </motion.div>
+                      variants={fadeUp}
+                      initial="hidden"
+                      animate="visible"
+                      custom={0.1}
+                      className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300"
+                    >
+                      <span className="relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-[25px]">
+                        <h2 className="skew-x-[10deg] tracking-wide capitalize">Privacy Policy</h2>
+                      </span>
+                    </motion.div>
 
           <motion.p
             variants={fadeUp}

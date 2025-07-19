@@ -54,11 +54,26 @@ export default function TopCategory() {
 
   const startAutoScroll = () => {
     stopAutoScroll();
+
     intervalRef.current = setInterval(() => {
-      const nextIndex = (currentIndex + 1) % featured.length;
-      scrollToIndex(nextIndex);
-    }, 5000);
+      const container = containerRef.current;
+      if (!container || featured.length === 0) return;
+
+      const nextIndex = currentIndex + 1;
+
+      if (nextIndex >= featured.length) {
+        // Reset instantly to the first without reverse scroll
+        container.scrollTo({
+          left: 0,
+          behavior: "auto", // No animation (jump to first)
+        });
+        setCurrentIndex(0);
+      } else {
+        scrollToIndex(nextIndex); // Smooth scroll to next
+      }
+    }, 4000);
   };
+
 
   const stopAutoScroll = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);

@@ -209,9 +209,13 @@ export default function BlogDetailsPage() {
           custom={0.2}
           className="mt-10"
         >
-          <h2 className="text-lg font-bold mb-4 text-black">
-            Related {blog.category} Blogs
-          </h2>
+          <div className="flex items-center justify-center mb-8 relative">
+            <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
+              <span className="relative z-10 inline-block rounded-md px-4 py-2 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-2xl">
+                <span className="skew-x-[10deg] tracking-wide">Related {blog.category} Blogs</span>
+              </span>
+            </div>
+          </div>
           <BlogGridSection blogs={relatedBlogs} />
         </motion.div>
 
@@ -236,9 +240,13 @@ export default function BlogDetailsPage() {
         custom={0.1}
         className="hidden md:block md:mt-10 mt-20"
       >
-        <h2 className="text-xl font-bold mb-4 text-black">
-          Related {blog.category} Blogs
-        </h2>
+        <div className="flex items-center justify-center mb-8 relative">
+          <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
+            <span className="relative z-10 inline-block rounded-md px-4 py-2 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-2xl">
+              <span className="skew-x-[10deg] tracking-wide">Related {blog.category} Blogs</span>
+            </span>
+          </div>
+        </div>
         <BlogGridSection blogs={relatedBlogs} />
       </motion.div>
     </div>

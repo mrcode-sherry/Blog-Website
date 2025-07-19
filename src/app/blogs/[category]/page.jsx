@@ -37,7 +37,7 @@ export default function CategoryPage() {
   return (
     <main className="min-h-screen px-6 md:px-20 py-10 bg-gray-50 text-gray-800">
       {/* Breadcrumb Heading */}
-      <section className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-16 mt-10">
+      <section className="bg-gray-100 py-8 sm:py-10 px-4 rounded-md shadow-sm mb-16 mt-20">
         <div className="max-w-7xl mx-auto text-center">
           <nav className="text-sm text-gray-600 sm:text-lg space-x-1">
             <Link href="/" className="text-indigo-600 hover:underline font-medium">

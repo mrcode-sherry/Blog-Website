@@ -22,7 +22,7 @@ export async function POST(req) {
 }
 
 // ✅ GET: Fetch all blogs
-export async function GET(req) {
+export async function GET() {
   await dbConnect();
   try {
     const blogData = await Blog.find().sort({ createdAt: -1 });

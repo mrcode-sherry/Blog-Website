@@ -14,8 +14,7 @@ const UploadBlog = () => {
     author: '',
   });
 
-  const fileInputRef = useRef(null); // ✅ Added ref
-
+  const fileInputRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -39,17 +38,38 @@ const UploadBlog = () => {
     setForm((prev) => ({ ...prev, desc: content }));
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setForm((prev) => ({
-        ...prev,
-        img: reader.result,
-      }));
+    reader.onloadend = async () => {
+      const base64Image = reader.result;
+
+      try {
+        const res = await fetch('/api/upload-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ image: base64Image }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          setForm((prev) => ({
+            ...prev,
+            img: data.url, // ✅ Save Cloudinary URL
+          }));
+        } else {
+          setErrorMsg('❌ Image upload failed.');
+        }
+      } catch (error) {
+        setErrorMsg('❌ Image upload error: ' + error.message);
+      }
     };
+
     reader.readAsDataURL(file);
   };
 
@@ -60,7 +80,7 @@ const UploadBlog = () => {
     }));
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // ✅ Reset file input
+      fileInputRef.current.value = '';
     }
   };
 
@@ -114,7 +134,6 @@ const UploadBlog = () => {
         onSubmit={handleSubmit}
         className="space-y-4 bg-white p-6 rounded-lg shadow-md"
       >
-        {/* Title */}
         <input
           type="text"
           name="title"
@@ -125,7 +144,6 @@ const UploadBlog = () => {
           required
         />
 
-        {/* Description */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Blog Description
@@ -133,7 +151,6 @@ const UploadBlog = () => {
           <TinyEditor value={form.desc} onChange={handleDescriptionChange} />
         </div>
 
-        {/* Image Upload */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Upload Blog Image
@@ -165,7 +182,6 @@ const UploadBlog = () => {
           )}
         </div>
 
-        {/* Category */}
         <select
           name="category"
           value={form.category}
@@ -181,7 +197,6 @@ const UploadBlog = () => {
           ))}
         </select>
 
-        {/* Author */}
         <input
           type="text"
           name="author"
@@ -191,11 +206,10 @@ const UploadBlog = () => {
           className="w-full p-3 border border-gray-300 rounded"
         />
 
-        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition"
+          className="bg-indigo-600 text-white px-6 py-2 rounded cursor-pointer hover:bg-indigo-700 transition"
         >
           {loading ? 'Uploading...' : 'Submit Blog'}
         </button>

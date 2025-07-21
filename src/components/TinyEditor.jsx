@@ -16,11 +16,12 @@ const TinyEditor = ({ value, onChange }) => {
           'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
           'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed',
           'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste',
-          'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions',
+          'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions',
           'tinycomments', 'tableofcontents', 'footnotes', 'mergetags',
           'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword',
           'exportword', 'exportpdf',
         ],
+
         toolbar:
           'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | ' +
           'link image media table mergetags | addcomment showcomments | spellcheckdialog ' +

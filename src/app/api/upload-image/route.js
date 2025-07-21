@@ -10,18 +10,16 @@ export async function POST(req) {
       return NextResponse.json({ message: 'No image received' }, { status: 400 });
     }
 
-    // Upload base64 image to Cloudinary
     const uploadResponse = await cloudinary.uploader.upload(image, {
-      folder: 'blog-images', // Optional: a specific folder in Cloudinary
+      folder: 'blog-images',
+      timeout: 60000, // Increased timeout
     });
 
     const imageUrl = uploadResponse.secure_url;
 
-    // Save `imageUrl` to your database if needed here
-
     return NextResponse.json({ message: 'Image uploaded successfully', url: imageUrl });
   } catch (error) {
     console.error('Upload error:', error);
-    return NextResponse.json({ message: 'Server error' }, { status: 500 });
+    return NextResponse.json({ message: 'Cloudinary error: ' + error.message }, { status: 500 });
   }
 }

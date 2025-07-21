@@ -20,14 +20,7 @@ const UploadBlog = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const categories = [
-    'Technology',
-    'Finance',
-    'Business',
-    'Crypto',
-    'Sports',
-    'Lifestyle',
-    'Health',
-    'Fashion',
+    'Technology', 'Finance', 'Business', 'Crypto', 'Sports', 'Lifestyle', 'Health', 'Fashion',
   ];
 
   const handleChange = (e) => {
@@ -42,10 +35,22 @@ const UploadBlog = () => {
     const file = e.target.files[0];
     if (!file) return;
 
+    // ❌ Reject if image is larger than 1MB
+    if (file.size > 1 * 1024 * 1024) {
+      setErrorMsg("❌ Image too large. Max 1MB allowed.");
+
+      // ✅ Clear the file input so filename doesn't stay visible
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+      return;
+    }
+
+    setErrorMsg('');
+
     const reader = new FileReader();
     reader.onloadend = async () => {
       const base64Image = reader.result;
-
       try {
         const res = await fetch('/api/upload-image', {
           method: 'POST',
@@ -60,7 +65,7 @@ const UploadBlog = () => {
         if (res.ok) {
           setForm((prev) => ({
             ...prev,
-            img: data.url, // ✅ Save Cloudinary URL
+            img: data.url, // ✅ Cloudinary URL saved
           }));
         } else {
           setErrorMsg('❌ Image upload failed.');
@@ -79,6 +84,7 @@ const UploadBlog = () => {
       img: '',
     }));
 
+    // ✅ Clear the input (filename disappears)
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -164,6 +170,7 @@ const UploadBlog = () => {
             disabled={!!form.img}
             required={!form.img}
           />
+
           {form.img && (
             <div className="relative mt-3 w-full rounded overflow-hidden shadow-md">
               <img

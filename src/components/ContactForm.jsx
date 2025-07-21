@@ -86,7 +86,7 @@ const ContactForm = () => {
 
           <form
             onSubmit={handleSubmit}
-            className="bg-white p-4 sm:p-6 rounded-lg shadow-md space-y-5"
+            className="bg-white p-4 sm:p-6 rounded-lg shadow-2xl space-y-5"
             aria-label="Contact Form"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

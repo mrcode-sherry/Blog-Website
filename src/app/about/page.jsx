@@ -63,10 +63,7 @@ const AboutPage = () => {
             custom={0.2}
             className="text-sm sm:text-base text-gray-700 leading-relaxed"
           >
-            Welcome to our blog platform where we share cutting-edge articles on web development,
-            performance optimization, frameworks like Next.js and React, and digital trends shaping
-            the future. Our goal is to provide developers, tech enthusiasts, and professionals with
-            insightful and actionable content that inspires and educates.
+            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We cover everything from technology, health, and business, to fashion, Lifestyle, and cryptocurrency, aiming to give our readers a fresh and exciting perspective on life.
           </motion.p>
 
           <motion.p
@@ -76,9 +73,47 @@ const AboutPage = () => {
             custom={0.3}
             className="text-sm sm:text-base text-gray-700 leading-relaxed"
           >
-            Whether you're a beginner or a seasoned developer, our platform curates content that
-            helps you stay ahead in the evolving tech world. From tutorials to industry analysis,
-            we’re here to grow with you.
+            We understand that staying on top of current tech, finance, or lifestyle trends can be overwhelming. That’s why we have a simple mission: to provide content that is engaging, accurate, and most importantly, helpful in growing you as an individual and a business owner.
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.35}
+            className="text-sm sm:text-base text-gray-700 leading-relaxed"
+          >
+            Our team breaks down complex topics into actionable insights that empower you to take meaningful steps in your business or personal life. Whether you're curious about the latest gadgets, want to explore cutting-edge technologies, or are a small business with innovative ideas — we’ve got you covered.
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.4}
+            className="text-sm sm:text-base text-gray-700 leading-relaxed"
+          >
+            From cryptocurrency guides for beginners to updates on the evolving workplace and digital tools, we curate content designed to inform and inspire. <em>(Consider clarifying this sentence: “for those interested in well-being and productivity.” — maybe expand it slightly.)</em>
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.45}
+            className="text-sm sm:text-base text-gray-700 leading-relaxed"
+          >
+            But we are more than just a website. <strong>KINTECHY</strong> is a community of people eager to learn and help others grow. Whether you're here for industry insights, lifestyle tips, or simply a good read — we’re happy to have you on board.
+          </motion.p>
+
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.5}
+            className="text-sm sm:text-base text-gray-700 leading-relaxed"
+          >
+            Let’s grow, learn, and become inspired together — one blog at a time.
           </motion.p>
 
           {/* Social Links */}
@@ -86,7 +121,7 @@ const AboutPage = () => {
             variants={fadeUp}
             initial="hidden"
             animate="visible"
-            custom={0.4}
+            custom={0.6}
             className="flex items-center gap-6 mt-4 sm:mt-6"
           >
             <Link
@@ -118,7 +153,7 @@ const AboutPage = () => {
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          custom={0.5}
+          custom={0.7}
           className="w-full lg:w-[25%]"
         >
           <LatestBlog variant="overlay" />

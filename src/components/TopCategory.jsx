@@ -1,13 +1,14 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import striptags from "striptags";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function TopCategory() {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef(null);
   const intervalRef = useRef(null);
@@ -15,20 +16,14 @@ export default function TopCategory() {
 
   const topCategories = ["technology", "health"];
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      try {
-        const res = await fetch("/api/blog/first-blogs");
-        const data = await res.json();
-        setBlogs(data.blogs || data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching blogs", err);
-        setLoading(false);
-      }
-    };
-    fetchBlogs();
-  }, []);
+  // ✅ TanStack React Query fetch
+  const { data: blogs = [], isLoading: loading } = useQuery({
+    queryKey: ["topCategoriesBlogs"],
+    queryFn: async () => {
+      const res = await axios.get("/api/blog/first-blogs");
+      return res.data.blogs || res.data;
+    },
+  });
 
   const featured = blogs.filter(
     (blog, index, self) =>
@@ -62,18 +57,16 @@ export default function TopCategory() {
       const nextIndex = currentIndex + 1;
 
       if (nextIndex >= featured.length) {
-        // Reset instantly to the first without reverse scroll
         container.scrollTo({
           left: 0,
-          behavior: "auto", // No animation (jump to first)
+          behavior: "auto",
         });
         setCurrentIndex(0);
       } else {
-        scrollToIndex(nextIndex); // Smooth scroll to next
+        scrollToIndex(nextIndex);
       }
     }, 4000);
   };
-
 
   const stopAutoScroll = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -171,7 +164,7 @@ export default function TopCategory() {
               ))}
             </div>
 
-            {/* Scroll Buttons (Desktop only) */}
+            {/* Scroll Buttons */}
             <button
               onClick={() => handleManualScroll("left")}
               className="hidden md:block absolute top-1/2 left-3 transform -translate-y-1/2 cursor-pointer text-white p-2 rounded-full z-10 hover:bg-gray-700"

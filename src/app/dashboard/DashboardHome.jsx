@@ -1,26 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
+
+import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 
+const fetchStats = async () => {
+  const res = await fetch("/api/dashboard/summary");
+  const data = await res.json();
+  if (!res.ok || !data.success) throw new Error(data.error || "Failed to fetch");
+  return data.data;
+};
+
 const DashboardHome = () => {
-  const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await fetch("/api/dashboard/summary");
-        const json = await res.json();
-        if (json.success) setStats(json.data);
-      } catch (err) {
-        console.error("Failed to fetch stats:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
+  const { data: stats, isLoading, isError } = useQuery({
+    queryKey: ["dashboard-stats"],
+    queryFn: fetchStats,
+  });
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
@@ -32,7 +26,7 @@ const DashboardHome = () => {
   };
 
   /* ---------------- Skeleton ---------------- */
-  if (loading)
+  if (isLoading)
     return (
       <div className="space-y-10 animate-pulse">
         {/* heading */}
@@ -56,7 +50,7 @@ const DashboardHome = () => {
       </div>
     );
 
-  if (!stats)
+  if (isError || !stats)
     return (
       <p className="text-center text-sm text-red-600">Failed to load data.</p>
     );
@@ -131,7 +125,7 @@ const DashboardHome = () => {
   );
 };
 
-/* Stat Card Component (unchanged) */
+/* Stat Card Component */
 const Card = ({ title, value }) => (
   <div className="bg-indigo-600 text-white p-5 rounded-lg shadow-md">
     <h2 className="text-lg font-semibold mb-1">{title}</h2>

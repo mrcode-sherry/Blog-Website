@@ -1,11 +1,13 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import striptags from "striptags";
 import LatestBlog from "@/components/LatestBlog";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const ITEMS_PER_PAGE = 8;
 const skeletonArray = Array.from({ length: 6 });
@@ -13,25 +15,25 @@ const skeletonArray = Array.from({ length: 6 });
 export default function SearchClient() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedBlogs = blogs.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  const totalPages = Math.ceil(blogs.length / ITEMS_PER_PAGE);
+  const { data, isLoading } = useQuery({
+    queryKey: ["searchBlogs", query],
+    queryFn: async () => {
+      const res = await axios.get(`/api/blog/search?q=${query}`);
+      return res.data.blogs;
+    },
+    enabled: !!query, // only run query if `query` is truthy
+  });
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      if (!query) return;
-      setLoading(true);
-      const res = await fetch(`/api/blog/search?q=${query}`);
-      const data = await res.json();
-      if (data.success) setBlogs(data.blogs);
-      setLoading(false);
-    };
-    fetchBlogs();
-  }, [query]);
+  const blogs = data || [];
+  const totalPages = Math.ceil(blogs.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
+  const paginatedBlogs = useMemo(
+    () => blogs.slice(startIndex, startIndex + ITEMS_PER_PAGE),
+    [blogs, startIndex]
+  );
 
   return (
     <main className="px-6 md:px-20 py-12 md:mt-20 mt-16 bg-white">
@@ -47,7 +49,7 @@ export default function SearchClient() {
 
       <div className="flex flex-col lg:flex-row gap-8">
         <section className="w-full lg:w-[75%] space-y-6">
-          {loading ? (
+          {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {skeletonArray.map((_, i) => (
                 <div
@@ -108,6 +110,7 @@ export default function SearchClient() {
               ))}
             </div>
           )}
+
           {totalPages > 1 && (
             <div className="flex gap-2 mt-6 justify-center">
               {Array.from({ length: totalPages }).map((_, i) => (

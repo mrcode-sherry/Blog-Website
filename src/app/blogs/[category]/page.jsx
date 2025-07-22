@@ -1,35 +1,30 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import TrendingBlog from "@/components/TrendingBlog";
 import Image from "next/image";
-import axios from "axios";
 import striptags from "striptags";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function CategoryPage() {
   const { category } = useParams();
-  const [blogs, setBlogs] = useState([]);
   const [visibleCount, setVisibleCount] = useState(9);
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCategoryBlogs = async () => {
-      try {
-        const res = await axios.get(`/api/blog/category/${category}`);
-        setBlogs(res.data.blogs || []);
-      } catch (error) {
-        console.error("Failed to fetch blogs:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (category) fetchCategoryBlogs();
-  }, [category]);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["categoryBlogs", category],
+    queryFn: async () => {
+      const res = await axios.get(`/api/blog/category/${category}`);
+      return res.data.blogs;
+    },
+    enabled: !!category,
+  });
 
+  const blogs = data || [];
   const featured = blogs[0];
   const remainingBlogs = blogs.slice(1, visibleCount);
   const loadMore = () => setVisibleCount((prev) => prev + 16);
@@ -60,51 +55,49 @@ export default function CategoryPage() {
           </div>
 
           {/* Featured Blog */}
-          {loading ? (
+          {isLoading ? (
             <div className="animate-pulse w-full h-[250px] sm:h-[300px] md:h-[450px] bg-gray-300 rounded-lg" />
-          ) : (
-            featured && (
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Link href={`/blogs/${category.toLowerCase()}/${featured.slug}`}>
-                  <div className="relative mb-10 rounded-lg group cursor-pointer overflow-hidden shadow-md h-[250px] sm:h-[300px] md:h-[450px]">
-                    <Image
-                      src={featured.img}
-                      alt={featured.title}
-                      fill
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute md:mt-40 mt-8 inset-0 bg-gradient-to-t from-black via-black/90 to-transparent px-4 sm:px-7 pb-6 z-10 flex flex-col justify-center">
-                      <div className="mb-4">
-                        <span className="text-xs sm:text-sm px-4 py-1 rounded-md bg-indigo-600 text-white font-bold italic skew-x-[-10deg]">
-                          <span className="skew-x-[10deg] tracking-wider">
-                            {featured.category}
-                          </span>
+          ) : featured ? (
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Link href={`/blogs/${category.toLowerCase()}/${featured.slug}`}>
+                <div className="relative mb-10 rounded-lg group cursor-pointer overflow-hidden shadow-md h-[250px] sm:h-[300px] md:h-[450px]">
+                  <Image
+                    src={featured.img}
+                    alt={featured.title}
+                    fill
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute md:mt-40 mt-8 inset-0 bg-gradient-to-t from-black via-black/90 to-transparent px-4 sm:px-7 pb-6 z-10 flex flex-col justify-center">
+                    <div className="mb-4">
+                      <span className="text-xs sm:text-sm px-4 py-1 rounded-md bg-indigo-600 text-white font-bold italic skew-x-[-10deg]">
+                        <span className="skew-x-[10deg] tracking-wider">
+                          {featured.category}
                         </span>
-                      </div>
-                      <h3 className="text-white text-xl sm:text-2xl md:text-[40px] mb-4 font-bold leading-tight hover:underline hover:decoration-blue-500 hover:underline-offset-4 duration-300">
-                        {featured.title}
-                      </h3>
-                      <p className="text-gray-200 text-sm sm:text-base mb-4 leading-relaxed md:line-clamp-3 line-clamp-2">
-                        {striptags(featured.desc)}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {featured.author} •{" "}
-                        {new Date(featured.createdAt).toLocaleDateString()}
-                      </p>
+                      </span>
                     </div>
+                    <h3 className="text-white text-xl sm:text-2xl md:text-[40px] mb-4 font-bold leading-tight hover:underline hover:decoration-blue-500 hover:underline-offset-4 duration-300">
+                      {featured.title}
+                    </h3>
+                    <p className="text-gray-200 text-sm sm:text-base mb-4 leading-relaxed md:line-clamp-3 line-clamp-2">
+                      {striptags(featured.desc)}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {featured.author} •{" "}
+                      {new Date(featured.createdAt).toLocaleDateString()}
+                    </p>
                   </div>
-                </Link>
-              </motion.div>
-            )
-          )}
+                </div>
+              </Link>
+            </motion.div>
+          ) : null}
 
           {/* Grid of Smaller Blogs */}
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6 md:gap-y-11">
-            {loading
+            {isLoading
               ? Array.from({ length: 4 }).map((_, i) => (
                   <div
                     key={i}
@@ -156,7 +149,7 @@ export default function CategoryPage() {
           </div>
 
           {/* Load More */}
-          {!loading && visibleCount < blogs.length && (
+          {!isLoading && visibleCount < blogs.length && (
             <div className="flex justify-center mt-8">
               <button
                 onClick={loadMore}

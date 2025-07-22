@@ -1,37 +1,30 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import striptags from "striptags";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 const skeletonArray = new Array(6).fill(null);
 
 const LatestBlog = ({ variant = "default" }) => {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchBlogs = async (page = 1) => {
-    setLoading(true);
-    try {
-      const res = await axios.get(`/api/blog/latest?page=${page}&limit=6`);
-      setBlogs(res.data.blogs);
-      setCurrentPage(res.data.currentPage);
-      setTotalPages(res.data.totalPages);
-    } catch (err) {
-      console.error("Failed to fetch blogs:", err);
-    }
-    setLoading(false);
-  };
+  const { data, isLoading } = useQuery({
+    queryKey: ["latestBlogs", currentPage],
+    queryFn: async () => {
+      const res = await axios.get(`/api/blog/latest?page=${currentPage}&limit=6`);
+      return res.data;
+    },
+    keepPreviousData: true,
+  });
 
-  useEffect(() => {
-    fetchBlogs(currentPage);
-  }, [currentPage]);
+  const blogs = data?.blogs || [];
+  const totalPages = data?.totalPages || 1;
 
   const goToNext = () => {
     if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
@@ -66,7 +59,7 @@ const LatestBlog = ({ variant = "default" }) => {
             : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 md:gap-y-11"
         }`}
       >
-        {loading
+        {isLoading
           ? skeletonArray.map((_, index) => (
               <div
                 key={index}

@@ -1,27 +1,20 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import axios from 'axios';
 import { motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 const CategoryBlog = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get('/api/blog/category');
-        setCategories(res.data.categories);
-        setLoading(false);
-      } catch (err) {
-        console.error("Failed to load categories:", err);
-        setLoading(false);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const { data: categories = [], isLoading: loading } = useQuery({
+    queryKey: ['blogCategories'],
+    queryFn: async () => {
+      const res = await axios.get('/api/blog/category');
+      return res.data.categories;
+    },
+  });
 
   return (
     <section className="px-6 md:px-20 py-10 sm:py-14 bg-white">

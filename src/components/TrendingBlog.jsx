@@ -1,29 +1,21 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import { Eye } from "lucide-react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 const TrendingBlog = () => {
-  const [trending, setTrending] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTrending = async () => {
-      try {
-        const res = await axios.get("/api/blog/trending");
-        setTrending(res.data.blogs);
-      } catch (err) {
-        console.error("Failed to fetch trending blogs", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTrending();
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ["trendingBlogs"],
+    queryFn: async () => {
+      const res = await axios.get("/api/blog/trending");
+      return res.data.blogs;
+    },
+  });
 
   const SkeletonCard = () => (
     <div className="flex items-start gap-3 animate-pulse">
@@ -47,11 +39,11 @@ const TrendingBlog = () => {
 
       {/* Blog List or Skeleton */}
       <div className="flex flex-col gap-7">
-        {loading
+        {isLoading
           ? Array(4)
               .fill(0)
               .map((_, i) => <SkeletonCard key={i} />)
-          : trending.map((blog, index) => {
+          : data?.map((blog, index) => {
               const validImg = blog?.img;
               if (!validImg) return null;
 

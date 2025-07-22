@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 const categories = [
   "Technology",
@@ -15,43 +16,24 @@ const categories = [
 ];
 
 export default function ManageBlogs() {
-  const [allBlogs, setAllBlogs] = useState([]);
-  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Technology");
-  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  /* fetch all blogs */
-  const fetchBlogs = async () => {
-    try {
+  const { data: allBlogs = [], isLoading, refetch } = useQuery({
+    queryKey: ["blogs"],
+    queryFn: async () => {
       const res = await fetch("/api/blog");
       const data = await res.json();
-      if (data.success) {
-        setAllBlogs(data.blogs);
-        filterByCategory(data.blogs, "Technology");
-      }
-    } catch (err) {
-      console.error("Error fetching blogs:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      if (!data.success) throw new Error("Failed to fetch blogs");
+      return data.blogs;
+    },
+  });
 
-  /* client‑side filtering */
-  const filterByCategory = (blogs, category) => {
-    const filtered = blogs.filter(
-      (b) => b.category?.toLowerCase() === category.toLowerCase()
+  const filteredBlogs = useMemo(() => {
+    return allBlogs.filter(
+      (b) => b.category?.toLowerCase() === selectedCategory.toLowerCase()
     );
-    setFilteredBlogs(filtered);
-  };
-
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
-  useEffect(() => {
-    filterByCategory(allBlogs, selectedCategory);
-  }, [selectedCategory]);
+  }, [allBlogs, selectedCategory]);
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this blog?")) return;
@@ -60,7 +42,7 @@ export default function ManageBlogs() {
       const data = await res.json();
       if (data.success) {
         alert("Blog deleted");
-        fetchBlogs();
+        refetch();
       } else alert("Failed to delete blog");
     } catch (err) {
       console.error("Delete error:", err);
@@ -69,7 +51,6 @@ export default function ManageBlogs() {
 
   const handleEdit = (id) => router.push(`/edit-blog/${id}`);
 
-  /* simple fade‑up variant */
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
     visible: (d = 0) => ({
@@ -79,7 +60,6 @@ export default function ManageBlogs() {
     }),
   };
 
-  /* skeleton cards while loading */
   const SkeletonCard = () => (
     <div className="flex items-center justify-between bg-gray-200 p-4 rounded shadow animate-pulse">
       <div className="flex items-center gap-4 w-full">
@@ -126,8 +106,7 @@ export default function ManageBlogs() {
 
       {/* Blog List */}
       <div className="grid gap-6">
-        {loading ? (
-          /* Skeleton placeholders */
+        {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
         ) : filteredBlogs.length === 0 ? (
           <p>No blogs found in this category.</p>

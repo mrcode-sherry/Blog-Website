@@ -3,8 +3,10 @@
 import React, { useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { X } from 'lucide-react';
+import { CldUploadWidget } from 'next-cloudinary';
 
 const TinyEditor = dynamic(() => import('@/components/TinyEditor'), { ssr: false });
+
 
 const UploadBlog = () => {
   const [form, setForm] = useState({
@@ -32,47 +34,8 @@ const UploadBlog = () => {
     setForm((prev) => ({ ...prev, desc: content }));
   };
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    if (file.size > 1 * 1024 * 1024) {
-      setErrorMsg("❌ Image too large. Max 1MB allowed.");
-      if (fileInputRef.current) fileInputRef.current.value = '';
-      return;
-    }
-
-    setErrorMsg('');
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/upload-image', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.url) {
-        setForm((prev) => ({
-          ...prev,
-          img: data.url,
-        }));
-        console.log("✅ Uploaded:", data.url);
-      } else {
-        setErrorMsg('❌ Upload failed: ' + (data.message || 'Unknown error'));
-        if (fileInputRef.current) fileInputRef.current.value = '';
-      }
-    } catch (err) {
-      setErrorMsg('❌ Error: ' + err.message);
-      if (fileInputRef.current) fileInputRef.current.value = '';
-    }
-  };
-
   const handleRemoveImage = () => {
     setForm((prev) => ({ ...prev, img: '' }));
-    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSubmit = async (e) => {
@@ -101,7 +64,6 @@ const UploadBlog = () => {
           category: '',
           author: '',
         });
-        if (fileInputRef.current) fileInputRef.current.value = '';
       } else {
         setErrorMsg('❌ Failed: ' + data.error);
       }
@@ -137,18 +99,31 @@ const UploadBlog = () => {
 
         <div>
           <label className="text-sm font-medium">Upload Blog Image</label>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="w-full p-2 border rounded"
-            disabled={!!form.img}
-            required={!form.img}
-          />
+          <CldUploadWidget
+            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+            cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+            onSuccess={(result) => {
+              if (result.info.secure_url && result.event === 'success') {
+                setForm((prev) => ({ ...prev, img: result.info.secure_url }));
+              }
+            }}
+          >
+            {({ open }) => (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  open();
+                }}
+                className="w-full mt-2 border border-gray-300 py-2 px-3 rounded"
+              >
+                Upload Image
+              </button>
+            )}
+          </CldUploadWidget>
 
           {form.img && (
-            <div className="relative mt-4 w-full max-w-md">
+            <div className="relative mt-4">
               <img src={form.img} alt="Uploaded" className="w-full max-h-72 rounded object-contain" />
               <button
                 onClick={handleRemoveImage}

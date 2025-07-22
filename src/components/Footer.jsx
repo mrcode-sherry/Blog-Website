@@ -88,7 +88,7 @@ const Footer = () => {
               href="mailto:info@example.com"
               className="text-indigo-400 hover:underline"
             >
-              info@example.com
+              kintechyinfo@gmail.com
             </Link>
           </p>
           <p className="text-sm mt-1">

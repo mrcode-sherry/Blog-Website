@@ -1,7 +1,17 @@
+// src/app/contact/page.jsx
 import React from 'react';
 import ContactForm from '../../components/ContactForm';
 
-const page = () => {
+// ✅ SEO Metadata
+export const generateMetadata = () => {
+  return {
+    title: "Kintechy | Contact",
+    description: "Get in touch with Kintechy. We'd love to hear from you. Send your message, inquiry, or feedback today.",
+    robots: "index, follow",
+  };
+};
+
+const ContactPage = () => {
   return (
     <section className="bg-white">
       <ContactForm />
@@ -9,4 +19,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default ContactPage;

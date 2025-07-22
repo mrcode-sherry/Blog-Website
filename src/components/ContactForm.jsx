@@ -210,7 +210,7 @@ const ContactForm = () => {
               <div className="flex items-center gap-3">
                 <Mail className="text-indigo-600" size={20} />
                 <Link href="mailto:info@example.com" className="hover:underline text-[16px] hover:text-indigo-700 transition">
-                  info@example.com
+                  kintechyinfo@gmail.com
                 </Link>
               </div>
               <div className="flex items-center gap-3">

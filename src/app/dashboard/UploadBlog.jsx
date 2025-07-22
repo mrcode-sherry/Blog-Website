@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { X } from 'lucide-react';
@@ -35,66 +36,50 @@ const UploadBlog = () => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // ❌ Reject if image is larger than 1MB
     if (file.size > 1 * 1024 * 1024) {
       setErrorMsg("❌ Image too large. Max 1MB allowed.");
-
-      // ✅ Clear the file input so filename doesn't stay visible
-      if (fileInputRef.current) {
-        fileInputRef.current.value = '';
-      }
+      if (fileInputRef.current) fileInputRef.current.value = '';
       return;
     }
 
     setErrorMsg('');
+    const formData = new FormData();
+    formData.append('file', file);
 
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64Image = reader.result;
-      try {
-        const res = await fetch('/api/upload-image', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ image: base64Image }),
-        });
+    try {
+      const res = await fetch('/api/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
 
-        const data = await res.json();
+      const data = await res.json();
 
-        if (res.ok) {
-          setForm((prev) => ({
-            ...prev,
-            img: data.url, // ✅ Cloudinary URL saved
-          }));
-        } else {
-          setErrorMsg('❌ Image upload failed.');
-        }
-      } catch (error) {
-        setErrorMsg('❌ Image upload error: ' + error.message);
+      if (res.ok && data.url) {
+        setForm((prev) => ({
+          ...prev,
+          img: data.url,
+        }));
+        console.log("✅ Uploaded:", data.url);
+      } else {
+        setErrorMsg('❌ Upload failed: ' + (data.message || 'Unknown error'));
+        if (fileInputRef.current) fileInputRef.current.value = '';
       }
-    };
-
-    reader.readAsDataURL(file);
+    } catch (err) {
+      setErrorMsg('❌ Error: ' + err.message);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
   };
 
   const handleRemoveImage = () => {
-    setForm((prev) => ({
-      ...prev,
-      img: '',
-    }));
-
-    // ✅ Clear the input (filename disappears)
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
+    setForm((prev) => ({ ...prev, img: '' }));
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg('');
     setSuccessMsg('');
+    setErrorMsg('');
 
     try {
       const res = await fetch('/api/blog', {
@@ -116,14 +101,12 @@ const UploadBlog = () => {
           category: '',
           author: '',
         });
-        if (fileInputRef.current) {
-          fileInputRef.current.value = '';
-        }
+        if (fileInputRef.current) fileInputRef.current.value = '';
       } else {
-        setErrorMsg('❌ Failed to upload blog: ' + data.error);
+        setErrorMsg('❌ Failed: ' + data.error);
       }
-    } catch (error) {
-      setErrorMsg('❌ Server error: ' + error.message);
+    } catch (err) {
+      setErrorMsg('❌ Server error: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -133,55 +116,44 @@ const UploadBlog = () => {
     <div className="max-w-2xl mx-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Upload New Blog</h2>
 
-      {successMsg && <p className="text-green-600 mb-3">{successMsg}</p>}
-      {errorMsg && <p className="text-red-600 mb-3">{errorMsg}</p>}
+      {successMsg && <p className="text-green-600">{successMsg}</p>}
+      {errorMsg && <p className="text-red-600">{errorMsg}</p>}
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4 bg-white p-6 rounded-lg shadow-md"
-      >
+      <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded shadow">
         <input
           type="text"
           name="title"
           value={form.title}
           onChange={handleChange}
           placeholder="Blog Title"
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-3 border rounded"
           required
         />
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Blog Description
-          </label>
+          <label className="text-sm font-medium">Blog Description</label>
           <TinyEditor value={form.desc} onChange={handleDescriptionChange} />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Upload Blog Image
-          </label>
+          <label className="text-sm font-medium">Upload Blog Image</label>
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*"
             onChange={handleImageChange}
-            className="w-full p-2 border border-gray-300 rounded bg-white cursor-pointer"
+            className="w-full p-2 border rounded"
             disabled={!!form.img}
             required={!form.img}
           />
 
           {form.img && (
-            <div className="relative mt-3 w-full rounded overflow-hidden shadow-md">
-              <img
-                src={form.img}
-                alt="Uploaded preview"
-                className="w-full max-h-64 object-cover rounded"
-              />
+            <div className="relative mt-4 w-full max-w-md">
+              <img src={form.img} alt="Uploaded" className="w-full max-h-72 rounded object-contain" />
               <button
-                type="button"
                 onClick={handleRemoveImage}
-                className="absolute top-2 right-2 bg-white p-1 rounded-full shadow hover:bg-red-600 hover:text-white transition cursor-pointer"
+                type="button"
+                className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -193,7 +165,7 @@ const UploadBlog = () => {
           name="category"
           value={form.category}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-300 rounded cursor-pointer"
+          className="w-full p-3 border rounded"
           required
         >
           <option value="">Select Category</option>
@@ -210,13 +182,13 @@ const UploadBlog = () => {
           value={form.author}
           onChange={handleChange}
           placeholder="Author (default: Admin)"
-          className="w-full p-3 border border-gray-300 rounded"
+          className="w-full p-3 border rounded"
         />
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-indigo-600 text-white px-6 py-2 rounded cursor-pointer hover:bg-indigo-700 transition"
+          className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
         >
           {loading ? 'Uploading...' : 'Submit Blog'}
         </button>

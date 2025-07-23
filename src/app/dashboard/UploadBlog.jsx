@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
 import { CldUploadWidget } from 'next-cloudinary';
 
 const TinyEditor = dynamic(() => import('@/components/TinyEditor'), { ssr: false });
-
 
 const UploadBlog = () => {
   const [form, setForm] = useState({
@@ -17,13 +16,14 @@ const UploadBlog = () => {
     author: '',
   });
 
-  const fileInputRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const categories = [
-    'Technology', 'Finance', 'Business', 'Crypto', 'Sports', 'Lifestyle', 'Health', 'Fashion',
+    'Technology', 'Finance', 'Business', 'Crypto',
+    'Sports', 'Lifestyle', 'Health', 'Fashion',
   ];
 
   const handleChange = (e) => {
@@ -102,9 +102,25 @@ const UploadBlog = () => {
           <CldUploadWidget
             uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
             cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+            onOpen={() => {
+              document.body.style.overflow = 'hidden';
+              setUploadLoading(true);
+            }}
+            onClose={() => {
+              document.body.style.overflow = 'auto';
+              setTimeout(() => setUploadLoading(false), 500);
+            }}
             onSuccess={(result) => {
-              if (result.info.secure_url && result.event === 'success') {
+              document.body.style.overflow = 'auto';
+              const fileSizeMB = result.info.bytes / (1024 * 1024);
+              if (fileSizeMB > 1) {
+                setErrorMsg('❌ Image must be smaller than 1MB');
+                return;
+              }
+
+              if (result.event === 'success' && result.info.secure_url) {
                 setForm((prev) => ({ ...prev, img: result.info.secure_url }));
+                setErrorMsg('');
               }
             }}
           >
@@ -113,22 +129,33 @@ const UploadBlog = () => {
                 type="button"
                 onClick={(e) => {
                   e.preventDefault();
-                  open();
+                  setTimeout(() => open(), 100);
                 }}
-                className="w-full mt-2 border border-gray-300 py-2 px-3 rounded"
+                className="w-full mt-2 border cursor-pointer hover:bg-gray-300 duration-200 border-gray-300 py-2 px-3 rounded flex items-center justify-center gap-2"
               >
-                Upload Image
+                {uploadLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    Opening uploader...
+                  </>
+                ) : (
+                  'Upload Image'
+                )}
               </button>
             )}
           </CldUploadWidget>
 
           {form.img && (
             <div className="relative mt-4">
-              <img src={form.img} alt="Uploaded" className="w-full max-h-72 rounded object-contain" />
+              <img
+                src={form.img}
+                alt="Uploaded"
+                className="w-full max-h-72 rounded object-contain"
+              />
               <button
                 onClick={handleRemoveImage}
                 type="button"
-                className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full"
+                className="absolute top-2 cursor-pointer duration-200 right-2 p-1 bg-red-600 text-white rounded-full"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -163,7 +190,7 @@ const UploadBlog = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+          className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 cursor-pointer duration-200"
         >
           {loading ? 'Uploading...' : 'Submit Blog'}
         </button>

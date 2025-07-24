@@ -126,8 +126,6 @@ const PrivacyPolicyClient = () => {
             <br />
             <span className="block mt-2 font-medium">
               KINTECHY Media Ltd.  
-              <br />
-              123 Tech Avenue, London, UK
             </span>
           </motion.p>
 

@@ -82,22 +82,13 @@ const Footer = () => {
               <Linkedin size={18} className="text-white" />
             </Link>
           </div>
-          <p className="text-sm mt-2">
+          <p className="text-[16px] mt-2">
             📧{" "}
             <Link
               href="mailto:info@example.com"
               className="text-indigo-400 hover:underline"
             >
               kintechyinfo@gmail.com
-            </Link>
-          </p>
-          <p className="text-sm mt-1">
-            📞{" "}
-            <Link
-              href="tel:+1234567890"
-              className="text-indigo-400 hover:underline"
-            >
-              +1 (234) 567-890
             </Link>
           </p>
         </div>

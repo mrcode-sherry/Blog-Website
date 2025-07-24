@@ -14,7 +14,7 @@ export default function Hero() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="relative w-full md:w-[35%] max-w-sm h-80 sm:h-96 rounded-md overflow-hidden shadow-md group order-2 md:order-none"
+          className="relative w-full md:w-[35%] max-w-sm md:h-[365px] h-[330px] rounded-md overflow-hidden shadow-md group order-2 md:order-none"
         >
           <Image
             src="/Hero/blog-hero.jpg"
@@ -33,7 +33,7 @@ export default function Hero() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="absolute md:top-33 top-20 z-20 text-white px-5 w-full space-y-2"
+            className="absolute md:top-24 top-24 z-20 text-white px-7 w-full space-y-3"
           >
             <span className="z-10 rounded-md inline-block px-2 py-1 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[13px] md:text-[15px]">
               <h2 className="skew-x-[10deg] tracking-wide capitalize">
@@ -87,7 +87,7 @@ export default function Hero() {
           >
             <Link href="/contact">
               <button className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 sm:py-3 text-sm sm:text-base rounded-md shadow-md transition duration-200 cursor-pointer">
-                Publish Your Blog
+               Start Blogging Today
               </button>
             </Link>
           </motion.div>
@@ -97,7 +97,7 @@ export default function Hero() {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 1.1, duration: 1.6, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-gray-500 text-sm max-w-xl leading-relaxed pt-3 sm:pt-4 mx-auto md:mx-0"
+            className="text-gray-500 text-sm max-w-xl leading-relaxed mx-auto md:mx-0"
           >
             Our blogging platform publishes daily updates in multiple categories so readers can explore tech innovations, fashion trends, Crypto updates, business strategies, healthcare advice, and sports highlights.
           </motion.p>

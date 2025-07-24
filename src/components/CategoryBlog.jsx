@@ -7,6 +7,18 @@ import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
+// 🔁 Category → Image Map
+const categoryImages = {
+  technology: '/Blog-Category-Image/technology.jpg',
+  finance: '/Blog-Category-Image/finance.jpg',
+  business: '/Blog-Category-Image/business.jpg',
+  crypto: '/Blog-Category-Image/crypto.jpg',
+  sports: '/Blog-Category-Image/sports.jpg',
+  lifestyle: '/Blog-Category-Image/lifestyle.jpg',
+  health: '/Blog-Category-Image/health.jpg',
+  fashion: '/Blog-Category-Image/fashion.jpg',
+};
+
 const CategoryBlog = () => {
   const { data: categories = [], isLoading: loading } = useQuery({
     queryKey: ['blogCategories'],
@@ -17,7 +29,7 @@ const CategoryBlog = () => {
   });
 
   return (
-    <section className="px-6 md:px-20 py-10 sm:py-14 bg-white">
+    <section className="px-6 md:px-20 py-10 md:-mt-14 bg-white">
       {/* Section Heading */}
       <div className="flex items-center justify-center mb-8 relative">
         <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">
@@ -38,46 +50,51 @@ const CategoryBlog = () => {
                 <div className="h-8 w-24 bg-gray-300 rounded-md ml-auto" />
               </div>
             ))
-          : categories.map((cat, i) => (
-              <motion.div
-                key={cat.slug}
-                className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-              >
-                <Link href={`/blogs/${cat.slug}`}>
-                  <div className="relative w-full h-48 sm:h-52 md:h-60 overflow-hidden">
-                    <Image
-                      src={cat.image || "/LatestBlog/blog.jpg"}
-                      alt={cat.category}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent group-hover:opacity-80 transition duration-300" />
+          : categories.map((cat, i) => {
+              const slug = cat.slug.toLowerCase();
+              const img = categoryImages[slug];
+
+              return (
+                <motion.div
+                  key={slug}
+                  className="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300"
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                >
+                  <Link href={`/blogs/${slug}`}>
+                    <div className="relative w-full h-48 sm:h-52 md:h-60 overflow-hidden">
+                      <Image
+                        src={img}
+                        alt={cat.category}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/50 to-transparent group-hover:opacity-80 transition duration-300" />
+                    </div>
+                  </Link>
+
+                  <div className="p-4 sm:p-5 space-y-1 sm:space-y-2">
+                    <Link href={`/blogs/${slug}`}>
+                      <h3 className="text-lg sm:text-xl font-bold text-indigo-700 group-hover:text-indigo-900 transition hover:underline">
+                        {cat.category}
+                      </h3>
+                    </Link>
+                    <p className="text-sm text-gray-600">{cat.count} Articles</p>
                   </div>
-                </Link>
 
-                <div className="p-4 sm:p-5 space-y-1 sm:space-y-2">
-                  <Link href={`/blogs/${cat.slug}`}>
-                    <h3 className="text-lg sm:text-xl font-bold text-indigo-700 group-hover:text-indigo-900 transition hover:underline">
-                      {cat.category}
-                    </h3>
-                  </Link>
-                  <p className="text-sm text-gray-600">{cat.count} Articles</p>
-                </div>
-
-                <div className="absolute bottom-3 right-3">
-                  <Link
-                    href={`/blogs/${cat.slug}`}
-                    className="text-xs sm:text-sm bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-indigo-700 transition shadow-md"
-                  >
-                    View Blogs
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
+                  <div className="absolute bottom-3 right-3">
+                    <Link
+                      href={`/blogs/${slug}`}
+                      className="text-xs sm:text-sm bg-indigo-600 text-white px-3 sm:px-4 py-2 rounded-md hover:bg-indigo-700 transition shadow-md"
+                    >
+                      View Blogs
+                    </Link>
+                  </div>
+                </motion.div>
+              );
+            })}
       </div>
     </section>
   );

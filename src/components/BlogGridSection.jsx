@@ -4,8 +4,7 @@ import Image from "next/image";
 import striptags from "striptags";
 
 export default function BlogGridSection({ blogs }) {
-  console.log("🔍 Received blogs in BlogGridSection:", blogs);
-
+  
   if (!Array.isArray(blogs) || blogs.length === 0) {
     return (
       <p className="text-center mt-6 text-gray-500">No blogs available.</p>
@@ -13,7 +12,7 @@ export default function BlogGridSection({ blogs }) {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 pb-16">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 md:pb-16 pb-10">
       {blogs.map((blog) => {
         const validImg =
           blog.img?.startsWith("http") ||

@@ -2,11 +2,9 @@ import dbConnect from '@/backend/db';
 import Blog from '@/backend/models/blog';
 import { NextResponse } from 'next/server';
 
-export async function GET(request, contextPromise) {
-  const context = await contextPromise; // ✅ await context
+export async function GET(request, context) {
   await dbConnect();
-
-  const { slug } = context.params;
+  const slug = context.params.slug;
 
   try {
     const blog = await Blog.findOne({ slug });

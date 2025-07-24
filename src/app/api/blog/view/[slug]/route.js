@@ -2,9 +2,9 @@ import dbConnect from '@/backend/db';
 import Blog from '@/backend/models/blog';
 import { NextResponse } from 'next/server';
 
-export async function PUT(req, { params }) {
+export async function PUT(req, context) {
   await dbConnect();
-  const { slug } = params;
+const slug = context.params.slug;
 
   try {
     await Blog.findOneAndUpdate({ slug }, { $inc: { views: 1 } });

@@ -4,7 +4,7 @@ export const generateMetadata = () => {
   return {
     title: 'Kintechy | About',
     description:
-      'Learn more about Kintechy – a forward-thinking blog platform covering technology, business, crypto, and lifestyle content.',
+      'Get to know Kintechy – An innovative blog platform featuring technology, businesses, cryptocurrency and lifestyle contents.',
     robots: 'index, follow',
   };
 };

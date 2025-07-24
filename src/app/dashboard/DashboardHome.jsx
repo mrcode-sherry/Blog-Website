@@ -104,23 +104,6 @@ const DashboardHome = () => {
           ))}
         </ul>
       </motion.div>
-
-      {/* Future Features Section */}
-      <motion.div
-        variants={fadeUp}
-        initial="hidden"
-        animate="visible"
-        custom={0.3}
-        className="bg-white p-6 rounded-lg shadow-md"
-      >
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800">Next Steps</h2>
-        <ul className="list-disc pl-6 text-gray-600 space-y-2">
-          <li>Add Recent Activity Feed</li>
-          <li>Implement Blog Analytics</li>
-          <li>Setup Comment Moderation</li>
-          <li>Connect Google Analytics / Mailchimp</li>
-        </ul>
-      </motion.div>
     </div>
   );
 };

@@ -5,6 +5,7 @@ import TrendingBlog from "@/components/TrendingBlog";
 import BlogGridSection from "@/components/BlogGridSection";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -18,15 +19,17 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function CategoryPage({ params }) {
+export default async function CategoryPage({ params, searchParams }) {
   const category = params.category;
+  const page = parseInt(searchParams?.page || "1");
+  const limit = 9;
 
-  // Use dynamic host detection
-  const host = headers().get("host");
+  const headersList = await headers();
+  const host = headersList.get("host");
   const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
   const baseUrl = `${protocol}://${host}`;
 
-  const res = await fetch(`${baseUrl}/api/blog/category/${category}`, {
+  const res = await fetch(`${baseUrl}/api/blog/category/${category}?page=${page}&limit=${limit}`, {
     cache: "no-store",
   });
 
@@ -77,7 +80,7 @@ export default async function CategoryPage({ params }) {
                       <span className="skew-x-[10deg] tracking-wider">{featured.category}</span>
                     </span>
                   </div>
-                  <h3 className="text-white text-xl sm:text-2xl md:text-[40px] mb-4 font-bold leading-tight hover:underline hover:decoration-blue-500 hover:underline-offset-4 duration-300">
+                  <h3 className="text-white text-xl sm:text-2xl md:text-[40px] mb-4 font-bold leading-tight hover:underline hover:decoration-indigo-400 hover:underline-offset-4 duration-300">
                     {featured.title}
                   </h3>
                   <p className="text-gray-200 text-sm sm:text-base mb-4 leading-relaxed md:line-clamp-3 line-clamp-2">
@@ -91,8 +94,34 @@ export default async function CategoryPage({ params }) {
             </Link>
           )}
 
-          {/* Blog grid */}
           <BlogGridSection blogs={remainingBlogs} />
+
+          {/* Pagination */}
+          {data.totalPages > 1 && (
+            <div className="flex justify-center items-center gap-6 pt-10">
+              {page > 1 && (
+                <Link
+                  href={`/blogs/${category}?page=${page - 1}`}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition font-semibold shadow"
+                >
+                  <ChevronLeft size={18} />
+                  Previous
+                </Link>
+              )}
+              <span className="text-indigo-700 font-medium text-sm sm:text-base">
+                Page {page} of {data.totalPages}
+              </span>
+              {page < data.totalPages && (
+                <Link
+                  href={`/blogs/${category}?page=${page + 1}`}
+                  className="flex items-center gap-2 px-5 py-2 rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition font-semibold shadow"
+                >
+                  Next
+                  <ChevronRight size={18} />
+                </Link>
+              )}
+            </div>
+          )}
         </section>
 
         <aside className="w-full lg:w-[30%]">

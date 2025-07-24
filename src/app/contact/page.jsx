@@ -6,7 +6,7 @@ import ContactForm from '../../components/ContactForm';
 export const generateMetadata = () => {
   return {
     title: "Kintechy | Contact",
-    description: "Get in touch with Kintechy. We'd love to hear from you. Send your message, inquiry, or feedback today.",
+    description: "Get in touch with kintechy. We would love to hear from you. Send your message question or feedback today!",
     robots: "index, follow",
   };
 };

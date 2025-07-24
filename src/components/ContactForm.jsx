@@ -205,18 +205,12 @@ const ContactForm = () => {
               </Link>
             </div>
 
-            {/* Email and Phone */}
+            {/* Email */}
             <div className="space-y-3 text-gray-700">
               <div className="flex items-center gap-3">
                 <Mail className="text-indigo-600" size={20} />
                 <Link href="mailto:info@example.com" className="hover:underline text-[16px] hover:text-indigo-700 transition">
                   kintechyinfo@gmail.com
-                </Link>
-              </div>
-              <div className="flex items-center gap-3">
-                <Phone className="text-indigo-600" size={20} />
-                <Link href="tel:+1234567890" className="hover:underline text-[16px] hover:text-indigo-700 transition">
-                  +1 (234) 567-890
                 </Link>
               </div>
             </div>

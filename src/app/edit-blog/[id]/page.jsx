@@ -16,7 +16,8 @@ const categories = [
 export default function EditBlogPage() {
   const { id } = useParams();
   const router = useRouter();
-  const imageRef = useRef(null);
+  const imageWrapperRef = useRef(null);
+  const imageContainerRef = useRef(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -29,7 +30,7 @@ export default function EditBlogPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
-  const [scrollImage, setScrollImage] = useState(false);
+  const [scrollTrigger, setScrollTrigger] = useState(false);
 
   const fetchBlog = async () => {
     try {
@@ -40,8 +41,10 @@ export default function EditBlogPage() {
           ...data.blog,
           category: data.blog.category?.toLowerCase() || 'technology',
         });
-        setScrollImage(true); // trigger scroll after image loads
         setLoading(false);
+        setTimeout(() => {
+          imageWrapperRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 400);
       } else {
         alert('Blog not found');
         router.push('/');
@@ -55,15 +58,19 @@ export default function EditBlogPage() {
     fetchBlog();
   }, [id]);
 
+  // ✅ Auto-scroll once the image DOM node updates
   useEffect(() => {
-    if (scrollImage && formData.img && imageRef.current) {
-      // fallback scroll in case onLoad doesn't trigger
-      setTimeout(() => {
-        imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 300);
-      setScrollImage(false);
-    }
-  }, [scrollImage, formData.img]);
+    if (!scrollTrigger || !formData.img || !imageWrapperRef.current) return;
+
+    const observer = new MutationObserver(() => {
+      imageWrapperRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      observer.disconnect();
+    });
+
+    observer.observe(imageWrapperRef.current, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [scrollTrigger, formData.img]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -146,11 +153,13 @@ export default function EditBlogPage() {
                 cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
                 onOpen={() => {
                   document.body.style.overflow = 'hidden';
+                  document.documentElement.style.overflow = 'hidden';
                   setUploadLoading(true);
                 }}
                 onClose={() => {
                   document.body.style.overflow = 'auto';
-                  setTimeout(() => setUploadLoading(false), 500);
+                  document.documentElement.style.overflow = 'auto';
+                  setTimeout(() => setUploadLoading(false), 300);
                 }}
                 onSuccess={(result) => {
                   const fileSizeMB = result.info.bytes / (1024 * 1024);
@@ -162,7 +171,7 @@ export default function EditBlogPage() {
 
                   if (result.info.secure_url && result.event === 'success') {
                     setFormData((prev) => ({ ...prev, img: result.info.secure_url }));
-                    setScrollImage(true);
+                    setScrollTrigger(true);
                   }
                 }}
               >
@@ -189,23 +198,23 @@ export default function EditBlogPage() {
               </CldUploadWidget>
             )}
 
+            {/* Image Preview */}
             {formData.img && (
-              <div ref={imageRef} className="relative mt-3 w-full rounded shadow-md">
-                <img
-                  src={formData.img}
-                  alt="Uploaded"
-                  className="w-full max-h-72 object-contain rounded"
-                  onLoad={() => {
-                    imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                  }}
-                />
-                <button
-                  type="button"
-                  onClick={handleRemoveImage}
-                  className="absolute top-2 right-2 bg-white p-1 duration-200 rounded-full shadow hover:bg-red-600 hover:text-white transition"
-                >
-                  <X className="w-5 h-5" />
-                </button>
+              <div ref={imageWrapperRef} className="relative mt-3 w-full rounded shadow-md">
+                <div ref={imageContainerRef}>
+                  <img
+                    src={formData.img}
+                    alt="Uploaded"
+                    className="w-full max-h-72 object-contain rounded"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-2 right-2 bg-white p-1 duration-200 rounded-full shadow hover:bg-red-600 hover:text-white transition"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             )}
           </div>

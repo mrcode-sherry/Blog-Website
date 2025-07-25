@@ -14,7 +14,7 @@ export default function Hero() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           viewport={{ once: true }}
-          className="relative w-full md:w-[35%] max-w-sm md:h-[365px] h-[330px] rounded-md overflow-hidden shadow-md group order-2 md:order-none"
+          className="relative w-full md:w-[35%] max-w-sm md:h-[365px] h-[310px] rounded-md overflow-hidden shadow-md group order-2 md:order-none"
         >
           <Image
             src="/Hero/blog-hero.jpg"
@@ -33,7 +33,7 @@ export default function Hero() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="absolute md:top-24 top-24 z-20 text-white px-7 w-full space-y-3"
+            className="absolute md:top-24 top-16 z-20 text-white px-7 w-full space-y-3"
           >
             <span className="z-10 rounded-md inline-block px-2 py-1 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-[13px] md:text-[15px]">
               <h2 className="skew-x-[10deg] tracking-wide capitalize">

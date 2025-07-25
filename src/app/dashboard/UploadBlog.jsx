@@ -131,11 +131,11 @@ const UploadBlog = () => {
                   e.preventDefault();
                   setTimeout(() => open(), 100);
                 }}
-                className="w-full mt-2 border cursor-pointer hover:bg-gray-300 duration-200 border-gray-300 py-2 px-3 rounded flex items-center justify-center gap-2"
+                className="w-full mt-2 border cursor-pointer hover:bg-gray-300 duration-200 border-gray-300 py-2 px-3 rounded flex items-center justify-center gap-2 text-black"
               >
                 {uploadLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin text-black" />
                     Opening uploader...
                   </>
                 ) : (
@@ -167,7 +167,7 @@ const UploadBlog = () => {
           name="category"
           value={form.category}
           onChange={handleChange}
-          className="w-full p-3 border rounded"
+          className="w-full p-3 border rounded text-black"
           required
         >
           <option value="" className='text-black'>Select Category</option>
@@ -184,7 +184,7 @@ const UploadBlog = () => {
           value={form.author}
           onChange={handleChange}
           placeholder="Author (default: Admin)"
-          className="w-full p-3 border rounded"
+          className="w-full p-3 border rounded text-black"
         />
 
         <button

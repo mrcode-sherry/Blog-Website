@@ -224,7 +224,7 @@ export default function EditBlogPage() {
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="p-2 border rounded"
+            className="p-2 border rounded text-black"
             required
           >
             <option value="" className='text-black'>Select Category</option>

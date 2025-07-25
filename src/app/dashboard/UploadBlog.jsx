@@ -76,7 +76,7 @@ const UploadBlog = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-2xl font-semibold mb-4">Upload New Blog</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-black">Upload New Blog</h2>
 
       {successMsg && <p className="text-green-600">{successMsg}</p>}
       {errorMsg && <p className="text-red-600">{errorMsg}</p>}
@@ -88,17 +88,17 @@ const UploadBlog = () => {
           value={form.title}
           onChange={handleChange}
           placeholder="Blog Title"
-          className="w-full p-3 border rounded"
+          className="w-full p-3 border rounded text-black"
           required
         />
 
         <div>
-          <label className="text-sm font-medium">Blog Description</label>
-          <TinyEditor value={form.desc} onChange={handleDescriptionChange} />
+          <label className="text-sm font-medium text-black">Blog Description</label>
+          <TinyEditor value={form.desc} onChange={handleDescriptionChange} className="text-black"/>
         </div>
 
         <div>
-          <label className="text-sm font-medium">Upload Blog Image</label>
+          <label className="text-sm font-medium text-black">Upload Blog Image</label>
           <CldUploadWidget
             uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
             cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
@@ -170,7 +170,7 @@ const UploadBlog = () => {
           className="w-full p-3 border rounded"
           required
         >
-          <option value="">Select Category</option>
+          <option value="" className='text-black'>Select Category</option>
           {categories.map((cat) => (
             <option key={cat} value={cat.toLowerCase()}>
               {cat}

@@ -123,7 +123,7 @@ export default function EditBlogPage() {
   return (
     <div className="min-h-screen px-4 py-10 bg-gray-50 mt-20">
       <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
-        <h1 className="text-2xl font-bold mb-4">Edit Blog</h1>
+        <h1 className="text-2xl font-bold mb-4 text-black">Edit Blog</h1>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
@@ -131,7 +131,7 @@ export default function EditBlogPage() {
             value={formData.title}
             onChange={handleChange}
             placeholder="Title"
-            className="p-2 border rounded"
+            className="p-2 border rounded text-black"
             required
           />
 
@@ -140,7 +140,7 @@ export default function EditBlogPage() {
             value={formData.author}
             onChange={handleChange}
             placeholder="Author"
-            className="p-2 border rounded"
+            className="p-2 border rounded text-black"
           />
 
           {/* Image Upload Section */}
@@ -183,11 +183,11 @@ export default function EditBlogPage() {
                       open();
                     }}
                     disabled={uploadLoading}
-                    className="p-2 border rounded flex items-center justify-center gap-2 cursor-pointer bg-white w-full hover:bg-gray-300 transition"
+                    className="p-2 border rounded flex items-center justify-center gap-2 cursor-pointer bg-white w-full hover:bg-gray-300 transition text-black"
                   >
                     {uploadLoading ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin text-black" />
                         Opening uploader...
                       </>
                     ) : (
@@ -227,7 +227,7 @@ export default function EditBlogPage() {
             className="p-2 border rounded"
             required
           >
-            <option value="">Select Category</option>
+            <option value="" className='text-black'>Select Category</option>
             {categories.map((cat) => (
               <option key={cat} value={cat}>
                 {cat.charAt(0).toUpperCase() + cat.slice(1)}
@@ -240,7 +240,7 @@ export default function EditBlogPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Blog Description
             </label>
-            <TinyEditor value={formData.desc} onChange={handleDescriptionChange} />
+            <TinyEditor value={formData.desc} onChange={handleDescriptionChange} className="text-black"/>
           </div>
 
           <button

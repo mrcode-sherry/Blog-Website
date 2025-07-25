@@ -79,7 +79,7 @@ export default function ManageBlogs() {
         variants={fadeUp}
         initial="hidden"
         animate="visible"
-        className="text-2xl font-semibold mb-4"
+        className="text-2xl font-semibold mb-4 text-black"
       >
         Manage Blogs
       </motion.h2>
@@ -92,11 +92,11 @@ export default function ManageBlogs() {
         custom={0.1}
         className="mb-6"
       >
-        <label className="mr-2 font-medium">Filter by Category:</label>
+        <label className="mr-2 font-medium text-black">Filter by Category:</label>
         <select
           value={selectedCategory}
           onChange={(e) => setSelectedCategory(e.target.value)}
-          className="p-2 border rounded"
+          className="p-2 border rounded text-black border-black"
         >
           {categories.map((cat) => (
             <option key={cat}>{cat}</option>
@@ -109,7 +109,7 @@ export default function ManageBlogs() {
         {isLoading ? (
           Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
         ) : filteredBlogs.length === 0 ? (
-          <p>No blogs found in this category.</p>
+          <p className="text-black">No blogs found in this category.</p>
         ) : (
           filteredBlogs.map((blog, idx) => (
             <motion.div
@@ -128,7 +128,7 @@ export default function ManageBlogs() {
                   className="w-24 h-16 object-cover rounded"
                 />
                 <div>
-                  <h3 className="font-semibold text-lg">{blog.title}</h3>
+                  <h3 className="font-semibold text-lg text-black">{blog.title}</h3>
                   <p className="text-sm text-gray-500">
                     Uploaded: {new Date(blog.createdAt).toLocaleDateString()}
                   </p>

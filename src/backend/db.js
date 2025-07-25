@@ -1,16 +1,17 @@
 import mongoose from "mongoose";
 
 const dbConnect = async () => {
-    if(mongoose.connection.readyState >= 1){
-        return
-    }
+  if (mongoose.connection.readyState >= 1) return;
 
-    try {
-        await mongoose.connect("mongodb+srv://root:root@cluster0.qm6ovvw.mongodb.net/")
-        console.log("Database Connected")
-    } catch (error) {
-        console.log(error)
-    }
-}
+  try {
+    const uri = process.env.MONGODB_URI;
+    if (!uri) throw new Error("MONGODB_URI is not defined in .env");
 
-export default dbConnect
+    await mongoose.connect(uri);
+    console.log("✅ Database Connected");
+  } catch (error) {
+    console.error("❌ Database Connection Error:", error);
+  }
+};
+
+export default dbConnect;

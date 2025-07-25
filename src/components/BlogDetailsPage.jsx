@@ -21,7 +21,7 @@ export default function BlogDetailsPage({ blog, relatedBlogs }) {
     "[&_h1]:text-2xl sm:[&_h1]:text-3xl [&_h2]:text-xl sm:[&_h2]:text-2xl [&_h3]:text-lg sm:[&_h3]:text-xl " +
     "[&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-6 " +
     "[&_p]:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:pl-4 [&_blockquote]:italic " +
-    "[&_img]:rounded-lg [&_img]:shadow-md";
+    "[&_img]:rounded-lg [&_img]:shadow-md [&_img]:max-w-full [&_img]:h-auto [&_img]:my-4";
 
   return (
     <div className="md:px-20 px-6 pt-28 sm:pt-32 bg-white">

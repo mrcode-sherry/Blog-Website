@@ -20,12 +20,15 @@ const ContactForm = () => {
     phone: '',
   });
 
+  const [loading, setLoading] = useState(false); // added loading state
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // start loading
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
@@ -46,6 +49,8 @@ const ContactForm = () => {
     } catch (err) {
       console.error(err);
       alert("❌ An error occurred while sending the message.");
+    } finally {
+      setLoading(false); // stop loading
     }
   };
 
@@ -167,9 +172,14 @@ const ContactForm = () => {
 
             <button
               type="submit"
-              className="w-full sm:w-auto cursor-pointer duration-300 bg-indigo-600 text-white px-6 py-3 rounded-md hover:bg-indigo-700 transition"
+              disabled={loading}
+              className={`w-full sm:w-auto cursor-pointer duration-300 px-6 py-3 rounded-md transition ${
+                loading
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
+              }`}
             >
-              Submit Message
+              {loading ? 'Submitting...' : 'Submit Message'}
             </button>
           </form>
 
@@ -177,7 +187,6 @@ const ContactForm = () => {
           <div className="mt-12 space-y-6">
             <h2 className="text-xl font-semibold text-gray-800">Get in Touch</h2>
 
-            {/* Social Icons */}
             <div className="flex gap-4 flex-wrap">
               <Link
                 href="https://facebook.com"
@@ -205,11 +214,13 @@ const ContactForm = () => {
               </Link>
             </div>
 
-            {/* Email */}
             <div className="space-y-3 text-gray-700">
               <div className="flex items-center gap-3">
                 <Mail className="text-indigo-600" size={20} />
-                <Link href="mailto:info@example.com" className="hover:underline text-[16px] hover:text-indigo-700 transition">
+                <Link
+                  href="mailto:info@example.com"
+                  className="hover:underline text-[16px] hover:text-indigo-700 transition"
+                >
                   kintechyinfo@gmail.com
                 </Link>
               </div>

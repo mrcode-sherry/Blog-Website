@@ -22,6 +22,7 @@ export default function BlogDetailsPage({ blog, relatedBlogs }) {
     "[&_ul]:list-disc [&_ol]:list-decimal [&_li]:ml-6 " +
     "[&_p]:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:pl-4 [&_blockquote]:italic " +
     "[&_img]:rounded-lg [&_img]:shadow-md [&_img]:max-w-full [&_img]:h-auto [&_img]:my-4";
+    "[&_a]:text-blue-600 [&_a]:underline hover:[&_a]:text-blue-800"
 
   return (
     <div className="md:px-20 px-6 pt-28 sm:pt-32 bg-white">

@@ -1,9 +1,15 @@
 import BlogDetailsPage from "@/components/BlogDetailsPage";
 import { notFound } from "next/navigation";
 
+// 📌 Helper to remove HTML tags
+function stripHtml(html) {
+  return html.replace(/<[^>]*>/g, "");
+}
+
 // 📌 Generate metadata for SEO and Open Graph
 export async function generateMetadata(props) {
   const slug = props.params.slug;
+  const category = props.params.category;
   if (!slug) return { title: "Blog Not Found" };
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/blog/slug/${slug}`, {
@@ -27,13 +33,19 @@ export async function generateMetadata(props) {
     };
   }
 
+  // Strip HTML from blog.desc and limit to 120 characters
+  const cleanDesc = stripHtml(blog.metadesc || blog.desc || "").slice(0, 130);
+
   return {
     title: blog.metitle || blog.title,
-    description: blog.metadesc || blog.desc?.slice(0, 160),
+    description: cleanDesc,
     openGraph: {
       title: blog.metitle || blog.title,
-      description: blog.metadesc || blog.desc?.slice(0, 160),
+      description: cleanDesc,
       images: blog.img ? [blog.img] : [],
+    },
+    alternates: {
+      canonical: `https://kintechy.com/blogs/${category}/${slug}`,
     },
   };
 }

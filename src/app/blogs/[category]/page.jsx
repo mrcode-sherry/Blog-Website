@@ -14,9 +14,13 @@ function capitalize(str) {
 export async function generateMetadata({ params }) {
   const category = params.category;
   return {
-    title: `Kintechy | ${capitalize(category)}`,
-    description: `Explore the latest ${category} blogs on Kintechy.`,
-  };
+  title: `Kintechy | Latest ${capitalize(category)} News Trends and Insights Today`,
+  description: `Stay updated with the latest ${category} blogs, insights, expert opinions, and trending news only on Kintechy.`,
+  alternates: {
+      canonical: `https://kintechy.com/blogs/${category}`,
+    },
+};
+
 }
 
 export default async function CategoryPage({ params, searchParams }) {

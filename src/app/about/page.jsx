@@ -2,10 +2,13 @@ import AboutClient from "@/components/AboutClient";
 
 export const generateMetadata = () => {
   return {
-    title: 'Kintechy | About',
+    title: 'Kintechy | Discover Our Mission and Blog Purpose',
     description:
-      'Get to know Kintechy – An innovative blog platform featuring technology, businesses, cryptocurrency and lifestyle contents.',
+      'Get to know Kintechy – an innovative blog platform featuring technology, business, cryptocurrency, and lifestyle content.',
     robots: 'index, follow',
+    alternates: {
+      canonical: 'https://kintechy.com/about',
+    },
   };
 };
 

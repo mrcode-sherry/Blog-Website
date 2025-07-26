@@ -22,10 +22,25 @@ const lora = Lora({
 
 // ✅ Updated metadata with favicon
 export const metadata: Metadata = {
-  title: "Kintechy",
-  description: "A blog covering tech, lifestyle, design, and more.",
-  icons: {
-    icon: "/favicon.ico", // ✅ This is the only line added
+  title: "Kintechy | Explore tech finance crypto health fashion",
+  description: "Enhance your knowledge by staying on top of the trends in technology, cryptocurrency, business, finance, healthcare, fashion, and even sports.",
+  keywords: [
+    "tech news", "AI tools", "latest smartphones", "web development",
+    "finance tips", "crypto trends", "business ideas", "startup growth",
+    "blockchain news", "bitcoin updates", "NFTs explained", "ethereum guide",
+    "sports updates", "fitness routines", "lifestyle hacks", "fashion tips",
+    "mental health", "healthy diet", "SEO tricks", "digital marketing",
+    "app development", "UI/UX trends", "programming basics", "React.js",
+    "Next.js tutorials", "cloud hosting", "mobile apps", "crypto wallets",
+    "investment strategies", "online business", "passive income", "freelancing",
+    "self improvement", "remote work", "Google algorithm", "YouTube SEO",
+    "design inspiration", "coding tips", "finance news", "ecommerce trends",
+    "sports tech", "life coaching", "travel guides", "nutrition plans",
+    "tech gadgets", "startup tips", "market analysis", "fashion 2025",
+    "blockchain dev", "javascript"
+  ],
+  alternates: {
+    canonical: "https://www.kintechy.com",
   },
 };
 

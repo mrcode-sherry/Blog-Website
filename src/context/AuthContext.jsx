@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (username, password) => {
     // Replace with your own logic or API call
-    if (username === 'kinAdmin2025' && password === 'SafeZone@8_8') {
+    if (username === 'kinAdmin2025' && password === 'SafeZone@88') {
       setIsAuthenticated(true);
       localStorage.setItem('isAuthenticated', 'true');
       router.push('/dashboard');

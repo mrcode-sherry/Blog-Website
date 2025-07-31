@@ -15,7 +15,8 @@ export async function generateMetadata({ params }) {
   const category = params.category;
   return {
   title: `Kintechy | Latest ${capitalize(category)} News Trends and Insights Today`,
-  description: `Stay updated with the latest ${category} blogs, insights, expert opinions, and trending news only on Kintechy.`,
+  description: `Kintechy is the only place to get the latest ${category} blogs, news, expert opinions, and trending news.
+`,
   alternates: {
       canonical: `https://kintechy.com/blogs/${category}`,
     },

@@ -41,11 +41,10 @@ export default function Hero() {
               </h2>
             </span>
             <h3 className="md:text-[26px] text-xl font-semibold leading-snug">
-              Discover the Future of Tech & Digital Life
+              Explore the Tech & Digital Lifestyle Trends
             </h3>
             <p className="md:text-[16px] text-sm opacity-90 leading-relaxed">
-              Explore trending stories in tech, fashion, business, Lifestyle, Finance, Sports, Crypto and health.  
-              Stay updated — stay inspired.
+              Discover popular stories in top categories such as tech, fashion, business, lifestyle, sports, celebrity news, (Crypto) cryptocurrency news. Stay updated stay inspired.
             </p>
           </motion.div>
         </motion.div>

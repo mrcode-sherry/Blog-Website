@@ -4,7 +4,7 @@ import PrivacyPolicyClient from '@/components/PrivacyPolicyClient';
 
 export const generateMetadata = () => ({
   title: 'Kintechy | Understand Your Data Privacy Rights Clearly',
-  description: 'Learn how Kintechy protects your data, uses cookies, and complies with GDPR, CCPA, and other privacy standards.',
+  description: 'Find out how Kintechy keeps your information safe, uses cookies, and follows the rules set by GDPR, CCPA, and other privacy laws.',
   alternates: {
     canonical: "https://kintechy.com/privacy-policy",
   },

@@ -91,11 +91,8 @@ const AboutClient = () => {
             <Link href="https://facebook.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
               <Facebook size={24} />
             </Link>
-            <Link href="https://instagram.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
+            <Link href="https://www.instagram.com/kintechy_media2025" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
               <Instagram size={24} />
-            </Link>
-            <Link href="https://linkedin.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
-              <Linkedin size={24} />
             </Link>
           </motion.div>
         </section>

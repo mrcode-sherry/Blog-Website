@@ -68,24 +68,17 @@ const Footer = () => {
               <Facebook size={18} className="text-white" />
             </Link>
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/kintechy_media2025"
               target="_blank"
               className="p-2 bg-gray-800 rounded-full hover:bg-indigo-600 transition"
             >
               <Instagram size={18} className="text-white" />
             </Link>
-            <Link
-              href="https://linkedin.com"
-              target="_blank"
-              className="p-2 bg-gray-800 rounded-full hover:bg-indigo-600 transition"
-            >
-              <Linkedin size={18} className="text-white" />
-            </Link>
           </div>
           <p className="text-[16px] mt-2">
             📧{" "}
             <Link
-              href="mailto:info@example.com"
+              href="kintechyinfo@gmail.com"
               className="text-indigo-400 hover:underline"
             >
               kintechyinfo@gmail.com

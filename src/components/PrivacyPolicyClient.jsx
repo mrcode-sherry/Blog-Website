@@ -101,14 +101,14 @@ const PrivacyPolicyClient = () => {
             <li>If you’re in the EU, request a portable copy of your data.</li>
           </motion.ul>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.8} className="text-base text-gray-700 leading-relaxed mt-2">
-            To exercise your rights, email us at <a href="mailto:privacy@kintechy.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>. We respond within 7 days.
+            To exercise your rights, email us at <a href="kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>. We respond within 7 days.
           </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.85} className="text-lg font-semibold text-indigo-600 mt-6">
             Children’s Privacy
           </motion.h3>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.9} className="text-base text-gray-700 leading-relaxed">
-            We do not knowingly collect data from children. If you're a parent and believe your child has shared personal info, contact us immediately at <a href="mailto:privacy@kintechy.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>.
+            We do not knowingly collect data from children. If you're a parent and believe your child has shared personal info, contact us immediately at <a href="kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>.
           </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.95} className="text-lg font-semibold text-indigo-600 mt-6">
@@ -122,7 +122,7 @@ const PrivacyPolicyClient = () => {
             Contact KINTECHY
           </motion.h3>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.1} className="text-base text-gray-700 leading-relaxed">
-            For any questions regarding this Privacy Policy, cookies, or data usage, contact us at <a href="mailto:privacy@kintechy.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a> or write to:
+            For any questions regarding this Privacy Policy, cookies, or data usage, contact us at <a href="kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a> or write to:
             <br />
             <span className="block mt-2 font-medium">
               KINTECHY Media Ltd.  
@@ -133,11 +133,8 @@ const PrivacyPolicyClient = () => {
             <Link href="https://facebook.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
               <Facebook size={24} />
             </Link>
-            <Link href="https://instagram.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
+            <Link href="https://www.instagram.com/kintechy_media2025" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
               <Instagram size={24} />
-            </Link>
-            <Link href="https://linkedin.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
-              <Linkedin size={24} />
             </Link>
           </motion.div>
         </section>

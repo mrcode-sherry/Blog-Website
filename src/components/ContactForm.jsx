@@ -197,20 +197,12 @@ const ContactForm = () => {
                 <Facebook size={20} />
               </Link>
               <Link
-                href="https://instagram.com"
+                href="https://www.instagram.com/kintechy_media2025"
                 target="_blank"
                 aria-label="Instagram"
                 className="p-3 bg-indigo-100 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition"
               >
                 <Instagram size={20} />
-              </Link>
-              <Link
-                href="https://linkedin.com"
-                target="_blank"
-                aria-label="LinkedIn"
-                className="p-3 bg-indigo-100 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition"
-              >
-                <Linkedin size={20} />
               </Link>
             </div>
 
@@ -218,7 +210,7 @@ const ContactForm = () => {
               <div className="flex items-center gap-3">
                 <Mail className="text-indigo-600" size={20} />
                 <Link
-                  href="mailto:info@example.com"
+                  href="kintechyinfo@gmail.com"
                   className="hover:underline text-[16px] hover:text-indigo-700 transition"
                 >
                   kintechyinfo@gmail.com

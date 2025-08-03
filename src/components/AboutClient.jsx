@@ -88,7 +88,7 @@ const AboutClient = () => {
             custom={0.5}
             className="flex items-center gap-6 mt-4 sm:mt-6"
           >
-            <Link href="https://facebook.com" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
+            <Link href="https://www.facebook.com/people/Kintechy-Media/61579023332486/" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">
               <Facebook size={24} />
             </Link>
             <Link href="https://www.instagram.com/kintechy_media2025" target="_blank" className="text-indigo-600 hover:text-indigo-800 transition-colors">

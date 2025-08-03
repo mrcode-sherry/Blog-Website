@@ -61,7 +61,7 @@ const Footer = () => {
           </p>
           <div className="flex gap-3 mb-4">
             <Link
-              href="https://facebook.com"
+              href="https://www.facebook.com/people/Kintechy-Media/61579023332486/"
               target="_blank"
               className="p-2 bg-gray-800 rounded-full hover:bg-indigo-600 transition"
             >
@@ -77,12 +77,13 @@ const Footer = () => {
           </div>
           <p className="text-[16px] mt-2">
             📧{" "}
-            <Link
-              href="kintechyinfo@gmail.com"
+            <a
+              href="mailto:kintechyinfo@gmail.com"
               className="text-indigo-400 hover:underline"
             >
               kintechyinfo@gmail.com
-            </Link>
+            </a>
+
           </p>
         </div>
 

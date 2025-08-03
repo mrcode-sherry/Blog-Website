@@ -189,7 +189,7 @@ const ContactForm = () => {
 
             <div className="flex gap-4 flex-wrap">
               <Link
-                href="https://facebook.com"
+                href="https://www.facebook.com/people/Kintechy-Media/61579023332486/"
                 target="_blank"
                 aria-label="Facebook"
                 className="p-3 bg-indigo-100 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition"
@@ -209,12 +209,12 @@ const ContactForm = () => {
             <div className="space-y-3 text-gray-700">
               <div className="flex items-center gap-3">
                 <Mail className="text-indigo-600" size={20} />
-                <Link
-                  href="kintechyinfo@gmail.com"
+                <a
+                  href="mailto:kintechyinfo@gmail.com"
                   className="hover:underline text-[16px] hover:text-indigo-700 transition"
                 >
                   kintechyinfo@gmail.com
-                </Link>
+                </a>
               </div>
             </div>
           </div>

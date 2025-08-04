@@ -18,7 +18,7 @@ export async function generateMetadata({ params }) {
   description: `Kintechy is the only place to get the latest ${category} blogs, news, expert opinions, and trending news.
 `,
   alternates: {
-      canonical: `https://kintechy.com/blogs/${category}`,
+      canonical: `https://www.kintechy.com/blogs/${category}`,
     },
 };
 

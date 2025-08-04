@@ -7,7 +7,7 @@ export const generateMetadata = () => {
       'Get to know Kintechy – an innovative blog platform featuring technology, business, cryptocurrency, and lifestyle content.',
     robots: 'index, follow',
     alternates: {
-      canonical: 'https://kintechy.com/about',
+      canonical: 'https://www.kintechy.com/about',
     },
   };
 };

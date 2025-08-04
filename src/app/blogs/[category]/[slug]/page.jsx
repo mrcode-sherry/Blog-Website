@@ -45,7 +45,7 @@ export async function generateMetadata(props) {
       images: blog.img ? [blog.img] : [],
     },
     alternates: {
-      canonical: `https://kintechy.com/blogs/${category}/${slug}`,
+      canonical: `https://www.kintechy.com/blogs/${category}/${slug}`,
     },
   };
 }

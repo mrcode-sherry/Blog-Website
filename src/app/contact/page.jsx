@@ -9,7 +9,7 @@ export const generateMetadata = () => {
     description: "Get in touch with kintechy. We would love to hear from you. Send your message question or feedback today!",
     robots: "index, follow",
     alternates: {
-      canonical: "https://kintechy.com/contact",
+      canonical: "https://www.kintechy.com/contact",
     },
   };
 };

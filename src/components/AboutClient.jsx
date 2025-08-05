@@ -57,23 +57,23 @@ const AboutClient = () => {
           </motion.div>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We cover everything from technology, health, finance, business, and sports aiming to give our readers a fresh and exciting perspective on life.
+            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We write about tech, health, finance, business and sports… just tryin' to show life in cool and fresh way to our readers.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.25} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            We understand that staying on top of current tech, finance, or lifestyle trends can be overwhelming. That’s why we have a simple mission: to provide content that is engaging, accurate, and most importantly, helpful in growing you as an individual and a business owner.
+            We know it’s hard to follow tech, money stuff or lifestyle things every time. That’s why we try make simple content — helpful, true and useful for you and your business to grow.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.3} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            Our team breaks down complex topics into actionable insights that empower you to take meaningful steps in your business or personal life. Whether you're curious about the latest gadgets, want to explore cutting-edge technologies, or are a small business with innovative ideas — we’ve got you covered.
+            Our team make hard topics easy to understand. If you want to know about new gadgets, smart tech, or you have small business with cool ideas — we here for you, to help you go ahead in life.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.35} className="text-sm sm:text-base text-gray-700 leading-relaxed">
             From Technology guides for beginners to updates on the evolving workplace and digital tools, we curate content designed to inform and inspire those interested in well-being and productivity.
-          </motion.p>
+            </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.4} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            But we are more than just a website. <strong>KINTECHY</strong> is a community of people eager to learn and help others grow. Whether you're here for industry insights, lifestyle tips, or simply a good read — we’re happy to have you on board.
+            But we are more than just a website. <strong>KINTECHY</strong> is a community of people eager to learn and help others grow. If you come for business tips, lifestyle stuff, or just want to read something nice — we happy you’re here with us.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.45} className="text-sm sm:text-base text-gray-700 leading-relaxed">

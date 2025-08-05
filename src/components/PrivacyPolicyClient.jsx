@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Instagram } from 'lucide-react';
 import LatestBlog from '@/components/LatestBlog';
 import { motion } from 'framer-motion';
 
@@ -52,7 +52,7 @@ const PrivacyPolicyClient = () => {
           </motion.div>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-base text-gray-700 leading-relaxed">
-            At <strong>KINTECHY</strong>, we prioritize your privacy, data security, and your right to control personal information. This policy clearly outlines what data we collect, how we use it, and the measures we take to protect it.
+            At <strong>KINTECHY</strong>, your privacy matter big time. We care for your data, your safety, and you full right to control what info you give. This page tell simple – what we take, how we use it, and how we try keep it safe.
           </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.3} className="text-lg font-semibold text-indigo-600 mt-6">
@@ -69,33 +69,33 @@ const PrivacyPolicyClient = () => {
             Why We Use Your Information
           </motion.h3>
           <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.45} className="list-disc pl-6 text-gray-700 text-base space-y-1">
-            <li>Deliver high-quality blog content on business, health, and tech.</li>
-            <li>Send updates and newsletters to users who opt in.</li>
-            <li>Analyze traffic via Google Analytics to improve content.</li>
-            <li>Prevent spam, fraud, and malicious activity.</li>
-            <li>Build new features based on real user behavior.</li>
-            <li><strong>We never sell or rent your personal data.</strong></li>
+            <li>We write helpful blogs about business, health, and tech stuff – trying our best to keep it useful and simple for you.</li>
+            <li>If you say yes, we send emails and little updates to your inbox – but only when you want. No forcing, no spamming.</li>
+            <li>We check how people use our website with tools like Google Analytics – just to make things better for all visitors.</li>
+            <li>We don’t like bad stuff – so we block spam, stop fake users, and protect our site from anything fishy or harmful.</li>
+            <li>When we see what users do, we get smart ideas to build better features. Your activity helps us grow.</li>
+            <li><strong>One more thing – we never ever sell or rent your info. Not to anyone. Not even by mistake.</strong></li>
           </motion.ul>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.5} className="text-lg font-semibold text-indigo-600 mt-6">
             Cookie & Tracking Policy
           </motion.h3>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.55} className="text-base text-gray-700 leading-relaxed">
-            We use cookies and tools like Google Analytics to understand how users interact with our site. Cookies help speed up site loading and remember your preferences. You can block or clear cookies through your browser at any time.
+            We use cookies and Google tools (like Analytics) just to see how people use our website. These little cookies help the site load faster and remember what you like — so next time, things feel smooth and easy for you. You can stop or delete cookies anytime from your browser settings — easy peasy.
           </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.6} className="text-lg font-semibold text-indigo-600 mt-6">
             Third-Party Services & Affiliate Links
           </motion.h3>
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.65} className="text-base text-gray-700 leading-relaxed">
-            Some articles may contain affiliate links or third-party ads. These services may place cookies on your device. <strong>KINTECHY</strong> does not control third-party domains. Please refer to their privacy policies.
+            Some blog posts got affiliate links or ads from other people. If you click or buy through them, we maybe get small help — but no extra cost for you. These services may place cookies on your device. <strong> KINTECHY </strong> does not control third-party domains. Please refer to their privacy policies.
           </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.7} className="text-lg font-semibold text-indigo-600 mt-6">
             Your Privacy Rights (GDPR & CCPA)
           </motion.h3>
           <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.75} className="list-disc pl-6 text-gray-700 text-base space-y-1">
-            <li>Access, edit, or delete your personal info.</li>
+            <li>You can see, change, or even remove your personal info anytime — no problem.</li>
             <li>Opt out of any marketing emails at any time.</li>
             <li>If you live in California, you can request “Do Not Sell My Personal Info.”</li>
             <li>If you’re in the EU, request a portable copy of your data.</li>

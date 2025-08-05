@@ -24,11 +24,8 @@ export default function Navbar() {
     'Technology',
     'Finance',
     'Business',
-    'Crypto',
     'Sports',
-    'Lifestyle',
     'Health',
-    'Fashion',
   ];
 
   useEffect(() => {

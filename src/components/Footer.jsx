@@ -97,11 +97,8 @@ const Footer = () => {
               "Technology",
               "Finance",
               "Business",
-              "Crypto",
               "Sports",
-              "Lifestyle",
               "Health",
-              "Fashion",
             ].map((cat) => (
               <li key={cat}>
                 <Link

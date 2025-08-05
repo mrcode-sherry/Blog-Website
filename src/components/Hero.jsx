@@ -44,7 +44,7 @@ export default function Hero() {
               Explore the Tech & Digital Lifestyle Trends
             </h3>
             <p className="md:text-[16px] text-sm opacity-90 leading-relaxed">
-              Discover popular stories in top categories such as tech, fashion, business, lifestyle, sports, celebrity news, (Crypto) cryptocurrency news. Stay updated stay inspired.
+              Discover popular stories in top categories such as tech, business, finance, sports, celebrity news, health news. Stay updated stay inspired.
             </p>
           </motion.div>
         </motion.div>
@@ -74,7 +74,7 @@ export default function Hero() {
             viewport={{ once: true }}
             className="text-gray-600 text-sm sm:text-base md:text-lg max-w-xl leading-relaxed mx-auto md:mx-0"
           >
-            Stay informed with expert-written articles across technology, fashion, business, Lifestyle, Finance, Sports, Crypto and health.
+            Stay informed with expert-written articles across technology, business, Finance, Sports, and health.
             We deliver real stories, tutorials, and opinions all in one place.
           </motion.p>
 
@@ -98,7 +98,7 @@ export default function Hero() {
             viewport={{ once: true }}
             className="text-gray-500 text-sm max-w-xl leading-relaxed mx-auto md:mx-0"
           >
-            Our blogging platform publishes daily updates in multiple categories so readers can explore tech innovations, fashion trends, Crypto updates, business strategies, healthcare advice, and sports highlights.
+            Our blogging platform publishes daily updates in multiple categories so readers can explore tech innovations, business strategies, healthcare advice, finance, and sports highlights.
           </motion.p>
         </motion.div>
       </div>

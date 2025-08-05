@@ -69,7 +69,7 @@ const PrivacyPolicyClient = () => {
             Why We Use Your Information
           </motion.h3>
           <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.45} className="list-disc pl-6 text-gray-700 text-base space-y-1">
-            <li>Deliver high-quality blog content on business, lifestyle, and tech.</li>
+            <li>Deliver high-quality blog content on business, health, and tech.</li>
             <li>Send updates and newsletters to users who opt in.</li>
             <li>Analyze traffic via Google Analytics to improve content.</li>
             <li>Prevent spam, fraud, and malicious activity.</li>

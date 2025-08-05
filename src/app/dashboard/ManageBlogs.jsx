@@ -8,11 +8,8 @@ const categories = [
   "Technology",
   "Finance",
   "Business",
-  "Crypto",
   "Sports",
-  "Lifestyle",
   "Health",
-  "Fashion",
 ];
 
 export default function ManageBlogs() {

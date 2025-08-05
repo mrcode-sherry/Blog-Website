@@ -57,7 +57,7 @@ const AboutClient = () => {
           </motion.div>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We cover everything from technology, health, and business, to fashion, lifestyle, and cryptocurrency, aiming to give our readers a fresh and exciting perspective on life.
+            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We cover everything from technology, health, finance, business, and sports aiming to give our readers a fresh and exciting perspective on life.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.25} className="text-sm sm:text-base text-gray-700 leading-relaxed">
@@ -69,7 +69,7 @@ const AboutClient = () => {
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.35} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            From cryptocurrency guides for beginners to updates on the evolving workplace and digital tools, we curate content designed to inform and inspire those interested in well-being and productivity.
+            From Technology guides for beginners to updates on the evolving workplace and digital tools, we curate content designed to inform and inspire those interested in well-being and productivity.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.4} className="text-sm sm:text-base text-gray-700 leading-relaxed">

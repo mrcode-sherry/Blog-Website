@@ -9,8 +9,8 @@ import { CldUploadWidget } from 'next-cloudinary';
 const TinyEditor = dynamic(() => import('@/components/TinyEditor'), { ssr: false });
 
 const categories = [
-  'technology', 'finance', 'business', 'crypto',
-  'sports', 'lifestyle', 'health', 'fashion',
+  'technology', 'finance', 'business',
+  'sports', 'health',
 ];
 
 export default function EditBlogPage() {

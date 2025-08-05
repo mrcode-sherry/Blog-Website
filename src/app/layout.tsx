@@ -22,21 +22,21 @@ const lora = Lora({
 
 // ✅ Updated metadata with favicon
 export const metadata: Metadata = {
-  title: "Kintechy | Explore tech finance crypto health fashion",
-  description: "Enhance your knowledge by staying on top of the trends in technology, cryptocurrency, business, finance, healthcare, fashion, and even sports.",
+  title: "Kintechy | Explore tech finance business health sports",
+  description: "Enhance your knowledge by staying on top of the trends in technology, business, finance, healthcare, and even sports.",
   keywords: [
     "tech news", "AI tools", "latest smartphones", "web development",
-    "finance tips", "crypto trends", "business ideas", "startup growth",
+    "finance tips", "tech trends", "business ideas", "startup growth",
     "blockchain news", "bitcoin updates", "NFTs explained", "ethereum guide",
-    "sports updates", "fitness routines", "lifestyle hacks", "fashion tips",
+    "sports updates", "fitness routines", "lifestyle hacks", "tech tips",
     "mental health", "healthy diet", "SEO tricks", "digital marketing",
     "app development", "UI/UX trends", "programming basics", "React.js",
-    "Next.js tutorials", "cloud hosting", "mobile apps", "crypto wallets",
+    "Next.js tutorials", "cloud hosting", "mobile apps", "tech wallets",
     "investment strategies", "online business", "passive income", "freelancing",
     "self improvement", "remote work", "Google algorithm", "YouTube SEO",
     "design inspiration", "coding tips", "finance news", "ecommerce trends",
     "sports tech", "life coaching", "travel guides", "nutrition plans",
-    "tech gadgets", "startup tips", "market analysis", "fashion 2025",
+    "tech gadgets", "startup tips", "market analysis", "tech 2025",
     "blockchain dev", "javascript"
   ],
   alternates: {

@@ -25,11 +25,8 @@ export async function GET() {
     'technology',
     'finance',
     'business',
-    'crypto',
     'sports',
-    'lifestyle',
     'health',
-    'fashion',
   ];
 
   categories.forEach((category) => {

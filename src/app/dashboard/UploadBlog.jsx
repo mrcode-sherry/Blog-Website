@@ -22,8 +22,8 @@ const UploadBlog = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const categories = [
-    'Technology', 'Finance', 'Business', 'Crypto',
-    'Sports', 'Lifestyle', 'Health', 'Fashion',
+    'Technology', 'Finance', 'Business',
+    'Sports', 'Health',
   ];
 
   const handleChange = (e) => {

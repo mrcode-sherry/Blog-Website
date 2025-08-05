@@ -5,4 +5,4 @@ Disallow: /login
 Disallow: /dashboard
 Disallow: /search
 
-Sitemap: https://kintechy.com/sitemap.xml
+Sitemap: https://www.kintechy.com/sitemap.xml

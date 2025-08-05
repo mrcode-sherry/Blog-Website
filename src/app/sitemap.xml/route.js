@@ -4,7 +4,7 @@ import dbConnect from '@/backend/db';
 import Blog from '@/backend/models/blog';
 
 export async function GET() {
-  const baseUrl = 'https://kintechy.com'; // Change this to your production domain
+  const baseUrl = 'https://www.kintechy.com'; // Change this to your production domain
 
   // Connect to your MongoDB database
   await dbConnect();

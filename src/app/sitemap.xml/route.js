@@ -1,18 +1,20 @@
+export const dynamic = 'force-dynamic'; // This ensures Google can fetch the dynamic sitemap
+
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { Readable } from 'stream';
 import dbConnect from '@/backend/db';
 import Blog from '@/backend/models/blog';
 
 export async function GET() {
-  const baseUrl = 'https://www.kintechy.com'; // Change this to your production domain
+  const baseUrl = 'https://www.kintechy.com';
 
-  // Connect to your MongoDB database
+  // Connect to MongoDB
   await dbConnect();
 
-  // Fetch only slug and category for sitemap efficiency
+  // Fetch all blogs (only slug and category)
   const blogs = await Blog.find({}, 'slug category').lean();
 
-  // Static and public pages
+  // Static pages
   const links = [
     { url: '/', changefreq: 'daily', priority: 1.0 },
     { url: '/about', changefreq: 'daily', priority: 0.7 },
@@ -20,15 +22,8 @@ export async function GET() {
     { url: '/privacy-policy', changefreq: 'daily', priority: 0.6 },
   ];
 
-  // Blog categories (these are the main blog listing pages for each category)
-  const categories = [
-    'technology',
-    'finance',
-    'business',
-    'sports',
-    'health',
-  ];
-
+  // Categories
+  const categories = ['technology', 'finance', 'business', 'sports', 'health'];
   categories.forEach((category) => {
     links.push({
       url: `/blogs/${category}`,
@@ -46,7 +41,7 @@ export async function GET() {
     });
   });
 
-  // Generate XML from the links
+  // Generate sitemap XML
   const stream = new SitemapStream({ hostname: baseUrl });
   const xml = await streamToPromise(Readable.from(links).pipe(stream)).then((data) =>
     data.toString()
@@ -55,6 +50,7 @@ export async function GET() {
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml',
+      'Cache-Control': 's-maxage=3600, stale-while-revalidate', // optional, helps cache control
     },
   });
 }

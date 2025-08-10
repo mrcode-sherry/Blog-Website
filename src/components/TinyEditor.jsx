@@ -12,12 +12,12 @@ const TinyEditor = ({ value, onChange }) => {
         height: 300,
         menubar: true,
         plugins: [
-          'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists',
-          'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-          'pageembed', 'mentions', 'tableofcontents', 'footnotes',
-          'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword'
+          'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image',
+          'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks',
+          'wordcount'
         ],
-        
+
+
         toolbar:
           'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | ' +
           'link image media table mergetags | addcomment showcomments | spellcheckdialog ' +

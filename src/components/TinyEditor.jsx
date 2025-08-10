@@ -18,8 +18,7 @@ const TinyEditor = ({ value, onChange }) => {
           'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste',
           'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions',
           'tinycomments', 'tableofcontents', 'footnotes', 'mergetags',
-          'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword',
-          'exportword', 'exportpdf',
+          'autocorrect', 'typography', 'inlinecss', 'markdown', 'importword'
         ],
 
         toolbar:

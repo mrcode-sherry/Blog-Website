@@ -1,9 +1,9 @@
 import BlogDetailsPage from "@/components/BlogDetailsPage";
 import { notFound } from "next/navigation";
 
-// 📌 Helper to remove HTML tags
+// 📌 Helper to remove HTML tags safely
 function stripHtml(html) {
-  return html.replace(/<[^>]*>/g, "");
+  return html.replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
 }
 
 // 📌 Generate metadata for SEO and Open Graph
@@ -33,8 +33,9 @@ export async function generateMetadata(props) {
     };
   }
 
-  // Strip HTML from blog.desc and limit to 120 characters
-  const cleanDesc = stripHtml(blog.metadesc || blog.desc || "").slice(0, 130);
+  // ✅ Prefer metadesc (plain text), else strip desc
+  const rawDesc = blog.metadesc || blog.desc || "";
+  const cleanDesc = stripHtml(rawDesc).slice(0, 155); // Google prefers 150–160 chars
 
   return {
     title: blog.metitle || blog.title,

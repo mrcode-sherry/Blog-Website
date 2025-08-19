@@ -9,7 +9,7 @@ import "../app/globals.css";
 // Extend window type to include gtag
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
+    gtag: (...args: unknown[]) => void;
   }
 }
 

@@ -4,7 +4,7 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Script from "next/script";
-import "../styles/globals.css";
+import "../app/globals.css";
 
 // Extend window type to include gtag
 declare global {

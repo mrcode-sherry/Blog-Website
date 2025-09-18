@@ -86,7 +86,7 @@ export default function TopCategory() {
   };
 
   return (
-    <div className="w-full flex flex-col px-4 sm:px-6 md:px-20 gap-6 py-8 bg-white overflow-hidden">
+    <div className="w-full flex flex-col px-6 md:px-20 gap-6 py-8 bg-white overflow-hidden">
       {/* Title outside the flex row for full width */}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
@@ -141,7 +141,7 @@ export default function TopCategory() {
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
                           unoptimized={blog.img?.startsWith("data:image")}
                         />
-                        <div className="absolute md:mt-40 mt-8 inset-0 bg-gradient-to-t from-black via-black/90 to-transparent md:px-12 px-7 pb-6 z-10 flex flex-col justify-center">
+                        <div className="absolute md:mt-40 mt-5 inset-0 bg-gradient-to-t from-black via-black/90 to-transparent md:px-12 px-7 pb-6 z-10 flex flex-col justify-center">
                           <div className="mb-4">
                             <span className="text-xs sm:text-sm px-4 py-1 rounded-md bg-indigo-600 text-white font-bold italic skew-x-[-10deg]">
                               <span className="skew-x-[10deg] tracking-wider">

@@ -35,7 +35,7 @@ const LatestBlog = ({ variant = "default" }) => {
   };
 
   return (
-    <section className={`w-full overflow-hidden ${variant === "overlay" ? "" : ""} md:px-10 py-10`}>
+    <section className={`w-full md:mt-0 -mt-5 overflow-hidden ${variant === "overlay" ? "" : ""} md:px-10 py-10`}>
       {/* Heading */}
       <div className="flex items-center justify-center mb-8 relative">
         <div className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300">

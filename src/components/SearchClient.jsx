@@ -66,7 +66,7 @@ export default function SearchClient() {
               ))}
             </div>
           ) : paginatedBlogs.length === 0 ? (
-            <p>No blogs found.</p>
+            <p className="text-black">No blogs match your search.</p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {paginatedBlogs.map((blog, idx) => (

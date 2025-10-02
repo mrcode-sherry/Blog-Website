@@ -127,6 +127,9 @@ const PrivacyPolicyClient = () => {
             <span className="block mt-2 font-medium">
               KINTECHY Media Ltd.  
             </span>
+            <span className='mt-3'>
+              <span className='text-indigo-600 text-[18px] font-semibold'>Last updated:</span> October 1, 2025
+            </span>
           </motion.p>
 
           <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={1.2} className="flex flex-wrap items-center gap-6 mt-6">

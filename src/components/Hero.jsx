@@ -44,7 +44,7 @@ export default function Hero() {
               Explore the Tech & Digital Lifestyle Trends
             </h3>
             <p className="md:text-[16px] text-sm opacity-90 leading-relaxed">
-              Discover popular stories in top categories such as tech, business, finance, sports, celebrity news, health news. Stay updated stay inspired.
+              Discover popular stories in top categories such as tech, business, finance, sports, news, health news. Stay updated stay inspired.
             </p>
           </motion.div>
         </motion.div>

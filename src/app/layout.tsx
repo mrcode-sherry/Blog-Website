@@ -6,6 +6,7 @@ import FooterBar from "@/components/FooterBar";
 import { AuthProvider } from '@/context/AuthContext';
 import Analytics from "@/components/Analytics";
 import Providers from "./providers";
+import Script from "next/script";
 import "./globals.css";
 
 // ✅ Load fonts with custom variables that match your globals.css
@@ -23,7 +24,8 @@ const lora = Lora({
 // ✅ Updated metadata with favicon
 export const metadata: Metadata = {
   title: "Kintechy | Explore tech finance business health sports",
-  description: "Enhance your knowledge by staying on top of the trends in technology, business, finance, healthcare, and even sports.",
+  description:
+    "Enhance your knowledge by staying on top of the trends in technology, business, finance, healthcare, and even sports.",
   keywords: [
     "tech news", "AI tools", "latest smartphones", "web development",
     "finance tips", "tech trends", "business ideas", "startup growth",
@@ -49,6 +51,15 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {/* ✅ Google AdSense script added here */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4516525119681943"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={`${inter.variable} ${lora.variable} font-sans antialiased`}>
         <Analytics />
         <Providers>

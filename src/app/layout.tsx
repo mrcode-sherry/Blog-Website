@@ -6,7 +6,6 @@ import FooterBar from "@/components/FooterBar";
 import { AuthProvider } from '@/context/AuthContext';
 import Analytics from "@/components/Analytics";
 import Providers from "./providers";
-import Script from "next/script";
 import "./globals.css";
 
 // ✅ Load fonts with custom variables that match your globals.css
@@ -21,7 +20,6 @@ const lora = Lora({
   variable: "--font-serif",
 });
 
-// ✅ Updated metadata with favicon
 export const metadata: Metadata = {
   title: "Kintechy | Explore tech finance business health sports",
   description:
@@ -52,13 +50,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* ✅ Google AdSense script added here */}
-        <Script
+        {/* ✅ Directly added script tag for Google AdSense (server-rendered) */}
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4516525119681943"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
+        ></script>
       </head>
       <body className={`${inter.variable} ${lora.variable} font-sans antialiased`}>
         <Analytics />

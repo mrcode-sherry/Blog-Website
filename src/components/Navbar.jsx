@@ -24,7 +24,6 @@ export default function Navbar() {
     'Technology',
     'Finance',
     'Business',
-    'Sports',
     'Health',
   ];
 
@@ -104,26 +103,20 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
-          <li className="group relative">
-            <div className="flex items-center hover:text-indigo-500 transition cursor-pointer">
-              <Link href="/contact" className="flex items-center">
-                Contact <ChevronDown size={18} className="ml-1" />
-              </Link>
-            </div>
-            <div className="absolute hidden group-hover:block bg-white text-black shadow-2xl rounded-lg py-2 w-40 z-50">
-              <Link
-                href="/about"
-                className="block px-4 py-2 hover:bg-gray-100 hover:text-indigo-500 transition"
-              >
-                About
-              </Link>
-              <Link
-                href="/privacy-policy"
-                className="block px-4 py-2 hover:bg-gray-100 hover:text-indigo-500 transition"
-              >
-                Privacy Policy
-              </Link>
-            </div>
+          <li>
+            <Link href="/contact" className="hover:text-indigo-500 transition">
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link href="/about" className="hover:text-indigo-500 transition">
+              About
+            </Link>
+          </li>
+          <li>
+            <Link href="/privacy-policy" className="hover:text-indigo-500 transition">
+              Privacy Policy
+            </Link>
           </li>
           {isAuthenticated && (
             <li>

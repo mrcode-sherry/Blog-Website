@@ -23,7 +23,7 @@ const UploadBlog = () => {
 
   const categories = [
     'Technology', 'Finance', 'Business',
-    'Sports', 'Health',
+    'Health',
   ];
 
   const handleChange = (e) => {

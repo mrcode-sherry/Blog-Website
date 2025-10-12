@@ -12,7 +12,6 @@ const categoryImages = {
   technology: '/Blog-Category-Image/technology.jpg',
   finance: '/Blog-Category-Image/finance.jpg',
   business: '/Blog-Category-Image/business.jpg',
-  sports: '/Blog-Category-Image/sports.jpg',
   health: '/Blog-Category-Image/health.jpg',
 };
 

@@ -97,7 +97,6 @@ const Footer = () => {
               "Technology",
               "Finance",
               "Business",
-              "Sports",
               "Health",
             ].map((cat) => (
               <li key={cat}>

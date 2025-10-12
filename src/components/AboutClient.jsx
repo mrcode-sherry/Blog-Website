@@ -57,7 +57,7 @@ const AboutClient = () => {
           </motion.div>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We write about tech, health, finance, business and sports… just tryin' to show life in cool and fresh way to our readers.
+            <strong>KINTECHY</strong> is a complete contemporary blogging platform for today's fast-moving digital world. We write about tech, health, finance and business… just tryin' to show life in cool and fresh way to our readers.
           </motion.p>
 
           <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.25} className="text-sm sm:text-base text-gray-700 leading-relaxed">

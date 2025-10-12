@@ -10,7 +10,7 @@ const TinyEditor = dynamic(() => import('@/components/TinyEditor'), { ssr: false
 
 const categories = [
   'technology', 'finance', 'business',
-  'sports', 'health',
+  'health',
 ];
 
 export default function EditBlogPage() {

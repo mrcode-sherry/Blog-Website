@@ -21,21 +21,21 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
-  title: "Kintechy | Explore tech finance business health sports",
+  title: "Kintechy | Explore tech finance business health blogs",
   description:
-    "Enhance your knowledge by staying on top of the trends in technology, business, finance, healthcare, and even sports.",
+    "Enhance your knowledge by staying on top of the trends in technology, business, finance, and healthcare blogs.",
   keywords: [
     "tech news", "AI tools", "latest smartphones", "web development",
     "finance tips", "tech trends", "business ideas", "startup growth",
     "blockchain news", "bitcoin updates", "NFTs explained", "ethereum guide",
-    "sports updates", "fitness routines", "lifestyle hacks", "tech tips",
+    "fitness routines", "lifestyle hacks", "tech tips",
     "mental health", "healthy diet", "SEO tricks", "digital marketing",
     "app development", "UI/UX trends", "programming basics", "React.js",
     "Next.js tutorials", "cloud hosting", "mobile apps", "tech wallets",
     "investment strategies", "online business", "passive income", "freelancing",
     "self improvement", "remote work", "Google algorithm", "YouTube SEO",
     "design inspiration", "coding tips", "finance news", "ecommerce trends",
-    "sports tech", "life coaching", "travel guides", "nutrition plans",
+    "life coaching", "travel guides", "nutrition plans",
     "tech gadgets", "startup tips", "market analysis", "tech 2025",
     "blockchain dev", "javascript"
   ],

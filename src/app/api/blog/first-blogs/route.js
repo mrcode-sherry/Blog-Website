@@ -9,7 +9,6 @@ export async function GET() {
     "technology",
     "finance",
     "business",
-    "sports",
     "health",
   ];
 

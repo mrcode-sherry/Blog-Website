@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Instagram } from 'lucide-react';
 import LatestBlog from '@/components/LatestBlog';
 import { motion } from 'framer-motion';
 
@@ -19,7 +19,7 @@ const fadeUp = {
   }),
 };
 
-const AboutClient = () => {
+const TermsOfServiceClient = () => {
   return (
     <main className="min-h-screen bg-white px-6 md:px-20 py-10 text-gray-800">
       {/* Breadcrumb */}
@@ -35,7 +35,7 @@ const AboutClient = () => {
               Home
             </Link>
             <span className="text-gray-500">/</span>
-            <span className="text-gray-800 font-semibold capitalize">About</span>
+            <span className="text-gray-800 font-semibold capitalize">Terms of Service</span>
           </nav>
         </div>
       </motion.section>
@@ -52,21 +52,14 @@ const AboutClient = () => {
             className="flex items-center w-full before:flex-1 before:border-t before:border-gray-300 after:flex-1 after:border-t after:border-gray-300"
           >
             <span className="relative z-10 rounded-md inline-block px-4 py-2 mb-5 bg-indigo-600 text-white font-bold italic skew-x-[-10deg] text-center text-lg sm:text-xl md:text-[25px]">
-              <h2 className="skew-x-[10deg] tracking-wide capitalize">About Us</h2>
+              <h2 className="skew-x-[10deg] tracking-wide capitalize">Terms of Service</h2>
             </span>
           </motion.div>
 
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            <strong>KINTECHY</strong> is a contemporary blog platform developed in the fast forward digital age. We post insightful articles in the areas of technology, health, finance and business in a new accessible voice that allows you to easily understand complicated things. We understand that it is difficult to follow all the trends, that is why we make everything possible to present clear and actionable ideas which are useful to our readers to become better people and professionals. 
-          </motion.p>
-
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.25} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            We are members of the team that is specialized in interpreting complex issues into simple explanations. In the event you are interested in the newest devices, clever technology, or creative entrepreneurial concepts, <strong>KINTECHY</strong> can be utilized to get going. Our articles are informative, inspirational and can enhance productivity and well-being, whether it is a beginner-focused tech guide or a guide to the changing workplace and the prevailing digital tools.
-          </motion.p>
-
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.3} className="text-sm sm:text-base text-gray-700 leading-relaxed">
-            <strong>KINTECHY</strong> is not just a site, it is a community of interested individuals who get to learn and teach others. You can find the business advice, lifestyle, or even just something interesting to read, you can find all those things here. Grow, learn and become inspired, both of us and one blog at a time.
-          </motion.p>
+          {/* Content will be added by user */}
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-sm sm:text-base text-gray-700 leading-relaxed">
+            {/* User will add content here */}
+          </motion.div>
 
           {/* Social Links */}
           <motion.div
@@ -100,4 +93,4 @@ const AboutClient = () => {
   );
 };
 
-export default AboutClient;
+export default TermsOfServiceClient;

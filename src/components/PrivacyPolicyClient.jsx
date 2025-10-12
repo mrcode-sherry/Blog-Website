@@ -84,6 +84,20 @@ const PrivacyPolicyClient = () => {
             We use cookies and Google tools (like Analytics) just to see how people use our website. These little cookies help the site load faster and remember what you like — so next time, things feel smooth and easy for you. You can stop or delete cookies anytime from your browser settings — easy peasy.
           </motion.p>
 
+          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.56} className="bg-gray-50 rounded-lg p-4 mt-4 mb-6">
+            <h4 className="font-semibold text-gray-800 mb-3">Types of Cookies We Use:</h4>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li><strong>Essential Cookies:</strong> Required for basic site functionality and security. These cannot be disabled.</li>
+              <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our site (Google Analytics). You can opt-out of these.</li>
+              <li><strong>Performance Cookies:</strong> Used to improve site speed and user experience.</li>
+            </ul>
+            <div className="mt-4 p-3 bg-indigo-50 rounded border-l-4 border-indigo-600">
+              <p className="text-sm text-indigo-800">
+                <strong>Your Choice:</strong> When you first visit our site, you'll see a cookie consent banner. You can choose to accept or decline non-essential cookies. Your choice is remembered for 30 days.
+              </p>
+            </div>
+          </motion.div>
+
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.6} className="text-lg font-semibold text-indigo-600 mt-6">
             Third-Party Services & Affiliate Links
           </motion.h3>

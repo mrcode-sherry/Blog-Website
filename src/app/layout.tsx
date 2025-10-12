@@ -3,6 +3,7 @@ import { Inter, Lora } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FooterBar from "@/components/FooterBar";
+import CookieConsent from "@/components/CookieConsent";
 import { AuthProvider } from '@/context/AuthContext';
 import Analytics from "@/components/Analytics";
 import Providers from "./providers";
@@ -71,6 +72,7 @@ export default function RootLayout({
             <section>
               <FooterBar />
             </section>
+            <CookieConsent />
           </AuthProvider>
         </Providers>
       </body>

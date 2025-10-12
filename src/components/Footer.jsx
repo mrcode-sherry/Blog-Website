@@ -130,6 +130,16 @@ const Footer = () => {
                 About
               </Link>
             </li>
+            <li>
+              <Link href="/terms-of-service" className="hover:text-indigo-400">
+                Terms of Service
+              </Link>
+            </li>
+            <li>
+              <Link href="/disclaimer" className="hover:text-indigo-400">
+                Disclaimer
+              </Link>
+            </li>
           </ul>
         </div>
 

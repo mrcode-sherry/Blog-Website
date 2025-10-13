@@ -51,96 +51,106 @@ const PrivacyPolicyClient = () => {
             </span>
           </motion.div>
 
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.2} className="text-base text-gray-700 leading-relaxed">
-            At <strong>KINTECHY</strong>, your privacy matter big time. We care for your data, your safety, and you full right to control what info you give. This page tell simple – what we take, how we use it, and how we try keep it safe.
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.25} className="text-base text-gray-700 leading-relaxed">
+            Hi from <strong>Kintechy</strong>. We consider it our duty to protect the personal information you share with us as we appreciate your privacy. Here, we outline your rights in visiting kintechy.com ("Site") and what information we collect and how we use it. By using the Site, you acknowledge the privacy practices in this policy.
           </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.3} className="text-lg font-semibold text-indigo-600 mt-6">
-            What Personal Data We Collect
+            Data We Collect
           </motion.h3>
-          <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.35} className="list-disc pl-6 text-gray-700 text-base space-y-1">
-            <li>Email addresses for newsletters and updates.</li>
-            <li>Basic contact info submitted via contact forms.</li>
-            <li>Anonymous analytics like IP, device type, browser, and page time.</li>
-            <li>Cookies to save preferences and improve performance.</li>
-          </motion.ul>
-
-          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.4} className="text-lg font-semibold text-indigo-600 mt-6">
-            Why We Use Your Information
-          </motion.h3>
-          <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.45} className="list-disc pl-6 text-gray-700 text-base space-y-1">
-            <li>We write helpful blogs about business, health, and tech stuff – trying our best to keep it useful and simple for you.</li>
-            <li>If you say yes, we send emails and little updates to your inbox – but only when you want. No forcing, no spamming.</li>
-            <li>We check how people use our website with tools like Google Analytics – just to make things better for all visitors.</li>
-            <li>We don’t like bad stuff – so we block spam, stop fake users, and protect our site from anything fishy or harmful.</li>
-            <li>When we see what users do, we get smart ideas to build better features. Your activity helps us grow.</li>
-            <li><strong>One more thing – we never ever sell or rent your info. Not to anyone. Not even by mistake.</strong></li>
-          </motion.ul>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.35} className="text-base text-gray-700 leading-relaxed">
+            Personal data refers to information such as your name, email address, and any additional information provided via contact forms and in newsletters.
+          </motion.p>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.4} className="text-base text-gray-700 leading-relaxed">
+            Usage Information includes data like the device and browser used, the IP address, the time spent on our website, the pages visited, and the referrer site that directed you to our website.
+          </motion.p>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.45} className="text-base text-gray-700 leading-relaxed">
+            Analytics and comprehension of user preferences, as well as user tracking, is done using cookies and similar technologies.
+          </motion.p>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.5} className="text-lg font-semibold text-indigo-600 mt-6">
-            Cookie & Tracking Policy
+            How We Use Your Information
           </motion.h3>
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.55} className="text-base text-gray-700 leading-relaxed">
-            We use cookies and Google tools (like Analytics) just to see how people use our website. These little cookies help the site load faster and remember what you like — so next time, things feel smooth and easy for you. You can stop or delete cookies anytime from your browser settings — easy peasy.
-          </motion.p>
-
-          <motion.div variants={fadeUp} initial="hidden" animate="visible" custom={0.56} className="bg-gray-50 rounded-lg p-4 mt-4 mb-6">
-            <h4 className="font-semibold text-gray-800 mb-3">Types of Cookies We Use:</h4>
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li><strong>Essential Cookies:</strong> Required for basic site functionality and security. These cannot be disabled.</li>
-              <li><strong>Analytics Cookies:</strong> Help us understand how visitors use our site (Google Analytics). You can opt-out of these.</li>
-              <li><strong>Performance Cookies:</strong> Used to improve site speed and user experience.</li>
-            </ul>
-            <div className="mt-4 p-3 bg-indigo-50 rounded border-l-4 border-indigo-600">
-              <p className="text-sm text-indigo-800">
-                <strong>Your Choice:</strong> When you first visit our site, you'll see a cookie consent banner. You can choose to accept or decline non-essential cookies. Your choice is remembered for 30 days.
-              </p>
-            </div>
-          </motion.div>
+          <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.55} className="list-disc pl-6 text-gray-700 text-base space-y-1">
+            <li>To provide the operation, maintenance and upgrading of the Site and functions.</li>
+            <li>To contact you (sending newsletters or updates, in case you subscribed).</li>
+            <li>To examine the usage of the sites and enhance the user experience.</li>
+            <li>To prevent fraud and guarantee security.</li>
+            <li>To customize content to your interests.</li>
+          </motion.ul>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.6} className="text-lg font-semibold text-indigo-600 mt-6">
-            Third-Party Services & Affiliate Links
+            Data Sharing and Disclosure
           </motion.h3>
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.65} className="text-base text-gray-700 leading-relaxed">
-            Some blog posts got affiliate links or ads from other people. If you click or buy through them, we maybe get small help — but no extra cost for you. These services may place cookies on your device. <strong> KINTECHY </strong> does not control third-party domains. Please refer to their privacy policies.
-          </motion.p>
+          <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.65} className="list-disc pl-6 text-gray-700 text-base space-y-1">
+            <li>We do not sell your personal data.</li>
+            <li>We can distribute information to service providers (hosting, analytics, email delivery) on a stringent privacy agreement.</li>
+            <li>We can provide aggregated or de-identified data to be used in analytics and research.</li>
+          </motion.ul>
 
           <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.7} className="text-lg font-semibold text-indigo-600 mt-6">
-            Your Privacy Rights (GDPR & CCPA)
+            Data Retention and Security
           </motion.h3>
           <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.75} className="list-disc pl-6 text-gray-700 text-base space-y-1">
-            <li>You can see, change, or even remove your personal info anytime — no problem.</li>
-            <li>Opt out of any marketing emails at any time.</li>
-            <li>If you live in California, you can request “Do Not Sell My Personal Info.”</li>
-            <li>If you’re in the EU, request a portable copy of your data.</li>
+            <li>We retain personal data only as long as needed to fulfill the purposes described and to comply with legal obligations.</li>
+            <li>We implement reasonable security measures to protect data. No method of transmission over the internet is 100% secure.</li>
           </motion.ul>
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.8} className="text-base text-gray-700 leading-relaxed mt-2">
-            To exercise your rights, email us at <a href="mailto:kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>. We respond within 7 days.
-          </motion.p>
 
-          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.85} className="text-lg font-semibold text-indigo-600 mt-6">
-            Children’s Privacy
+          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.8} className="text-lg font-semibold text-indigo-600 mt-6">
+            Your Rights
           </motion.h3>
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.9} className="text-base text-gray-700 leading-relaxed">
-            We do not knowingly collect data from children. If you're a parent and believe your child has shared personal info, contact us immediately at <a href="mailto:kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>.
+          <motion.ul variants={fadeUp} initial="hidden" animate="visible" custom={0.85} className="list-disc pl-6 text-gray-700 text-base space-y-1">
+            <li>Access, correct, delete, or export your data.</li>
+            <li>Withdraw consent where applicable.</li>
+            <li>Opt out of marketing communications.</li>
+            <li>Do Not Sell My Personal Data rights where applicable.</li>
+          </motion.ul>
+
+          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.9} className="text-lg font-semibold text-indigo-600 mt-6">
+            Cookies Policy
+          </motion.h3>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={0.95} className="text-base text-gray-700 leading-relaxed">
+            <strong>Uses of cookies:</strong> Core cookies: The cookies are required to make the site functional, and keep it secure; Analytics cookies: The cookies are required to know how you use the site, and we need your permission to do so.
+          </motion.p>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.0} className="text-base text-gray-700 leading-relaxed">
+            <strong>Your cookie preferences:</strong> Manage your interests and preferences; Recommend other content and performance to you (where allowed, with your consent).
+          </motion.p>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.05} className="text-base text-gray-700 leading-relaxed">
+            <strong>Cookie management:</strong> The user can manage cookies or withdraw cookies as needed through their browser settings or cookie banner on our site; You can manage cookies or withdraw cookies at any time where necessary.
+          </motion.p>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.1} className="text-base text-gray-700 leading-relaxed">
+            <strong>Third-party cookies and advertisers:</strong> There are those cookies which are introduced by third parties (e.g., Google Analytics, Google Ads). They have their privacy policies and can control their preferences in those providers.
           </motion.p>
 
-          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={0.95} className="text-lg font-semibold text-indigo-600 mt-6">
+          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={1.15} className="text-lg font-semibold text-indigo-600 mt-6">
+            Third-Party Links and Services
+          </motion.h3>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.2} className="text-base text-gray-700 leading-relaxed">
+            Our site may link to third-party sites with their own privacy practices. We're not responsible for those policies.
+          </motion.p>
+
+          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={1.35} className="text-lg font-semibold text-indigo-600 mt-6">
+            Children's Privacy
+          </motion.h3>
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.4} className="text-base text-gray-700 leading-relaxed">
+            <strong>Kintechy</strong> does not target children below the age of 13. Our data collection on children is not conscious.
+          </motion.p>
+
+          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={1.45} className="text-lg font-semibold text-indigo-600 mt-6">
             Policy Updates
           </motion.h3>
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.0} className="text-base text-gray-700 leading-relaxed">
-            We update this Privacy Policy periodically to reflect new site features and legal changes. Check the “Last updated” date at the bottom of this page for the latest version.
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.5} className="text-base text-gray-700 leading-relaxed">
+            We may update this policy. The "Last updated" date will change accordingly. We'll notify you of material changes as required by law.
           </motion.p>
 
-          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={1.05} className="text-lg font-semibold text-indigo-600 mt-6">
-            Contact KINTECHY
+          <motion.h3 variants={fadeUp} initial="hidden" animate="visible" custom={1.55} className="text-lg font-semibold text-indigo-600 mt-6">
+            How to Contact Us
           </motion.h3>
-          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.1} className="text-base text-gray-700 leading-relaxed">
-            For any questions regarding this Privacy Policy, cookies, or data usage, contact us at <a href="mailto:kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a> or write to:
+          <motion.p variants={fadeUp} initial="hidden" animate="visible" custom={1.6} className="text-base text-gray-700 leading-relaxed">
+            <strong>Kintechy</strong> Media Ltd.
             <br />
-            <span className="block mt-2 font-medium">
-              KINTECHY Media Ltd.  
-            </span>
+            Email: <a href="mailto:kintechyinfo@gmail.com" className="text-indigo-600 underline">kintechyinfo@gmail.com</a>
+            <br />
             <span className='mt-3'>
               <span className='text-indigo-600 text-[18px] font-semibold'>Last updated:</span> October 1, 2025
             </span>

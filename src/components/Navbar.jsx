@@ -208,6 +208,20 @@ export default function Navbar() {
                 >
                   Privacy Policy
                 </Link>
+                <Link
+                  href="/terms-of-service"
+                  onClick={handleMenuClose}
+                  className="hover:text-indigo-400"
+                >
+                  Terms of Service
+                </Link>
+                 <Link
+                  href="/disclaimer"
+                  onClick={handleMenuClose}
+                  className="hover:text-indigo-400"
+                >
+                  Disclaimer
+                </Link>
                 {isAuthenticated && (
                   <Link
                     href="/dashboard"

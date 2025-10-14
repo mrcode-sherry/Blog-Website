@@ -16,8 +16,6 @@ const TinyEditor = ({ value, onChange }) => {
           'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks',
           'wordcount'
         ],
-
-
         toolbar:
           'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | ' +
           'link image media table mergetags | addcomment showcomments | spellcheckdialog ' +
@@ -29,6 +27,8 @@ const TinyEditor = ({ value, onChange }) => {
           { value: 'First.Name', title: 'First Name' },
           { value: 'Email', title: 'Email' },
         ],
+        // Prevent TinyMCE from converting URLs which was causing issues with blog links
+        convert_urls: false,
       }}
     />
   );

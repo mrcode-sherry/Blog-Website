@@ -62,9 +62,9 @@ const TrendingBlog = () => {
                       <Image
                         src={validImg}
                         alt={blog.title}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        width={80}
+                        height={80}
+                        className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md"></div>
                     </div>

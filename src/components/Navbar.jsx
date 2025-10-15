@@ -160,14 +160,20 @@ export default function Navbar() {
       {/* Mobile Slide Menu */}
       <AnimatePresence>
         {menuOpen && (
-          <div className="fixed inset-0 z-[9998] flex">
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[9998] bg-black/70 backdrop-blur-sm flex"
+          >
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.4, ease: 'easeOut' }}
               ref={menuRef}
-              className="bg-black/90 w-[80%] h-screen py-6 px-6 overflow-y-auto relative backdrop-blur-sm"
+              className="bg-black/90 w-[80%] h-screen py-6 px-6 overflow-y-auto relative"
             >
               <div className="flex items-center justify-between mb-9">
                 <div className="flex items-center space-x-2">
@@ -233,8 +239,8 @@ export default function Navbar() {
                 )}
               </nav>
             </motion.div>
-            <div className="w-[25%] h-screen backdrop-blur-sm" onClick={handleMenuClose}></div>
-          </div>
+            <div className="w-[20%] h-screen" onClick={handleMenuClose}></div>
+          </motion.div>
         )}
       </AnimatePresence>
 

@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "self improvement", "remote work", "Google algorithm", "YouTube SEO",
     "design inspiration", "coding tips", "finance news", "ecommerce trends",
     "life coaching", "travel guides", "nutrition plans",
-    "tech gadgets", "startup tips", "market analysis", "tech 2025",
+    "tech gadgets", "startup tips", "market analysis", "tech 2026",
     "blockchain dev", "javascript"
   ],
   alternates: {
